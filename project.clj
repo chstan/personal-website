@@ -95,5 +95,6 @@
                        :cljsbuild {:builds {:app
                                             {:source-paths ["env/prod/cljs"]
                                              :compiler
-                                             {:optimizations :advanced
+                                             {:optimizations :whitespace
+                                              :externs ["externs/lib_externs.js"]
                                               :pretty-print false}}}}}})

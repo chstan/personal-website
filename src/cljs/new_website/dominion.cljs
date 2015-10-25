@@ -60,7 +60,6 @@
    [_ {:keys [editor-chan]}]
    (let [AI-state (:AI-state state)
          running (= AI-state :running)]
-     (.log js/console (str AI-state))
      (dom/div
       (->editor-area
        state {:init-state {:editor-chan editor-chan}})

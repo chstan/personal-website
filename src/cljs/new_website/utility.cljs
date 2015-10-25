@@ -21,7 +21,6 @@
   (did-mount
    [_]
    ;; Synchronously render math
-   (.log js/console "RENDERING")
    (mapv
     (fn [elem]
       (let [text (dommy/text elem)
@@ -31,7 +30,6 @@
    (js/renderMathInElement (sel1 :#app)))
   (render
    [_]
-   (.log js/console md)
    (dom/div
     {:class "markdown"}
     (if (not (empty? md))

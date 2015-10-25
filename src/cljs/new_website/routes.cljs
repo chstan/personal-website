@@ -19,7 +19,7 @@
 ;; Routes
 (sec/set-config! :prefix "#")
 
-(let [app-state-cur (om/root-cursor app-state)]
+(let [app-state-cur (om/ref-cursor (om/root-cursor app-state))]
   (sec/defroute welcome-page "/" []
     (om/update! app-state-cur [:navigation :view] :welcome))
   (sec/defroute resume-page "/resume" []

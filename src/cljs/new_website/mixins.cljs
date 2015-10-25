@@ -35,8 +35,7 @@
   (did-mount
    [_]
    ;; Synchronously render math
-   (.log js/console "RENDERING")
-   (mapv
+  (mapv
     (fn [elem]
       (let [text (dommy/text elem)
             new-text (str "\\(" text "\\)")]
@@ -72,8 +71,6 @@
   (did-mount
    [owner]
    (.configure js/hljs (clj->js {:languages ["clojure"]}))
-   (.log js/console js/hljs)
-   (.log js/console "ME")
    (mapv
     (fn [elem]
       (.highlightBlock js/hljs elem))

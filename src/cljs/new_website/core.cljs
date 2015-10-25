@@ -6,14 +6,12 @@
 
             [ajax.core :refer [GET POST]]
 
-            [new-website.routes :as routes :refer [app-state]]
+            [new-website.routes :as rs :refer [app-state]]
             [new-website.static-views :as static-views]
             [new-website.puzzle :as puzzle]
             [new-website.talks :as talks]
             [new-website.dominion :as dominion]
             [new-website.utility :as util]))
-
-(enable-console-print!)
 
 ;; Components
 ;;;;;;;;;;;;;
@@ -32,19 +30,19 @@
     (dom/ul
      (map (fn [[link label]]
             (dom/li (dom/a {:href link} label)))
-          [[(routes/welcome-page) "/"]
-           [(routes/resume-page) "resume"]
-           [(routes/projects-page) "projects"]
-           [(routes/talks-page) "talks"]
-           [(routes/papers-page) "papers"]
+          [[(rs/welcome-page) "/"]
+           [(rs/resume-page) "resume"]
+           [(rs/projects-page) "projects"]
+           [(rs/talks-page) "talks"]
+           [(rs/papers-page) "papers"]
            ["http://github.com/chstan" "github"]
-           [(routes/contact-page) "contact"]
-           [(routes/writing-page) "writing"]
-           [(routes/reading-page) "reading"]
-           [(routes/scheme-page) "scheme"]
-           [(routes/dominion-page) "dominion"]
-           [(routes/chess-page) "chess"]
-           [(routes/puzzle-page) "slide puzzles"]
+           [(rs/contact-page) "contact"]
+           [(rs/writing-page) "writing"]
+           [(rs/reading-page) "reading"]
+           [(rs/scheme-page) "scheme"]
+           [(rs/dominion-page) "dominion"]
+           [(rs/chess-page) "chess"]
+           [(rs/puzzle-page) "slide puzzles"]
            ])))))
 
 ;; Om navigation hooks
