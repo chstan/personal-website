@@ -96,5 +96,4 @@
                                             {:source-paths ["env/prod/cljs"]
                                              :compiler
                                              {:optimizations :whitespace
-                                              :externs ["externs/lib_externs.js"]
                                               :pretty-print false}}}}}})
