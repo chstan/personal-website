@@ -13,6 +13,8 @@
             [new-website.dominion :as dominion]
             [new-website.utility :as util]))
 
+(enable-console-print!)
+
 ;; Components
 ;;;;;;;;;;;;;
 
@@ -42,8 +44,8 @@
            [(rs/scheme-page) "scheme"]
            [(rs/dominion-page) "dominion"]
            [(rs/chess-page) "chess"]
-           [(rs/puzzle-page) "slide puzzles"]
-           ])))))
+           [(rs/puzzle-page) "slide puzzles"]])))))
+
 
 ;; Om navigation hooks
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -61,7 +63,6 @@
    :blog #'static-views/blog-item-view
 
    :puzzle #'puzzle/slide-puzzle-wrapper
-
 
    ;; Talks
    :subgradient-talk #'talks/subgradient-talk-wrapper
@@ -88,8 +89,9 @@
          (om/build component state)))))))
 
 
-(defn main []
-  (om/root
-   root-view
-   app-state
-   {:target (. js/document (getElementById "app"))}))
+
+
+(om/root
+ root-view
+ app-state
+ {:target (js/document.getElementById "app")})

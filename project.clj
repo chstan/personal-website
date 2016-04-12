@@ -4,96 +4,126 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :source-paths ["src/clj"]
+  :dependencies [[org.clojure/clojure "1.8.0"]
+                 [org.clojure/core.async "0.2.374"]
+
+                 [org.clojure/clojurescript "1.8.40" :scope "provided"]
+
+                 [ring "1.4.0"]
+                 [ring/ring-defaults "0.2.0"]
+                 [bk/ring-gzip "0.1.1"]
+                 [ring.middleware.logger "0.5.0"]
+                 [compojure "1.5.0"]
+                 [environ "1.0.2"]
+                 [org.omcljs/om "1.0.0-alpha31"]
+                 [prismatic/om-tools "0.4.0"]
+                 [prismatic/dommy "1.1.0"]
+                 [cljs-ajax "0.5.4"]
+                 [secretary "1.2.3"]
+                 [markdown-clj "0.9.87"]
+                 [cljsjs/highlight "8.4-0"]]
+
+  :plugins [[lein-cljsbuild "1.1.1"]
+            [lein-environ "1.0.1"]
+            [lein-less "1.7.3"]]
+
+  :min-lein-version "2.6.1"
+
+  :source-paths ["src/clj" "src/cljs" "dev"]
 
   :test-paths ["test/clj"]
 
-  :dependencies [;; Clojure
-                 [org.clojure/clojure "1.6.0"]
-                 [org.clojure/core.async "0.1.346.0-17112a-alpha"]
-
-                 [http-kit "2.1.19"]
-
-                 [ring "1.3.2"]
-                 [ring/ring-defaults "0.1.4"]
-                 [compojure "1.3.2"]
-
-                 [enlive "1.1.6"]
-                 [environ "1.0.0"]
-
-                 ;; Clojurescript
-                 [org.clojure/clojurescript "0.0-3058" :scope "provided"]
-
-                 [org.omcljs/om "0.8.8"]
-                 [prismatic/om-tools "0.3.11"]
-
-                 [prismatic/dommy "1.1.0"]
-
-                 [cljs-ajax "0.3.11"]
-                 [secretary "1.2.3"]
-
-                 [markdown-clj "0.9.67"]
-
-                 [cljsjs/highlight "8.4-0"]]
-
-  :plugins [[lein-cljsbuild "1.0.5"]
-            [lein-environ "1.0.0"]
-            [lein-less "1.7.3"]]
-
-  :min-lein-version "2.5.0"
+  :clean-targets ^{:protect false} [:target-path :compile-path "resources/public/js"]
 
   :uberjar-name "new-website.jar"
 
-  :cljsbuild {:builds {:app {:source-paths ["src/cljs"]
-                             :compiler {:output-to     "resources/public/js/app.js"
-                                        :output-dir    "resources/public/js/out"
-                                        :source-map    "resources/public/js/out.js.map"
-                                        :preamble      ["react/react.min.js"]
-                                        :optimizations :none
-                                        :pretty-print  true}}}}
+  ;; Use `lein run` if you just want to start a HTTP server, without figwheel
+  :main new-website.server
+
+  ;; nREPL by default starts in the :main namespace, we want to start in `user`
+  ;; because that's where our development helper functions like (run) and
+  ;; (browser-repl) live.
+  :repl-options {:init-ns user}
+
+  :cljsbuild {:builds
+              {:app
+               {:source-paths ["src/cljs"]
+
+                :figwheel true
+                ;; Alternatively, you can configure a function to run every time figwheel reloads.
+                ;; :figwheel {:on-jsload "new-website.core/on-figwheel-reload"}
+
+                :compiler {:main new-website.core
+                           :asset-path "js/compiled/out"
+                           :output-to "resources/public/js/compiled/new_website.js"
+                           :output-dir "resources/public/js/compiled/out"
+                           :source-map-timestamp true}}}}
+
+  ;; When running figwheel from nREPL, figwheel will read this configuration
+  ;; stanza, but it will read it without passing through leiningen's profile
+  ;; merging. So don't put a :figwheel section under the :dev profile, it will
+  ;; not be picked up, instead configure figwheel here on the top level.
+
+  :figwheel {;; :http-server-root "public"       ;; serve static assets from resources/public/
+             ;; :server-port 3449                ;; default
+             ;; :server-ip "127.0.0.1"           ;; default
+             :css-dirs ["resources/public/css"]  ;; watch and update CSS
+
+             ;; Instead of booting a separate server on its own port, we embed
+             ;; the server ring handler inside figwheel's http-kit server, so
+             ;; assets and API endpoints can all be accessed on the same host
+             ;; and port. If you prefer a separate server process then take this
+             ;; out and start the server with `lein run`.
+             :ring-handler user/http-handler
+
+             ;; Start an nREPL server into the running figwheel process. We
+             ;; don't do this, instead we do the opposite, running figwheel from
+             ;; an nREPL process, see
+             ;; https://github.com/bhauman/lein-figwheel/wiki/Using-the-Figwheel-REPL-within-NRepl
+             ;; :nrepl-port 7888
+
+             ;; To be able to open files in your editor from the heads up display
+             ;; you will need to put a script on your path.
+             ;; that script will have to take a file path and a line number
+             ;; ie. in  ~/bin/myfile-opener
+             ;; #! /bin/sh
+             ;; emacsclient -n +$2 $1
+             ;;
+             ;; :open-file-command "myfile-opener"
+
+             :server-logfile "log/figwheel.log"}
+
+  :doo {:build "test"}
 
 
   :less {:source-paths ["src/less"]
          :target-path "resources/public/css"}
 
-  :profiles {:dev {:source-paths ["env/dev/clj"]
-                   :test-paths ["test/clj"]
+  :profiles {:dev
+             {:dependencies [[figwheel "0.5.2"]
+                             [figwheel-sidecar "0.5.2"]
+                             [com.cemerick/piggieback "0.2.1"]
+                             [org.clojure/tools.nrepl "0.2.12"]]
 
-                   :dependencies [[figwheel "0.2.5"]
-                                  [figwheel-sidecar "0.2.5"]
-                                  [com.cemerick/piggieback "0.1.5"]
-                                  [weasel "0.6.0"]]
+              :plugins [[lein-figwheel "0.5.2"]
+                        [lein-doo "0.1.6"]]
 
-                   :repl-options {:init-ns new-website.server
-                                  :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
+              :cljsbuild {:builds
+                          {:test
+                           {:source-paths ["src/cljs" "test/cljs"]
+                            :compiler
+                            {:output-to "resources/public/js/compiled/testable.js"
+                             :main new-website.test-runner
+                             :optimizations :none}}}}}
 
-                   :plugins [[lein-figwheel "0.2.5"]]
-
-                   :figwheel {:http-server-root "public"
-                              :server-port 3449
-                              :css-dirs ["resources/public/css"]
-                              :ring-handler new-website.server/http-handler}
-
-                   :env {:is-dev true}
-
-                   :cljsbuild {:test-commands { "test" ["phantomjs" "env/test/js/unit-test.js" "env/test/unit-test.html"] }
-                               :builds {:app {:source-paths ["env/dev/cljs"]}
-                                        :test {:source-paths ["src/cljs" "test/cljs"]
-                                               :compiler {:output-to     "resources/public/js/app_test.js"
-                                                          :output-dir    "resources/public/js/test"
-                                                          :source-map    "resources/public/js/test.js.map"
-                                                          :preamble      ["react/react.min.js"]
-                                                          :optimizations :whitespace
-                                                          :pretty-print  false}}}}}
-
-             :uberjar {:source-paths ["env/prod/clj"]
-                       :hooks [leiningen.cljsbuild leiningen.less]
-                       :env {:production true}
-                       :omit-source true
-                       :aot :all
-                       :main new-website.server
-                       :cljsbuild {:builds {:app
-                                            {:source-paths ["env/prod/cljs"]
-                                             :compiler
-                                             {:optimizations :whitespace
-                                              :pretty-print false}}}}}})
+             :uberjar
+             {:source-paths ^:replace ["src/clj"]
+              :hooks [leiningen.cljsbuild leiningen.less]
+              :omit-source true
+              :aot :all
+              :cljsbuild {:builds
+                          {:app
+                           {:source-paths ^:replace ["src/cljs"]
+                            :compiler
+                            {:optimizations :advanced
+                             :pretty-print false}}}}}})

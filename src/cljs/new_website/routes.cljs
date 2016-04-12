@@ -53,8 +53,8 @@
   (sec/defroute subgradient-talk-page "/subgradient-iteration" []
     (om/update! app-state-cur [:navigation :view] :subgradient-talk))
   (sec/defroute knockout-datasync-talk-page "/knockout-datasync" []
-    (om/update! app-state-cur [:navigation :view] :knockout-datasync-talk))
-  )
+    (om/update! app-state-cur [:navigation :view] :knockout-datasync-talk)))
+
 
 ;; -------------------------
 ;; History

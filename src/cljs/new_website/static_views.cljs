@@ -6,6 +6,7 @@
             [clojure.string :as str]
 
             [ajax.core :refer [GET POST]]
+            [ajax.edn :refer [edn-response-format]]
 
             [new-website.mixins :refer [math-mixin]]
 
@@ -100,8 +101,9 @@
 (defcomponent resume-talks-section [talks-for-resume _]
   (render
    [_]
+   (println talks-for-resume)
    (dom/div
-    (om/build-all talks/talk-view (vec talks-for-resume)))))
+    (om/build-all talks/talk-view talks-for-resume))))
 
 (defcomponent resume-row [{:keys [title row-type content]} _]
   (render
@@ -124,7 +126,7 @@
    (if-not (:talks @state)
      (GET (util/edn-endpoint "talks")
           {:headers {"Accept" "application/edn"}
-           :format :edn
+           :response-format (edn-response-format)
            :handler
            (fn [resp]
              (om/transact! state :talks (constantly resp)))})))
@@ -211,7 +213,7 @@
                     "machine learning.")]}]}
       {:title "Talks"
        :row-type :talks
-       :content (filter #(not= (:kind %) :zanbato-tech-talk) (:talks @state))}
+       :content (filterv #(not= (:kind %) :zanbato-tech-talk) (:talks @state))}
       {:title "Skills"
        :row-type :skills
        :content {:proficient ["C{++}" "Python" "Clojure/ClojureScript"
@@ -297,7 +299,7 @@
    (if-not (:papers @state)
      (GET (util/edn-endpoint "papers")
           {:headers {"Accept" "application/edn"}
-           :format :edn
+           :response-format (edn-response-format)
            :handler
            (fn [resp]
              (om/transact! state :papers (constantly resp)))})))
@@ -322,7 +324,7 @@
    (if-not (:reading @state)
      (GET (util/edn-endpoint "reading")
           {:headers {"Accept" "application/edn"}
-           :format :edn
+           :response-format (edn-response-format)
            :handler
            (fn [resp]
              (om/update! state :reading resp))})))
@@ -341,7 +343,7 @@
    (if-not (:writing @state)
      (GET (util/edn-endpoint "writing")
           {:headers {"Accept" "application/edn"}
-           :format :edn
+           :response-format (edn-response-format)
            :handler
            (fn [resp]
              (om/update! state :writing resp))})))
@@ -377,8 +379,8 @@
        {:class "project-content"}
        (if label
          (dom/a {:href label} title)
-         (dom/h1 title)
-         )
+         (dom/h1 title))
+
        (dom/p description))))))
 
 (defcomponent projects-view [state _]
@@ -387,7 +389,7 @@
    (if-not (:projects @state)
      (GET (util/edn-endpoint "projects")
           {:headers {"Accept" "application/edn"}
-           :format :edn
+           :response-format (edn-response-format)
            :handler
            (fn [resp]
              (om/update! state :projects resp))})))
@@ -407,7 +409,7 @@
              :handler
              (fn [resp]
                (om/update! state [:blog-items item-name] resp))}))))
-  (render
-   [_]
-   (dom/div
-    (util/->render-md (get-in @state [:blog-items (get-in @state [:navigation :args])])))))
+ (render
+  [_]
+  (dom/div
+   (util/->render-md (get-in @state [:blog-items (get-in @state [:navigation :args])])))))

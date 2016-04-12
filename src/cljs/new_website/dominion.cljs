@@ -97,18 +97,18 @@
 
   (render-state
    [_ owner]
-  (dom/div
-   {:id "dominion"}
-   (dom/section
-    {:class "no-indent"}
-    (util/->render-md (get-in @state [:static :dominion :header])))
-   (if (get-in @state [:dominion :value])
-     (dom/section
-      {:id "dominion-widget"}
-      (->editor (:dominion state))))
-   (dom/section
-    {:class "no-indent"}
-    (util/->render-md (get-in @state [:static :dominion :body]))))))
+   (dom/div
+    {:id "dominion"}
+    (dom/section
+     {:class "no-indent"}
+     (util/->render-md (get-in @state [:static :dominion :header])))
+    (if (get-in @state [:dominion :value])
+      (dom/section
+       {:id "dominion-widget"}
+       (->editor (:dominion state))))
+    (dom/section
+     {:class "no-indent"}
+     (util/->render-md (get-in @state [:static :dominion :body]))))))
 
 (defcomponent dominion-view [state owner]
   (render

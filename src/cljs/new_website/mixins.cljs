@@ -35,12 +35,12 @@
   (did-mount
    [_]
    ;; Synchronously render math
-  (mapv
-    (fn [elem]
-      (let [text (dommy/text elem)
-            new-text (str "\\(" text "\\)")]
-        (dommy/set-text! elem new-text)))
-    (sel :.formula))
+   (mapv
+     (fn [elem]
+       (let [text (dommy/text elem)
+             new-text (str "\\(" text "\\)")]
+         (dommy/set-text! elem new-text)))
+     (sel :.formula))
    (js/renderMathInElement (sel1 :#app))))
 
 (defmixin reveal-mixin
@@ -61,11 +61,11 @@
             new-text (str "\\(" text "\\)")]
         (dommy/set-text! elem new-text)))
     (sel :.formula))
-   (js/renderMathInElement (sel1 :#app))
+   (js/renderMathInElement (sel1 :#app))))
 
    ;; Reset reveal in case this is a reload
    ;;(.slide js/Reveal 0)
-   ))
+
 
 (defmixin highlight-mixin
   (did-mount

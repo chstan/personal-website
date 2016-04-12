@@ -8,6 +8,7 @@
             [clojure.string :as str]
 
             [ajax.core :refer [GET POST]]
+            [ajax.edn :refer [edn-response-format]]
 
             [goog.string :as gstring]
             [goog.string.format]
@@ -50,7 +51,7 @@
    (if-not (:talks @state)
      (GET (util/edn-endpoint "talks")
           {:headers {"Accept" "application/edn"}
-           :format :edn
+           :response-format (edn-response-format)
            :handler
            (fn [resp]
              (om/transact! state :talks (constantly resp)))})))
@@ -211,8 +212,8 @@
       (dom/p {:class "fragment"} "Extenders"))
 
      (dom/section
-      (dom/span "Wanted to see what it would take to build a sync layer on top of observables..."))
-     ))))
+      (dom/span "Wanted to see what it would take to build a sync layer on top of observables..."))))))
+
 
 (defcomponent subgradient-talk-view [_ _]
   (:mixins reveal-mixin)
@@ -341,8 +342,8 @@
         (dom/div {:class "fragment"}
                  (dom/pre
                   (dom/code {:class "clojure"} (str sexprs)))
-                 (dom/span {:class "formula"} "\\Downarrow"
-                           )
+                 (dom/span {:class "formula"} "\\Downarrow")
+
                  (dom/pre
                   (dom/code {:class "clojure"} "[{:range [-1 1]}]")))))
 

@@ -1,4 +1,4 @@
-(ns new_website.core-test
+(ns new-website.core-test
   (:require-macros [cljs.test :refer (is deftest testing)])
   (:require [cljs.test]))
 

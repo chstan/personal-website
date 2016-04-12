@@ -11,4 +11,6 @@ pom.xml.asc
 /out
 /.repl
 
+log
+
 **/.DS_STORE

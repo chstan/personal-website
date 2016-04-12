@@ -1,44 +1,27 @@
 (ns new-website.server
   (:require [clojure.java.io :as io]
-            [new-website.dev :refer [is-dev? inject-devmode-html browser-repl start-figwheel start-less]]
-            [compojure.core :refer [GET defroutes]]
+            [compojure.core :refer [ANY GET PUT POST DELETE defroutes]]
             [compojure.route :refer [resources]]
-            [net.cgrand.enlive-html :refer [deftemplate]]
-            [net.cgrand.reload :refer [auto-reload]]
-            [ring.middleware.reload :as reload]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+            [ring.middleware.gzip :refer [wrap-gzip]]
+            [ring.middleware.logger :refer [wrap-with-logger]]
             [environ.core :refer [env]]
-            [org.httpkit.server :refer [run-server]])
+            [ring.adapter.jetty :refer [run-jetty]])
   (:gen-class))
 
-(deftemplate page (io/resource "index.html") []
-  [:body] (if is-dev? inject-devmode-html identity))
-
 (defroutes routes
-  (resources "/")
-  (resources "/react" {:root "react"})
-  (GET "/*" req (page)))
+  (GET "/" _
+    {:status 200
+     :headers {"Content-Type" "text/html; charset=utf-8"}
+     :body (io/input-stream (io/resource "public/index.html"))})
+  (resources "/"))
 
 (def http-handler
-  (if is-dev?
-    (reload/wrap-reload (wrap-defaults #'routes site-defaults))
-    (wrap-defaults routes site-defaults)))
-
-(defn run-web-server [& [port]]
-  (let [port (Integer. (or port (env :port) 10555))]
-    (println (format "Starting web server on port %d." port))
-    (run-server http-handler {:port port :join? false})))
-
-(defn run-auto-reload [& [port]]
-  (auto-reload *ns*)
-  (start-figwheel)
-  ;;(start-less)
-  )
-
-(defn run [& [port]]
-  (when is-dev?
-    (run-auto-reload))
-  (run-web-server port))
+  (-> routes
+      (wrap-defaults site-defaults)
+      wrap-with-logger
+      wrap-gzip))
 
 (defn -main [& [port]]
-  (run port))
+  (let [port (Integer. (or port (env :port) 10555))]
+    (run-jetty http-handler {:port port :join? false})))
