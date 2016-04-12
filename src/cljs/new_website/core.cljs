@@ -22,7 +22,10 @@
   (render
    [_]
    (dom/p
-    "Website migration in progress, this page has not been moved.")))
+    "Website migration in progress, this page has not been moved. You can visit the old version at "
+    (dom/a {:href "http://historical.conradstansbury.com"} "the archived copy."))))
+
+
 
 (defcomponent navbar-view [state _]
   (render
