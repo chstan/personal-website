@@ -101,7 +101,6 @@
 (defcomponent resume-talks-section [talks-for-resume _]
   (render
    [_]
-   (println talks-for-resume)
    (dom/div
     (om/build-all talks/talk-view talks-for-resume))))
 
