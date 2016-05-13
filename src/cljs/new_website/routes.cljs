@@ -49,6 +49,10 @@
   (sec/defroute puzzle-page "/puzzle" []
     (om/update! app-state-cur [:navigation :view] :puzzle))
 
+  ;; Misc
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (sec/defroute super-secret-cat-page "/super/secret/cat" []
+    (om/update! app-state-cur [:navigation :view] :a-cute-cat))
 
   ;; Talks
   ;;;;;;;;;;;;;;;;;;;;;;;;;;

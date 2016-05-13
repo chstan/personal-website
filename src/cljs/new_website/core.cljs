@@ -70,6 +70,9 @@
 
    :puzzle #'puzzle/slide-puzzle-wrapper
 
+   ;; Misc
+   :a-cute-cat #'static-views/super-secret-cat-view
+
    ;; Talks
    :subgradient-talk #'talks/subgradient-talk-wrapper
    :knockout-datasync-talk #'talks/knockout-datasync-talk-wrapper

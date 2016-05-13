@@ -412,3 +412,8 @@
   [_]
   (dom/div
    (util/->render-md (get-in @state [:blog-items (get-in @state [:navigation :args])])))))
+
+(defcomponent super-secret-cat-view [_ _]
+  (render [_]
+    (dom/section
+      (dom/img {:src "img/kash.jpg"}))))
