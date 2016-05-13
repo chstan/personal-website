@@ -30,8 +30,12 @@
   :min-lein-version "2.6.1"
 
   :source-paths ["src/clj" "src/cljs" "dev"]
-
   :test-paths ["test/clj"]
+
+  ; :foreign-libs [{:file "https://raw.githubusercontent.com/chstan/react-baduk/master/dist/react-baduk.js"
+  ;                 :file-min "https://raw.githubusercontent.com/chstan/react-baduk/master/dist/react-baduk.js"
+  ;                 :provides ["react-baduk"]}]
+  ; :externs ["extern.js"]
 
   :clean-targets ^{:protect false} [:target-path :compile-path "resources/public/js"]
 
