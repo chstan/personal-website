@@ -11,6 +11,7 @@
             [new-website.puzzle :as puzzle]
             [new-website.talks :as talks]
             [new-website.dominion :as dominion]
+            [new-website.go :as go]
             [new-website.utility :as util]))
 
 (enable-console-print!)
@@ -46,6 +47,7 @@
            [(rs/reading-page) "reading"]
            [(rs/scheme-page) "scheme"]
            [(rs/dominion-page) "dominion"]
+           [(rs/go-page) "go"]
            [(rs/chess-page) "chess"]
            [(rs/puzzle-page) "slide puzzles"]])))))
 
@@ -63,6 +65,7 @@
    :resume #'static-views/resume-view
    :projects #'static-views/projects-view
    :dominion #'dominion/dominion-view
+   :go #'go/go-view
    :blog #'static-views/blog-item-view
 
    :puzzle #'puzzle/slide-puzzle-wrapper

@@ -42,6 +42,8 @@
     (om/update! app-state-cur [:navigation :view] :scheme))
   (sec/defroute dominion-page "/dominion" []
     (om/update! app-state-cur [:navigation :view] :dominion))
+  (sec/defroute go-page "/go" []
+    (om/update! app-state-cur [:navigation :view] :go))
   (sec/defroute chess-page "/chess" []
     (om/update! app-state-cur [:navigation :view] :chess))
   (sec/defroute puzzle-page "/puzzle" []
