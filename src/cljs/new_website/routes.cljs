@@ -56,6 +56,8 @@
 
   ;; Talks
   ;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (sec/defroute data-engineering-talk-page "/data-engineering" []
+    (om/update! app-state-cur [:navigation :view] :data-engineering-talk))
   (sec/defroute subgradient-talk-page "/subgradient-iteration" []
     (om/update! app-state-cur [:navigation :view] :subgradient-talk))
   (sec/defroute knockout-datasync-talk-page "/knockout-datasync" []

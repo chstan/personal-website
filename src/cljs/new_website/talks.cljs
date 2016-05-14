@@ -215,6 +215,110 @@
       (dom/span "Wanted to see what it would take to build a sync layer on top of observables..."))))))
 
 
+(defcomponent data-engineering-talk-view [_ _]
+  (:mixins reveal-mixin)
+  (render
+    [_]
+    (dom/div
+      {:class "reveal"}
+      (dom/div
+        {:class "slides"}
+        (dom/section
+          (dom/h3 "What's Data Engineering? (And what have we been doing?)")
+          (dom/p {:style {:margin-top "150px"}} "Conrad"))
+
+        (dom/section
+          (dom/p "As a first thought...")
+          (dom/p {:class "fragment"}
+            "\"Scale\""))
+
+        (dom/section
+          (dom/h4 "\"I've been doing a lot with big data recently!\"")
+          (dom/p {:class "fragment"}
+            "(Overhead at the Palo Alto Blue Bottle of a psychology study with "
+            (dom/span {:class "formula"} "n=20000")
+            ")"))
+
+        (dom/section
+          (dom/p "On the other hand..."))
+
+        (dom/section
+          (dom/p "Google has on order of {{ mind bogglingly large number }} bytes of data"))
+
+        (dom/section
+          (dom/p "I'm not going to focus on these
+                  because they're relatively uninteresting")
+          (dom/p {:class "fragment"} "Zanbato doesn't have big data (yet?)"))
+
+        (dom/section
+          (dom/p "There are relatively good tools to deal with data \"at scale\"")
+          (dom/p {:class "fragment"} "(Thanks Google)"))
+
+        (dom/section
+          (dom/p "That doesn't prevent people from pursuing ridiculous ideas")
+          (dom/a {:href "https://algorithmia.com/"} "https://algorithmia.com/"))
+
+        (dom/section
+          (dom/span "Critical: Instead of moving data around, ")
+          (dom/span {:class "fragment"} "move code around"))
+
+        (dom/section
+          (dom/h3 "So what's data engineering?"))
+
+        (dom/section
+          (dom/p "As a short answer: preparing data for use in some analaysis or product"))
+
+        (dom/section
+          (dom/p
+            (dom/span {:style {:font-weight 500}} "AKA: ")
+            "Your data science project consumes vectors but you have to feed it pictures,
+             blog post comment threads, paper shipping logs, toxicity records of decomposing leaves found
+             around your Cupertino headquarters sent to you by a third party lab in a proprietary (semi-corrupted) format,
+             turnstile counts from the Library of Congress, and a steady stream of Twitter mentions
+             where people spelled your name slightly wrong"))
+
+        (dom/section
+          (dom/p "This is just to say that there's a lot of work that
+                  goes into preparing data for use in a substantial project"))
+
+        (dom/section
+         (dom/h4 "Schema Matching")
+         (dom/span {:class "fragment"}
+          "We need to impose stucture onto different sources"))
+
+        (dom/section
+         (dom/h4 "Entity Recognition")
+         (dom/span {:class "fragment"} "Need to be able to reason about different sources when they're describing the same 'thing'"))
+
+        (dom/section
+          (dom/h4 "Pipelines")
+          (dom/p {:class "fragment"} "Compositional and simple to understand")
+          (dom/p {:class "fragment"} "De-and-re-constructible approach almost necessary to deal with flexibiity inherent in data science/engineering"))
+
+        (dom/section
+          (dom/h4 "Data science is exploratory but...")
+          (dom/p {:class "fragment"} "Need to be able to ask questions of data, have a dialog"))
+
+        (dom/section
+          (dom/h4 "...rate of change is inverse to length of the feedback cycle")
+          (dom/p {:class "fragment"} "Fine when you have a few MB of JSON data, use a REPL")
+          (dom/p {:class "fragment"} "Harder when you're dealing with 100s of GBs of data that's changing and fetched over FTP"))
+
+        (dom/section
+          (dom/h4 "One of the most important goals of data engineering is to enable fast feedback")
+          (dom/p {:class "fragment"} "Build software to provide a fast and consistent way to access data for heterogenous sources"))
+
+        (dom/section
+          (dom/p "This stuff's a pain, can a computer do it for me?"))
+
+        (dom/section
+          (dom/h4 "Some belief that software might be able to do this automatically")
+          (dom/p {:class "fragment"} "Likely what will happen is that tooling will improve in ways that make technical aspects simpler")
+          (dom/p {:class "fragment"} "If you're data is already in a form that a computer can automatically understand it's probably pretty close to 'integrated'"))
+
+        (dom/section
+          (dom/h4 "Questions?"))))))
+
 (defcomponent subgradient-talk-view [_ _]
   (:mixins reveal-mixin)
   (render
@@ -394,3 +498,8 @@
   (render
    [_]
    (->knockout-datasync-talk-view {})))
+
+(defcomponent data-engineering-talk-wrapper [_ _]
+  (render
+    [_]
+    (->data-engineering-talk-view {})))

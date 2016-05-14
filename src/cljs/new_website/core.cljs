@@ -74,6 +74,8 @@
    :a-cute-cat #'static-views/super-secret-cat-view
 
    ;; Talks
+   ;; remember to update the
+   :data-engineering-talk #'talks/data-engineering-talk-wrapper
    :subgradient-talk #'talks/subgradient-talk-wrapper
    :knockout-datasync-talk #'talks/knockout-datasync-talk-wrapper
 
@@ -85,8 +87,9 @@
   (render
    [_]
    (let [nav-switch (get-in @state [:navigation :view])
-         component (nav-switch views-map)]
-     (if (contains? #{:subgradient-talk :knockout-datasync-talk} nav-switch)
+         component (nav-switch views-map)
+         all-talks #{:subgradient-talk :knockout-datasync-talk :data-engineering-talk}]
+     (if (contains? all-talks nav-switch)
        (om/build component state)
        (dom/div
         {:class "container"}
@@ -96,9 +99,6 @@
         (dom/div
          {:class "content-container"}
          (om/build component state)))))))
-
-
-
 
 (om/root
  root-view
