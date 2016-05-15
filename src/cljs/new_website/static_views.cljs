@@ -231,12 +231,16 @@
    (dom/div
     {:class "content-header statement"}
     (dom/p "Hi, I'm Conrad.")
-    (dom/p (str  "I'm recent Stanford physics graduate and a software engineer "
+    (dom/p (str  "I'm a recent Stanford physics graduate and a software engineer "
                  "working at Zanbato in Mountain View to build efficient "
                  "private markets."))
-    (dom/p (str "To see some of what I've been working on, take a look around "
-                "or head over to my GitHub. Alternatively, if you want to get "
-                "in touch, send me an email and I'll get back to you quickly."))
+    (dom/p
+      (dom/span
+        (str "To see some of what I've been working on, take a look around "
+             "or head over to my GitHub. Alternatively, if you want to get "
+             "in touch, send me an email or "))
+      (dom/a {:href "#/todo"} "let me know when you're free")
+      (dom/span " and I'll get back to you quickly."))
     (dom/p "Thanks for visiting."))))
 
 (defcomponent contact-view [state _]
