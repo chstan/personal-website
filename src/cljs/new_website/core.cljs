@@ -72,6 +72,7 @@
 
    ;; Misc
    :a-cute-cat #'static-views/super-secret-cat-view
+   :todo #'static-views/todo-view
 
    ;; Talks
    ;; remember to update the

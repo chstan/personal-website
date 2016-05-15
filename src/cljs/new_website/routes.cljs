@@ -53,6 +53,8 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;
   (sec/defroute super-secret-cat-page "/super/secret/cat" []
     (om/update! app-state-cur [:navigation :view] :a-cute-cat))
+  (sec/defroute todo-page "/todo" []
+    (om/update! app-state-cur [:navigation :view] :todo))
 
   ;; Talks
   ;;;;;;;;;;;;;;;;;;;;;;;;;;

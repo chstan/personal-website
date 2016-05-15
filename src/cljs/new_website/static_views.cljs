@@ -417,3 +417,14 @@
   (render [_]
     (dom/section
       (dom/img {:src "img/kash.jpg"}))))
+
+(defcomponent trello-board-view [_ _]
+  (render [_]
+    (dom/iframe {:src "https://trello.com/b/N9PkMev2.html"
+                 :frameBorder 0
+                 :width 800 :height 400})))
+
+(defcomponent todo-view [_ _]
+  (render [_]
+    (dom/section
+      (->trello-board-view {}))))
