@@ -10,6 +10,10 @@
   (:gen-class))
 
 (defroutes routes
+  (GET "/anti_forgery.js" [req]
+    {:status 200
+     :headers {"Content-Type" "application/javascript"}
+     :body (str "var csrf = '" *anti-forgery-token* "';")})
   (GET "/" _
     {:status 200
      :headers {"Content-Type" "text/html; charset=utf-8"}
