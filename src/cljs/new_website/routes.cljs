@@ -13,7 +13,8 @@
 
 (defonce app-state
   (atom
-   {:navigation {:view :welcome}}))
+   {:navigation {:view :welcome}
+    :trello-card {:name "" :description ""}}))
 
 ;; -------------------------
 ;; Routes
