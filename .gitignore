@@ -14,3 +14,6 @@ pom.xml.asc
 log
 
 **/.DS_STORE
+
+# sssh... secrets
+env.sh
