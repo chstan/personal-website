@@ -10,6 +10,7 @@
                  [org.clojure/clojurescript "1.8.40" :scope "provided"]
 
                  [ring "1.4.0"]
+                 [ring-middleware-format "0.7.0"]
                  [ring/ring-defaults "0.2.0"]
                  [bk/ring-gzip "0.1.1"]
                  [ring.middleware.logger "0.5.0"]
@@ -18,6 +19,7 @@
                  [org.omcljs/om "1.0.0-alpha31"]
                  [prismatic/om-tools "0.4.0"]
                  [prismatic/dommy "1.1.0"]
+                 [clj-http "2.2.0"]
                  [cljs-ajax "0.5.4"]
                  [secretary "1.2.3"]
                  [markdown-clj "0.9.87"]
