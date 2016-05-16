@@ -2,6 +2,10 @@
   font-family: 'Roboto', Helvetica, sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .no-indent, .no-indent .markdown {
   p {
     text-indent: 0;
@@ -456,5 +460,60 @@ p, href {
   h2 {
     color: rgb(68,68,68);
     margin-top: 35px;
+  }
+}
+
+#post-trello-card-form {
+  margin-left: 8px;
+
+  .create-card {
+    margin-top: 6px;
+    min-width: 80px;
+    height: 30px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: 1px solid rgb(185, 185, 185);
+    background-color: rgb(90, 181, 66);
+    color: white;
+    font-weight: bold;
+
+    &:disabled {
+      background-color: #cccccc;
+    }
+  }
+
+  .main-form {
+    border-radius: 4px;
+    font-weight: 500;
+    width: 400px;
+
+    padding: 4px;
+
+    background-color: rgb(227, 227, 227);
+    border: 1px solid rgb(185, 185, 185);
+
+    .input-group {
+      width: 100%;
+      &:not(:last-child) {
+        margin-bottom: 4px;
+      }
+
+      input, textarea {
+        font-weight: 300;
+        padding: 5px;
+        margin-right: 4px;
+        width: 100%;
+        border: 1px solid rgb(185, 185, 185);
+        border-radius: 4px;
+      }
+      textarea {
+        height: 90px;
+        outline: 0;
+        overflow: auto;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+      }
+    }
   }
 }
