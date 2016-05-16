@@ -426,9 +426,57 @@
   (render [_]
     (dom/iframe {:src "https://trello.com/b/N9PkMev2.html"
                  :frameBorder 0
-                 :width 800 :height 400})))
+                 :id "trello-iframe"
+                 :width 800 :height 350})))
 
-(defcomponent todo-view [_ _]
+(defcomponent todo-view [app owner]
   (render [_]
     (dom/section
-      (->trello-board-view {}))))
+      (dom/p
+        {:style {:margin-bottom "12px" :margin-left "8px"}}
+        (str "As an experiment, my personal Trello board is "
+             "available below. You can post a card to it if you "
+             "would like to find a time to meet. You can also send me "
+             "an email if you want, but this is a much lower noise channel."))
+      (->trello-board-view {})
+      (dom/div
+        {:id "post-trello-card-form"}
+        (dom/div
+          {:class "main-form"}
+          (dom/div
+            {:class "input-group"}
+            (dom/input
+              {:ref "name-input" :id "name"
+               :placeholder "Your name"
+               :value (:name (:trello-card app))
+               :on-change (fn [_]
+                            (let [this (om/get-node owner "name-input")]
+                              (om/update! app [:trello-card :name] (.-value this))))}))
+          (dom/div
+            {:class "input-group"}
+            (dom/textarea
+              {:ref "description-input" :id "description"
+               :placeholder "Notes + email + times that work for you"
+               :value (:description (:trello-card app))
+               :on-change (fn [_]
+                            (let [this (om/get-node owner "description-input")]
+                              (om/update! app [:trello-card :description] (.-value this))))})))
+        (dom/button
+          {:type "button" :class "create-card"
+           :disabled (not-every? (fn [x] (not (empty? x))) (vals (:trello-card app)))
+           :on-click (fn [_]
+                       (println (:trello-card app))
+                       (POST "/create-card"
+                            {:params {:name (:name (:trello-card app))
+                                      :description (:description (:trello-card app))}
+                             :headers {:x-csrf-token js/csrf}
+                             :error-handler (fn [resp] (println "Error"))
+                             :handler
+                             (fn [_]
+                               (.reload (.. js/window -location)))})
+                       (om/update! app [:trello-card] {:name "" :description ""}))}
+          "Add")
+        (dom/p
+          {:style {:margin-top "24px"}}
+          (str "The page will reload if you add a card, but it might "
+               "not show due to caching on Trello's part."))))))
