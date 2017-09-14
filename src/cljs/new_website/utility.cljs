@@ -7,7 +7,7 @@
 
             [markdown.core :refer [md->html]]
 
-            [new-website.mixins :refer [highlight-mixin]]))
+            [new-website.mixins :refer [highlight-mixin math-mixin]]))
 
 (defn static-endpoint [type label]
   (str "/" type "/" label "." type))
@@ -17,7 +17,7 @@
 (def txt-endpoint (partial static-endpoint "txt"))
 
 (defcomponent render-md [md _]
-  (:mixins highlight-mixin)
+  (:mixins highlight-mixin math-mixin)
   (did-mount
    [_]
    ;; Synchronously render math
