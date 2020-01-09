@@ -11,6 +11,9 @@ pom.xml.asc
 /out
 /.repl
 
+.idea/
+new-website.iml
+
 log
 
 **/.DS_STORE
