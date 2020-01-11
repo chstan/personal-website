@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {ProjectInfo, PROJECTS} from "./data";
 
 const ProjectSummary: React.FC<ProjectInfo> = ({title, pictureUrl, description, label}) => {
@@ -9,7 +10,7 @@ const ProjectSummary: React.FC<ProjectInfo> = ({title, pictureUrl, description, 
 
   let titleOrLink = <h1>{title}</h1>;
   if (label) {
-    titleOrLink = <a href={label}>{title}</a>;
+    titleOrLink = <Link to={label}>{title}</Link>;
   }
 
   return (
