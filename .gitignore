@@ -14,9 +14,18 @@ pom.xml.asc
 .idea/
 new-website.iml
 
-# generated css
+# generated files
 front/src/css/
 front/node_modules/
+front/build/
+
+# vim
+*.swo
+*.swp
+
+# scripts on server
+run_personal_website
+run_personal_website_continuously
 
 log
 *.log
