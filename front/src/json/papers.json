@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Fuzzy Jets (Undergraduate thesis)",
+    "date": "June 2015",
+    "authors": ["Conrad Stansbury"],
+    "url": "pdf/thesis.pdf",
+    "kind": "thesis"
+  },
+  {
+    "name": "Fuzzy Jets",
+    "authors": [
+      "Lester Mackey",
+      "Benjamin Nachman",
+      "Ariel Schwartzman",
+      "Conrad Stansbury"
+    ],
+    "date": "7 September 2015",
+    "url": "http://arxiv.org/abs/1509.02216",
+    "arxivId": "arXiv:1509.02216",
+    "kind": "arxiv"
+  }
+]

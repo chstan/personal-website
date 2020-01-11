@@ -352,7 +352,7 @@
     (dom/div
       (dom/div
         {:class "books-header"}
-        (dom/p "A record of books I've read lately, to come back to later."))
+        (dom/p ""))
       (om/build-all book-component
         (sort (fn [x] (not (:finished x))) (:reading @state))))))
 

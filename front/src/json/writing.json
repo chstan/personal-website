@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Data Preparation in ARPES",
+    "label": "arpes_1_data_prep",
+    "short": "An overview of data preparation steps in ARPES",
+    "released": false,
+    "date": "Sept 2017"
+  },
+  {
+    "title": "Cryogenic Magnetic Susceptibility Measurement",
+    "label": "curietemp",
+    "short": "A brief recap of Stanford's Physics 107, the low temperature undergraduate lab course.",
+    "released": true,
+    "date": "Oct 2014"
+  },
+  {
+    "title": "Writing a CFD Solver in Rust",
+    "label": "cfd-intro",
+    "short": "In which we embark on a long learning journey through turbulent waters",
+    "released": false,
+    "date": "May 2016"
+  }
+]

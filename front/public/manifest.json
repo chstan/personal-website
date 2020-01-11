@@ -1,0 +1,10 @@
+{
+  "short_name": "Conrad's Page",
+  "name": "Professional Website for Conrad Stansbury",
+  "icons": [
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

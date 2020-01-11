@@ -4,7 +4,7 @@
             [compojure.route :refer [resources]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.gzip :refer [wrap-gzip]]
-            [ring.middleware.logger :refer [wrap-with-logger]]
+            ;[ring.middleware.logger :refer [wrap-with-logger]] dead dep
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.format :refer [wrap-restful-format]]
             [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
@@ -28,11 +28,9 @@
   (routes
     (-> core-routes
         (wrap-defaults site-defaults)
-        wrap-with-logger
         wrap-gzip)
     (-> trello-routes
-        (wrap-restful-format :formats [:json :transit-json :edn])
-        wrap-with-logger)))
+        (wrap-restful-format :formats [:json :transit-json :edn]))))
 
 (defn -main [& [port]]
   (let [port (Integer. (or port (env :port) 10555))]

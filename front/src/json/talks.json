@@ -1,0 +1,39 @@
+[
+  {
+    "name": "Connecting the Dots 2015",
+    "date": "February 9-11, 2015",
+    "location": "UC Berkeley/LBNL",
+    "presentationTitle": "Fuzzy Clustering Algorithms for Jet Reconstruction",
+    "presentationUrl": "pdf/CTD2015_slides.pdf",
+    "kind": "invited"
+  },
+  {
+    "name": "Stanford University",
+    "date": "May 19, 2015",
+    "location": "Varian Physics",
+    "presentationTitle": "Fuzzy Jets (honors thesis defense)",
+    "presentationUrl": "/fuzzy-talk",
+    "kind": "other"
+  },
+  {
+    "date": "August 28th, 2015",
+    "location": "Zanbato, Inc.",
+    "presentationTitle": "Subgradient Iteration",
+    "presentationUrl": "/#/subgradient-iteration",
+    "kind": "zanbato-tech-talk"
+  },
+  {
+    "date": "October 2nd, 2015",
+    "location": "Zanbato, Inc.",
+    "presentationTitle": "Handling Data Synchronization in Knockout",
+    "presentationUrl": "/#/knockout-datasync",
+    "kind": "zanbato-tech-talk"
+  },
+  {
+    "date": "May 13th, 2016",
+    "location": "Zanbato, Inc.",
+    "presentationTitle": "Data Engineering at Scale (or other catchy titles)",
+    "presentationUrl": "/#/data-engineering",
+    "kind": "zanbato-tech-talk"
+  }
+]

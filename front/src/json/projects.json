@@ -1,0 +1,40 @@
+[
+  {
+    "title": "Fuzzy Jets",
+    "label": "/papers",
+    "description": "As an undergraduate I researched with the ATLAS group at SLAC between June 2013 and June 2015. The final project I worked on with Ben Nachman was to apply mixture modeling to finding jets. This method provides interesting new jet and substructure variables in the Monte Carlo events I studied, and this work constituted the basis for my undergraduate thesis and a paper currently being refereed."
+  },
+  {
+    "title": "Dominion",
+    "label": "/dominion",
+    "description": "I built a simulator for the popular card game Dominion. Although you can't use it to play online, you can write AIs to play against a few built in ones and other visitors' top submissions!"
+  },
+  {
+    "title": "Cryogenic Magnetic Susceptibility Measurement",
+    "label": "curie-temp",
+    "pictureUrl": "/img/susceptometer.jpg",
+    "description": "Stanford's low temperature physics lab allows students to conduct real experiments at liquid helium temperatures, from the point of experimental design to writing up and presenting results for peers and interested professors. My group designed a magnetic susceptometer which we used to measure the Curie temperature in Dysprosium and Gadolinium Chloride, measuring the complex susceptibility at many frequencies for each compound over a large temperature range."
+  },
+  {
+    "title": "Chess Engine",
+    "label": "/dominion",
+    "pictureUrl": "/img/chess.jpg",
+    "description": "I built a chess engine in C together with Tom Mullins to prepare for Stanford's computer systems course in my freshman spring. I continued working on the project long after completing the course, however, and as of the date of the most recent commit the engine can hold a game with a human player, or with itself, and has played against many visitors to my website. I hope to return to this project someday and enter it into the WCCC once time permits."
+  },
+  {
+    "title": "Scheme Interpreter",
+    "label": "/scheme",
+    "description": "I've been learning more engineering lately, but I'm especially interested in computational fluid dynamics. After putting together a simple FEA solver in C, I realized I didn't have a very nice way of doing mesh generation, so I wrote this Scheme interpreter. It's not finished, but it works!"
+  },
+  {
+    "title": "Alternating Convex Programming for Truss Design",
+    "label": "/pdf/convex_poster.pdf",
+    "pictureUrl": "/img/truss.png",
+    "description": "Hao Yi Ong and I developed a heuristic method of improving solutions to the truss topology design problem. Classically, convex optimization is used to size members subject to fixed attachment point locations. In our method attachment point locations are allowed to iteratively migrate small distances, resulting in an algorithm that intuitively 'knows' appropriate shapes for bridges + buildings."
+  },
+  {
+    "title": "Web Server",
+    "pictureUrl": "/img/servercode.png",
+    "description": "Built a simple web framework in Haskell to host this website and learn more about web technology from the ground up. At least the first version of every piece of tech this site uses was built by hand in Haskell to get a feel of what writing libraries to do routing, parse HTML and Markdown, and serve responses over sockets is like."
+  }
+]

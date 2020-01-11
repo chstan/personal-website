@@ -1,0 +1,282 @@
+[
+  {
+    "title": "The Sea, The Sea",
+    "author": "Iris Murdoch",
+    "completionDate": null,
+    "impression": null,
+    "finished": false
+  },
+  {
+    "title": "Plutarch's Lives",
+    "author": "Plutarch",
+    "completionDate": null,
+    "impression": null,
+    "finished": false
+  },
+  {
+    "title": "Altruism",
+    "author": "Matthieu Ricard",
+    "completionDate": null,
+    "impression": null,
+    "finished": false
+  },
+  {
+    "title": "Gotham: A History of New York City to 1898",
+    "author": "Wallace & Burrows",
+    "completionDate": null,
+    "impression": null,
+    "finished": false
+  },
+  {
+    "title": "Kissinger: 1923-1968: The Idealist",
+    "author": "Niall Ferguson",
+    "completionDate": null,
+    "impression": null,
+    "finished": false
+  },
+  {
+    "title": "Unbroken: A World War II Story of Survival, Resilience, and Redemption",
+    "author": "Laura Hillenbrand",
+    "completionDate": "May 2016",
+    "impression": "'Unbroken' contains enough moments depicting nearly unbelievable acts of courage and will--as an example, Zamperini's NCAA record mile with a broken rib--to justify reading the book as entertainment. What makes the biography remarkable though is the minor acts of defiance against Louis' circumstance and context, which sharpen both his decline into alcoholism and the absolutions he would give to his once captors. Contrary to the title, the scope of 'Unbroken' is extremely narrow: at times just four minutes, a night in the stillness of the doldrums, or the moment before gunfire lights upon a Zero. At its broadest, the book encompasses a pair of mothers who lost their sons in very different ways, and this is probably its greatest strength.",
+    "finished": true
+  },
+  {
+    "title": "Being Nixon: A Man Divided",
+    "author": "Evan Thomas",
+    "completionDate": "May 2016",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Consider Phlebas",
+    "author": "Iain M. Banks",
+    "completionDate": "April 2016",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future",
+    "author": "Ashlee Vance",
+    "completionDate": "April 2016",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Snow Crash",
+    "author": "Neal Stephenson",
+    "completionDate": "April 2016",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Hire With Your Head",
+    "author": "Lou Adler",
+    "completionDate": "March 2016",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "The Republic",
+    "author": "Plato",
+    "completionDate": "February 2016",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "The Prince",
+    "author": "Niccolo Machiavelli",
+    "completionDate": "January 2016",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Capital in the Twenty-First Century",
+    "author": "Thomas Piketty",
+    "completionDate": "January 2016",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "The Road to Character",
+    "author": "David Brooks",
+    "completionDate": "December 2015",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Dune Messiah",
+    "author": "Frank Herbert",
+    "completionDate": "November 2015",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Between the World and Me",
+    "author": "Ta-Nehisi Coates",
+    "completionDate": "October 2015",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "The White Album",
+    "author": "Joan Didion",
+    "completionDate": "August 2015",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Colorless Tsukuru Tazaki and His Years of Pilgrimage",
+    "author": "Haruki Murakami (trans. Philip Gabriel)",
+    "completionDate": "June 2015",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Cathedral",
+    "author": "Raymond Carver",
+    "completionDate": "April 2015",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "The Omnivore's Dilemma",
+    "author": "Michael Pollan",
+    "completionDate": "April 2015",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Trout Fishing in America",
+    "author": "Richard Brautigan",
+    "completionDate": "April 2015",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "The Guest Cat",
+    "author": "Takashi Hiraide",
+    "completionDate": "April 2015",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "In Watermelon Sugar",
+    "author": "Richard Brautigan",
+    "completionDate": "March 2015",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "The Dharma Bums",
+    "author": "Jack Kerouac",
+    "completionDate": "March 2015",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Letters to a Young Contrarian",
+    "author": "Christopher Hitchens",
+    "completionDate": "March 2015",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Pulphead",
+    "author": "John Jeremiah Sullivan",
+    "completionDate": "January 2015",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Dune",
+    "author": "Frank Herbert",
+    "completionDate": "December 2014",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Blow-Up",
+    "author": "Julio Cortazar",
+    "completionDate": "November 2014",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "The Brief Wondrous Life of Oscar Wao",
+    "author": "Junot Diaz",
+    "completionDate": "November 2014",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "The Underdogs",
+    "author": "Mariano Azuela",
+    "completionDate": "October 2014",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Break It Down",
+    "author": "Lydia Davis",
+    "completionDate": "October 2014",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Slouching Towards Bethlehem",
+    "author": "Joan Didion",
+    "completionDate": "September 2014",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "One Hundred Years of Solitude",
+    "author": "Gabriel Garcia Marquez",
+    "completionDate": "September 2014",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "The Dispossessed",
+    "author": "Ursula K. Le Guin",
+    "completionDate": "September 2014",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "The Master and Margarita",
+    "author": "Mikhail Bulgakov",
+    "completionDate": "August 2014",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "The Writing Life",
+    "author": "Annie Dillard",
+    "completionDate": "August 2014",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "Herzog",
+    "author": "Saul Bellow",
+    "completionDate": "July 2014",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "The Bell Jar",
+    "author": "Sylia Plath",
+    "completionDate": "July 2014",
+    "impression": null,
+    "finished": true
+  },
+  {
+    "title": "The Fire Next Time",
+    "author": "James Baldwin",
+    "completionDate": "July 2014",
+    "impression": null,
+    "finished": true
+  }
+]
