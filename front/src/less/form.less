@@ -1,0 +1,34 @@
+.form {
+  display: flex;
+  flex-direction: column;
+
+  > *:not(:last-child) {
+    margin-bottom: 0.75rem;
+  }
+
+  .form-header {
+    margin-bottom: 1rem;
+    font-size: 20px;
+    font-family: 'Source Sans Pro', 'Roboto', sans-serif;
+    font-weight: bold;
+  }
+}
+
+.parallel-forms {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  > *:not(:last-child) {
+    padding-right: 0.75rem;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  > * {
+    width: 100%;
+  }
+
+  > *:not(:first-child) {
+    margin-left: 0.75rem;
+  }
+}

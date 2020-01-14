@@ -1,3 +1,17 @@
+@import './vars';
+@import './toggle';
+@import './input-group';
+@import './form';
+@import './bibliography';
+@import './go';
+
+
+.callout {
+  margin-left: 0.75rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid @blockAccentColor;
+}
+
 #app, a {
   font-family: 'Roboto', Helvetica, sans-serif;
 }
@@ -32,18 +46,18 @@
   }
 
   #editor-container {
-    border-right: 1px solid rgb(232, 232, 232);
-    border-bottom: 1px solid rgb(232, 232, 232);
+    border-right: 1px solid @editorColor;
+    border-bottom: 1px solid @editorColor;
   }
 
   #run-button:disabled, #run-button:disabled:hover {
     background-color: rgba(255,235,0,0.4);
   }
+
   #run-button {
     height: 28px;
     width: 120px;
 
-    border-top: 0;
     border-width: 1px;
     border-color: rgb(232, 232, 232);
 
@@ -139,7 +153,7 @@
   margin-left: 1px !important;
 }
 
-a, p {
+a, p, span {
   font-size: 14px;
 }
 h2 {
@@ -164,9 +178,18 @@ nav {
 .nav-container {
   float: left;
   display: inline;
-  margin-left: 10px;
+  margin-left: 1rem;
   margin-right: 10px;
   width: 120px;
+  line-height: 1rem;
+
+  #name-header {
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-weight: 400;
+    margin-bottom: 70px;
+    text-transform: lowercase;
+    line-height: 1.2rem;
+  }
 }
 
 .container {
@@ -183,9 +206,6 @@ body, div, p, h1, h2, h3, h4, h5, h6 {
   margin-bottom: 20px;
 }
 .talks-header {
-  height: 80px;
-}
-.books-header {
   height: 80px;
 }
 
@@ -223,17 +243,25 @@ body, div, p, h1, h2, h3, h4, h5, h6 {
 .projects-content {
   margin-top: 70px;
 }
-.project-container {
+.project-container, .blog {
   &:not(:last-child) {
     margin-bottom: 30px;
   }
   h2 {
     font-size: 20px;
   }
-  .project-description {
+  .project-description, .blog-short {
     margin-top: 8px;
     font-size: 16px;
     font-weight: 300;
+  }
+}
+
+.welcome-callout {
+  margin-top: 1rem;
+  .callout;
+  header strong {
+    color: black;
   }
 }
 
@@ -284,15 +312,25 @@ body, div, p, h1, h2, h3, h4, h5, h6 {
   }
 }
 .talks-container {
-  margin-bottom: 120px;
+  margin-bottom: 60px;
+
+  li {
+    margin-bottom: 0.5rem;
+  }
 }
-.books-content {
-  margin-top: 70px;
-  width: 500px;
+
+.books-header {
+  height: 80px;
+}
+.book {
+  font-size: 14px;
+  cite {
+    font-weight: 400;
+  }
 }
 .book:not(:last-child) {
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
   border-bottom: 1px solid #eee;
 }
 
@@ -307,6 +345,7 @@ body, div, p, h1, h2, h3, h4, h5, h6 {
   padding-left: 60px;
   padding-bottom: 150px;
   padding-top: 70px;
+  line-height: 1.2rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -427,12 +466,6 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid #888;
   margin-bottom: 5px;
 }
-#name-header {
-  font-family: 'Roboto Slab', Georgia, serif;
-  font-weight: 400;
-  margin-bottom: 100px;
-  text-transform: lowercase;
-}
 ul {
   list-style: none outside;
   margin: 0 0 20px 0;
@@ -441,7 +474,7 @@ ul {
 li {
   padding:0 0 8px 0;
 }
-p, href {
+p, span {
   font-weight: 300;
 }
 .axis path,.axis line {
@@ -514,104 +547,18 @@ p, href {
 
     background-color: rgb(227, 227, 227);
     border: 1px solid rgb(185, 185, 185);
-
-    .input-group {
-      width: 100%;
-      &:not(:last-child) {
-        margin-bottom: 4px;
-      }
-
-      input, textarea {
-        font-weight: 300;
-        padding: 5px;
-        margin-right: 4px;
-        width: 100%;
-        border: 1px solid rgb(185, 185, 185);
-        border-radius: 4px;
-      }
-      textarea {
-        height: 90px;
-        outline: 0;
-        overflow: auto;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
-      }
-    }
   }
 }
 
-#go-game {
-  @board-color: rgb(221, 180, 84);
-  @board-color-shadow: rgba(255, 255, 255, 0.08);
-
-  .board {
-    margin: 45px 45px 30px 30px;
-    svg {
-      overflow-x: visible;
-      overflow-y: visible;
-      width: 400px;
-      height: 400px;
-      margin-bottom: -3px;
-    }
-    svg rect {
-      fill: @board-color-shadow;
-    }
-    background-color: @board-color;
-    width: 400px;
-    max-height: 400px;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
-
-    svg line {
-      stroke: rgba(0, 0, 0, 0.8);
-      stroke-width: 0.05;
-      stroke-linecap: square;
-    }
-  }
-
-
-  .table {
-    margin-top: 4rem;
-    display: inline-block;
-  }
-
-  .label {
-    text-transform: uppercase;
-    font-size: 0.8px;
-    font-family: 'Roboto', sans-serif;
-
-    &.y-label {
-      alignment-baseline: middle;
-    }
-  }
-
-  .piece {
-    &:hover {
-      stroke: green;
-      stroke-width: 0.1;
-    }
-
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
-
-    &.black {
-      fill: black;
-    }
-
-    &.white {
-      fill: white;
-    }
-  }
-
-  .piece-target {
-    opacity: 0;
-  }
-}
 
 a.external {
+  display: inline-block;
   strong {
     font-family: 'Source Sans Pro', 'Roboto', sans-serif;
     font-weight: 700;
-    color: green;
+  }
+  .link-decoration {
+    color: @linkAccentColor;
   }
 }
 
@@ -622,3 +569,89 @@ a.external {
     text-transform: lowercase;
   }
 }
+
+.inline-markdown {
+  .markdown {
+    display: inline;
+    p {
+      display: inline;
+    }
+  }
+}
+
+.katex {
+  font: normal 1.1em KaTeX_SansSerif, sans-serif !important;
+}
+
+.inline-markdown {
+  .katex {
+    font: normal 1em KaTeX_SansSerif, sans-serif !important;
+  }
+}
+
+#tax-explorer {
+  svg rect {
+    border-radius: 0;
+  }
+}
+
+.legend {
+  .title {
+    margin-bottom: 0.75em;
+    font-weight: normal;
+    font-size: 16px;
+  }
+  float: right;
+  border: 1px solid @softBorderColor;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 0.9em;
+  color: rgb(30, 30, 30);
+  font-family: 'Source Sans Pro', sans-serif;
+  margin: 5px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.info-block {
+  margin-top: 1.5rem;
+
+  header {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+
+  }
+  .content {
+    font-size: 16px;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    border: 1px solid rgb(204, 204, 204);
+    padding: 0.5rem;
+  }
+}
+
+#welcome-portal {
+  margin-top: 3.5em;
+
+  header h1, header h1 a {
+    font-size: 20px;
+  }
+
+  .example-marriage-diagram {
+    .lede {
+      margin: 0.5em 1em 2em 1em;
+      padding-bottom: 1em;
+      font-weight: bold;
+      font-family: 'Source Sans Pro', 'Roboto', sans-serif;
+      font-size: 14px;
+      border-bottom: 1px solid @softBorderColor;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}
+

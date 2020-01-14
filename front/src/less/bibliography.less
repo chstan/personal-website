@@ -1,0 +1,28 @@
+.bibliography {
+  display: flex;
+  flex-direction: column;
+
+  .bibliography-header {
+
+  }
+  ol {
+    padding-left: 1em;
+    list-style: none;
+    counter-reset: item;
+
+    li {
+      display: inline-flex;
+      counter-increment: item;
+    }
+
+    li:before {
+      content: counter(item);
+      font-family: 'Source Sans Pro', 'Roboto', sans-serif;
+      font-weight: 800;
+      font-size: smaller;
+      margin-right: 1em;
+      text-align: center;
+      display: inline-block;
+    }
+  }
+}

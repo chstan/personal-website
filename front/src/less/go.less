@@ -1,0 +1,83 @@
+@smallGoSize: 300px;
+@goSize: 400px;
+#go-game.go-game.go-game-small {
+  .board {
+    width: @smallGoSize;
+    max-height: @smallGoSize;
+    svg {
+      width: @smallGoSize;
+      height: @smallGoSize;
+    }
+  }
+}
+
+#go-game, .go-game {
+  @board-color: rgb(221, 180, 84);
+  @board-color-shadow: rgba(255, 255, 255, 0.08);
+
+  .board {
+    margin: 45px 45px 30px 30px;
+    svg {
+      overflow-x: visible;
+      overflow-y: visible;
+      width: @goSize;
+      height: @goSize;
+      margin-bottom: -3px;
+    }
+    svg rect {
+      fill: @board-color-shadow;
+    }
+    background-color: @board-color;
+    width: @goSize;
+    max-height: @goSize;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+
+    svg line {
+      stroke: rgba(0, 0, 0, 0.8);
+      stroke-width: 0.05;
+      stroke-linecap: square;
+    }
+  }
+
+
+  .table {
+    margin-top: 4rem;
+    display: inline-block;
+  }
+
+  .label {
+    text-transform: uppercase;
+    font-size: 0.8px;
+    font-family: 'Roboto', sans-serif;
+
+    &.y-label {
+      alignment-baseline: middle;
+    }
+  }
+
+  .piece {
+    &:hover {
+      stroke: green;
+      stroke-width: 0.1;
+    }
+
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
+
+    &.black {
+      fill: black;
+    }
+
+    &.white {
+      fill: white;
+    }
+  }
+
+  .piece-target {
+    opacity: 0;
+  }
+}
+
+
+.portal-wrapper #go-game .table {
+  margin-top: 2rem;
+}
