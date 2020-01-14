@@ -18,5 +18,26 @@
     "url": "http://arxiv.org/abs/1509.02216",
     "arxivId": "arXiv:1509.02216",
     "kind": "arxiv"
+  },
+  {
+    "name": "PyARPES Documentation Site",
+    "authors": ["Conrad Stansbury"],
+    "date": "2018 - present",
+    "url": "http://arpes.netlify.com/",
+    "kind": "longform"
+  },
+  {
+    "name": "DAQuiri Documentation Site",
+    "authors": ["Conrad Stansbury"],
+    "date": "2020 - present",
+    "url": "http://daquiri.readthedocs.io/",
+    "kind": "longform"
+  },
+  {
+    "name": "extra-qt Documentation Site",
+    "authors": ["Conrad Stansbury"],
+    "date": "2020 - present",
+    "url": "http://extra-qt.readthedocs.io/",
+    "kind": "longform"
   }
 ]

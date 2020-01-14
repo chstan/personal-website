@@ -1,5 +1,37 @@
 [
   {
+    "name": "the ALS User Meeting 2019",
+    "date": "October 3, 2019",
+    "location": "Advanced Light Source, LBNL",
+    "presentationTitle": "Studying Transition Metal Dichalcogenide Superlattices with nano-ARPES",
+    "presentationUrl": "pdf/ALS_User_Meeting_2019.pdf",
+    "kind": "conference"
+  },
+  {
+    "name": "APS March Meeting 2020",
+    "date": "March 4, 2020",
+    "location": "Denver",
+    "presentationTitle": "Studying Transition Metal Dichalcogenide Superlattices with nano-ARPES",
+    "presentationUrl": "pdf/APSMM_2020.pdf",
+    "kind": "conference"
+  },
+  {
+    "name": "APS March Meeting 2019",
+    "date": "March 4, 2019",
+    "location": "Boston",
+    "presentationTitle": "Orbital and Charge Participation in the Magnetic Phases of Intercalated $\\text{Fe}_{1/3}\\text{TaS}_2$, $\\text{Fe}_{1/3}\\text{NbS}_2$ and their Alloys",
+    "presentationUrl": "pdf/APSMM_2019.pdf",
+    "kind": "conference"
+  },
+  {
+    "name": "APS March Meeting 2018",
+    "date": "March 6, 2018",
+    "location": "Los Angeles",
+    "presentationTitle": "Electronic Structure Dynamics in Semimetallic TMD $\\text{Mo}_{1-x}\\text{W}_x\\text{Te}_2$ using Time- and Angle-Resolved Photoemission Spectroscopy",
+    "presentationUrl": "pdf/APSMM_2018.pdf",
+    "kind": "conference"
+  },
+  {
     "name": "Connecting the Dots 2015",
     "date": "February 9-11, 2015",
     "location": "UC Berkeley/LBNL",

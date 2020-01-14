@@ -1,5 +1,20 @@
 [
   {
+    "title": "PyARPES",
+    "label": "https://arpes.netlify.com/",
+    "description": "A comprehensive data analysis framework for angle-resolved photoemission spectroscopy (ARPES) and other condensed matter physics disciplines."
+  },
+  {
+    "title": "DAQuiri",
+    "label": "https://daquiri.readthedocs.io/",
+    "description": "DAQ and UI Generation tailored to scientific experiments."
+  },
+  {
+    "title": "extra-qt",
+    "label": "https://extra-qt.readthedocs.io/",
+    "description": "React without JavaScript."
+  },
+  {
     "title": "Fuzzy Jets",
     "label": "/papers",
     "description": "As an undergraduate I researched with the ATLAS group at SLAC between June 2013 and June 2015. The final project I worked on with Ben Nachman was to apply mixture modeling to finding jets. This method provides interesting new jet and substructure variables in the Monte Carlo events I studied, and this work constituted the basis for my undergraduate thesis and a paper currently being refereed."

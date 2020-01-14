@@ -1,10 +1,10 @@
 [
   {
-    "title": "Data Preparation in ARPES",
-    "label": "arpes_1_data_prep",
-    "short": "An overview of data preparation steps in ARPES",
-    "released": false,
-    "date": "Sept 2017"
+    "title": "Scientists Deserve Better UI Generators",
+    "label": "ui_generators",
+    "short": "Short Description Here",
+    "released": true,
+    "date": "Jan 2020"
   },
   {
     "title": "Cryogenic Magnetic Susceptibility Measurement",
@@ -14,9 +14,9 @@
     "date": "Oct 2014"
   },
   {
-    "title": "Writing a CFD Solver in Rust",
+    "title": "CFD Solver",
     "label": "cfd-intro",
-    "short": "In which we embark on a long learning journey through turbulent waters",
+    "short": "A long learning journey through... turbulent... waters to write a fluid dynamics simulation code in Rust.",
     "released": false,
     "date": "May 2016"
   }
