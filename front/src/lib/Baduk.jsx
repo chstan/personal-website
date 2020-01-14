@@ -442,7 +442,7 @@ class Baduk extends React.Component {
     return (
       <section className={`game ${this.props.className}`}>
         <BadukBoard size={this.props.size} labelStyle={this.props.labelStyle}
-                    onClickEmpty={playMove}
+                    onClickEmpty={this.props.readonly ? () => null : playMove}
         >
           { this.getPieces() }
         </BadukBoard>
@@ -452,6 +452,7 @@ class Baduk extends React.Component {
 }
 
 Baduk.propTypes = {
+  readonly: PropTypes.bool,
   className: PropTypes.string,
   size: PropTypes.number,
   komi: PropTypes.number,
@@ -464,15 +465,73 @@ Baduk.propTypes = {
 };
 
 Baduk.defaultProps = {
+  readonly: false,
+  size: 19,
+  starPoints: true,
+  komi: 6.5,
+  labelStyle: 'hybrid',
+};
+
+// every, sequence
+class AutoplayBaduk extends Baduk {
+  componentDidMount() {
+    this.interval = setInterval(() => this.playMoveFromSequence(), this.props.every * 1000);
+    this.setState({
+      game: new BadukGame(this.props.size),
+      currentMove: 0,
+    });
+
+  }
+
+  playMoveFromSequence() {
+    const nextMove = this.state.currentMove;
+    if (nextMove === this.props.sequence.length) {
+      // need to reset the board
+      this.setState({
+        game: new BadukGame(this.props.size),
+        currentMove: 0,
+      });
+    } else {
+      const [x, y] = this.props.sequence[nextMove];
+      this.state.game.move(x, y, false);
+      this.setState({
+        currentMove: nextMove + 1,
+      });
+    }
+  }
+}
+
+Baduk.propTypes = {
+  readonly: PropTypes.bool,
+  className: PropTypes.string,
+  size: PropTypes.number,
+  komi: PropTypes.number,
+  starPoints: PropTypes.bool,
+  labelStyle: PropTypes.oneOf([
+    'number',
+    'hybrid',
+    'letter',
+  ]),
+  sequence: PropTypes.arrayOf(PropTypes.number),
+  every: PropTypes.number,
+};
+
+
+AutoplayBaduk.defaultProps = {
+  readonly: true,
   size: 19,
   starPoints: true,
   komi: 6.5, // this would probably be superseded by rule variants if I add those
   labelStyle: 'hybrid',
+  sequence: [[0, 0], [1, 1], [2, 2], [3, 3], [4, 4]],
+  every: 1,
 };
 
 export {
+  AutoplayBaduk,
   Baduk,
   BadukBoard,
   BadukGame,
   Piece,
 };
+
