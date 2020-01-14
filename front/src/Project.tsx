@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import {ProjectInfo, PROJECTS} from "./data";
+import {WrapLink} from "./common";
 
 const ProjectSummary: React.FC<ProjectInfo> = ({title, pictureUrl, description, label}) => {
   const imageStyles = {
@@ -10,7 +10,7 @@ const ProjectSummary: React.FC<ProjectInfo> = ({title, pictureUrl, description, 
 
   let titleOrLink = <h1>{title}</h1>;
   if (label) {
-    titleOrLink = <Link to={label}>{title}</Link>;
+    titleOrLink = <WrapLink to={label}>{title}</WrapLink>;
   }
 
   return (
