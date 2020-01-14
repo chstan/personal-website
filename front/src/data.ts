@@ -22,6 +22,7 @@ export type PaperInfo = { // less well typed than others. ...shrug
 
 export enum TalkKind {
   ZANBATO = 'zanbato-tech-talk',
+  CONFERENCE = 'conference',
   INVITED = 'invited',
   OTHER = 'other',
 }

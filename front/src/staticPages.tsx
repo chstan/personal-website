@@ -6,38 +6,112 @@ import {
   ResumeRow, ResumeRowKind,
 } from "./data";
 import {TalkSummary} from "./Talks";
-import {Expandable, SimpleButton} from "./common";
-import { Baduk } from './lib/Baduk';
-import {InlineMath} from "react-katex";
+import {Expandable, SimpleButton, WrapLink} from "./common";
+import { Baduk, AutoplayBaduk } from './lib/Baduk';
+import moves from './json/alpha_go_lee_sedol_1.json';
+import {ExampleMarriageDiagram} from "./Marriage";
 
+const portalOptions = [
+  ['/go', () => (
+      <article className="go-game go-game-small" id="go-game" style={{marginLeft: "2rem"}}>
+          <AutoplayBaduk size={19} every={.25} sequence={moves} onClick={() => null}/>
+      </article>
+  )],
+  ['/marriage', () => <ExampleMarriageDiagram />,]
+];
+
+const secondsSince1970 = () => Math.round(new Date().getTime() / 1000);
+
+const WelcomePortal = () => {
+  const HOUR = 3600;
+  // stable over the course of a visit but repeat visits will be different
+  const PORTAL_PERIOD = 8 * HOUR;
+  const portalNumber = Math.floor(secondsSince1970() / PORTAL_PERIOD);
+  const [portalUrl, Portal] = portalOptions[portalNumber % portalOptions.length];
+
+  const PortalWrapper: React.FC<{depth: number,}> = ({children, depth}) => {
+    if (depth > 10) depth = 10;
+    if (depth < 0) return <div style={{margin: '10px'}}>{children}</div>;
+    const N_LEVELS = 4;
+    const scale = (N_LEVELS-Math.abs(depth - N_LEVELS));
+    return (
+      <div
+        className="portal-wrapper"
+        style={{
+          border: '0.5px solid rgba(0, 0, 0, 0.15)',
+          backgroundColor: `rgb(${255 - 5 * scale}, ${255 - 5 * scale}, ${255 - 5 * scale})`,
+          padding: '2px',
+        }}
+      >
+        <PortalWrapper depth={depth - 1}>
+          {children}
+        </PortalWrapper>
+      </div>
+    );
+  };
+
+  return (
+    <section id='welcome-portal'>
+      <header>
+          <h1>Here's a glimpse <WrapLink to={portalUrl as string}>elsewhere on the site.</WrapLink></h1>
+      </header>
+      <section style={{marginTop: '1rem'}}>
+        <PortalWrapper depth={7}>
+          <Portal />
+        </PortalWrapper>
+      </section>
+    </section>
+  )
+};
 const WelcomePage: React.FC = () => {
   return (
     <div className="content-header statement">
       <p>Hi, I'm Conrad.</p>
       <p>
-        <span>I am a graduate student in physics working as part of the </span>
-        <a href="http://research.physics.berkeley.edu/lanzara/">Lanzara Lab</a>
-        <span>.
+        I am a graduate student in physics working as part of
+        the <WrapLink to="http://research.physics.berkeley.edu/lanzara/">Lanzara Lab</WrapLink>
+        at the University of California, Berkeley.
         My current interests include developing and using powerful new
         spectroscopic tools like time resolved ARPES and THz optical reflectivity
         to understand topological states of matter and correlated systems.
-        I am also interested in the problem of developing computational tools
-        to better leverage the wealth of data that modern experimental probes
-        and first principles calculations
-        provide to drive discoveries of new phases of matter in physics and
-        materials science.
-        </span>
       </p>
-      <p><span>
-        Previous to my graduate student career I worked most recently as
-        a software engineer at Zanbato to build efficient private markets.
-      </span></p>
+      <p>
+        I also develop open source software to better serve the interests of scientists.
+        Notably, I am the author and maintainer for:
+      </p>
+      <p>
+        <ul className="welcome-callout">
+          <li>
+            <WrapLink to="https://arpes.netlify.com/"><strong>PyARPES</strong></WrapLink>:
+            a data analysis framework for angle resolved photoemission spectroscopy.
+          </li>
+          <li>
+            <WrapLink to="https://daquiri.readthedocs.io/"><strong>DAQuiri</strong></WrapLink>:
+            a LabView alternative providing user interface (UI) generation and high level primitives
+            for managing scientific experiments.
+          </li>
+          <li>
+            <WrapLink to="https://extra-qt.readthedocs.io/"><strong>extra-qt</strong></WrapLink>:
+            a <WrapLink to="https://reactjs.org">React</WrapLink> inspired pure functional view layer
+            around the desktop UI framework <WrapLink to="https://qt.io/">Qt5</WrapLink>.
+          </li>
+        </ul>
+      </p>
+      <p>
+        When not in the lab, I also work on developing machine learning techniques to better
+        understand the huge amounts of data ARPES provides on quantum materials.
+      </p>
+      <p>
+        Prior to graduate school, I worked as a full-stack software engineer, a data scientist,
+        and in technical recruiting at <WrapLink to="https://zanbato.com">Zanbato</WrapLink>.
+      </p>
       <p>
         To see some of what I've been working on, take a look around
-        or head over to my <a href={BASE_INFO.github}>GitHub</a>. Alternatively, if you want to get
+        or head over to my <WrapLink to={BASE_INFO.github}>GitHub</WrapLink>. Alternatively, if you want to get
         in touch, send me an email.
       </p>
-      <p>Thanks for visiting.</p>
+      <p>Thanks for visiting!</p>
+      <WelcomePortal />
     </div>
   );
 };
@@ -59,9 +133,13 @@ const ContactPage: React.FC = () => {
 
 const BookSummary: React.FC<Book> = (book: Book,) => {
   return (
-    <div className="book">
+    <li className="book" key={book.title}>
       <cite>{book.title}</cite>
-    </div>
+      <div className="just-container">
+        <p className="just-left-container">{book.author}</p>
+        <p className="just-right-container">{book.completionDate}</p>
+      </div>
+    </li>
   );
 };
 
@@ -70,8 +148,10 @@ class ReadingPage extends Expandable {
     const renderBooks = this.state.expanded ? BOOKS: BOOKS.slice(0, 5);
     return (
       <div>
-        <div className="book-header"><p>A record of books I've read lately, to come back to later.</p></div>
-        {renderBooks.map(BookSummary)}
+        <div className="books-header"><p>A record of books I've read lately, to come back to later.</p></div>
+        <ul>
+          {renderBooks.map(BookSummary)}
+        </ul>
         <SimpleButton onClick={this.toggle}>{this.state.expanded ? 'Hide' : 'Older'}</SimpleButton>
       </div>
     );
@@ -119,7 +199,7 @@ const ExperienceSection = (experiences: Array<ExperienceContent>) => (
   </div>
 );
 
-const TalkSection = (talks: Array<Talk>) => <div>{talks.map(t => <TalkSummary {...t}/>)}</div>;
+const TalkSection = (talks: Array<Talk>) => <div>{talks.map(t => <TalkSummary talk={t}/>)}</div>;
 
 const buildResumeRow: React.FC<ResumeRow> = ({kind, title, content}) => {
   const Components = new Map<ResumeRowKind, any>([

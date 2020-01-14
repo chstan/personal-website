@@ -21,3 +21,10 @@ declare module 'react-katex' {
   declare const InlineMath: any;
   declare const BlockMath: any;
 }
+declare module 'react-vis' {
+  declare const XYPlot: any;
+  declare const XAxis: any;
+  declare const YAxis: any;
+  declare const HeatmapSeries: any;
+  declare const Hint: any;
+}

@@ -6,8 +6,10 @@ import {Markdown,} from "./common";
 import {Link} from "react-router-dom";
 
 const FULL_POSTS = {
-  arpes_1_data_prep: raw('./md/arpes_1_data_prep.md'),
   curietemp: raw('./md/curietemp.md'),
+  daquiri: raw('./md/daquiri.md'),
+  extra_qt: raw('./md/extra_qt.md'),
+  ui_generators: raw('./md/ui_generators.md'),
 };
 
 
@@ -37,9 +39,9 @@ const BlogItem = () => {
 const BlogPage = () => <div className="project-container">
   {WRITING.map(w => {
     return (
-      <div className="project-content">
+      <div className="blog">
         {w.label ? <a href={`/writing/${w.label}`}><h2>{w.title}</h2></a> : <h2>{w.title}</h2>}
-        <p className="project-description">{w.short}</p>
+        <p className="blog-short">{w.short}</p>
       </div>
     );
   })}

@@ -1,22 +1,15 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {ContactPage, GoPage, ReadingPage, Resume, WelcomePage} from "./staticPages";
 import {ProjectsPage} from "./Project";
 import {TalksPage} from "./Talks";
 import PapersPage from "./Papers";
 import DominionPage from "./DominionPage";
 import ChessPage from "./ChessPage";
-import {Expandable} from "./common";
-import {BlogPage, BlogItem} from "./Blog";
+import {Expandable, WrapLink} from "./common";
+import {BlogItem, BlogPage} from "./Blog";
 import SlidePuzzlePage from "./SlidePuzzlePage";
-
-const WrapLink: React.FC<{to: string,}> = ({to, children}) =>
-  to.startsWith('http') ? <a className="external" href={to}>{children} <strong>⤤</strong></a> : <Link to={to}>{children}</Link>;
+import {TaxExplorerPage,} from "./Marriage";
 
 const Unimplemented: React.FC = () =>
   <p>Website migration in progress: this page has not been moved. You can still visit the old
@@ -24,6 +17,10 @@ const Unimplemented: React.FC = () =>
 
 
 class NavGroup extends Expandable {
+  componentDidMount() {
+    this.setState({ expanded: this.props.defaultOpen, });
+  }
+
   render() {
     return <section className="nav-section">
       <header><button onClick={this.toggle}>
@@ -37,12 +34,24 @@ class NavGroup extends Expandable {
 const projectLinksSection = {
   kind: 'navgroup',
   title: 'Quicklinks',
+  defaultOpen: false,
   content: [
     ['/scheme', [Unimplemented, 'scheme']],
     ['/dominion', [DominionPage, 'dominion']],
     ['/go', [GoPage, 'go']],
     ['/chess', [ChessPage, 'chess']],
     ['/slide-puzzles', [SlidePuzzlePage, 'slide puzzles']],
+  ]
+};
+
+const openSourceSection = {
+  kind: 'navgroup',
+  title: 'Open-source',
+  defaultOpen: true,
+  content: [
+    ['https://arpes.netlify.com/', [Unimplemented, 'PyARPES']],
+    ['https://daquiri.readthedocs.io/', [Unimplemented, 'DAQuiri']],
+    ['https://extra-qt.readthedocs.io/', [Unimplemented, 'extra_qt']],
   ]
 };
 
@@ -61,12 +70,20 @@ const links = [
   ['/', [WelcomePage, '/']],
   ['/talks', [TalksPage, 'talks']],
   ['/papers', [PapersPage, 'papers']],
+
+  SEPARATOR,
+
   ['http://github.com/chstan', [Unimplemented, 'github']],
+  openSourceSection,
 
   SEPARATOR,
 
   ['/projects', [ProjectsPage, 'projects']],
   projectLinksSection,
+
+  SEPARATOR,
+
+  ['/marriage', [TaxExplorerPage, 'civics, marriage, taxes']],
 
   SEPARATOR,
 
