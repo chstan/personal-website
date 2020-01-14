@@ -1,5 +1,6 @@
 import React from "react";
 import {Talk, TalkKind, TALKS} from "./data";
+import {InlineMarkdown} from "./common";
 
 const TalkWrapper: React.FC<{talk: Talk}> = ({talk, children}) => {
   let link = <a href="#">[upcoming]</a>;
@@ -9,7 +10,7 @@ const TalkWrapper: React.FC<{talk: Talk}> = ({talk, children}) => {
   return (
     <div className="talks-wrapper">
       <p>
-        <strong>{talk.presentationTitle}</strong>
+        <strong><InlineMarkdown source={talk.presentationTitle} /></strong>
         {children}
         {link}
       </p>
@@ -24,20 +25,22 @@ const TalkSummaryZanbato: React.FC<Talk> = (t) =>
   <TalkWrapper talk={t}>{`,  ${t.date}.`}</TalkWrapper>;
 
 const TalkSummaryOther = TalkSummaryDefault;
-const TalkSummary: React.FC<Talk> = (t) => {
-  switch (t.kind) {
+const TalkSummary: React.FC<{talk: Talk}> = ({talk,}) => {
+  switch (talk.kind) {
     case TalkKind.ZANBATO:
-      return <TalkSummaryZanbato {...t} />;
+      return <TalkSummaryZanbato {...talk} />;
     case TalkKind.OTHER:
-      return <TalkSummaryOther {...t} />;
+      return <TalkSummaryOther {...talk} />;
+    case TalkKind.CONFERENCE:
     case TalkKind.INVITED:
-      return <TalkSummaryDefault {...t} />;
+      return <TalkSummaryDefault {...talk} />;
   }
 };
 
 const TalksPage: React.FC = () => {
   const orders = [
     [TalkKind.INVITED, 'Invited Talks'],
+    [TalkKind.CONFERENCE, 'Conference Talks'],
     [TalkKind.ZANBATO, 'Tech Talks at Zanbato'],
     [TalkKind.OTHER, 'Other Talks'],
   ];
@@ -46,10 +49,10 @@ const TalksPage: React.FC = () => {
     <div>
       {orders.map(([k, l]) =>
         <div className="talks-container">
-          <div className="talks-section-header">
-            <p>{l}</p>
-            {TALKS.filter(t => t.kind === k).map(TalkSummary)}
-          </div>
+          <header className="talks-section-header">{l}</header>
+          <ul>
+            {TALKS.filter(t => t.kind === k).map(t => <li><TalkSummary talk={t} /></li>)}
+          </ul>
         </div>
       )}
     </div>

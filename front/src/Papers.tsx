@@ -1,11 +1,10 @@
 import React from "react";
 import {PaperInfo, PAPERS} from "./data";
+import {WrapLink} from "./common";
 
 const PaperSectionHeader: React.FC<{sectionTitle: string}> = ({sectionTitle, children}) => (
   <div className="talks-container">
-    <div className="talks-section-header">
-      <p>{sectionTitle}</p>
-    </div>
+    <header className="talks-section-header">{sectionTitle}</header>
     {children}
   </div>
 );
@@ -31,7 +30,11 @@ const PaperSummary: React.FC<PaperInfo> = (paper) => {
       );
     case 'longform':
     default:
-      return <p>TODO</p>;
+      return (
+        <div className="talks-wrapper">
+          <WrapLink to={paper.url}>{paper.name}</WrapLink>, <span>{paper.date}</span>
+        </div>
+      );
   }
 };
 
