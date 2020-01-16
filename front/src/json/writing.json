@@ -1,8 +1,15 @@
 [
   {
-    "title": "Scientists Deserve Better UI Generators",
+    "title": "Can Scientists Escape from LabView?",
     "label": "ui_generators",
-    "short": "Short Description Here",
+    "short": "The case for leaving LabView, the challenges, and one possible future.",
+    "released": true,
+    "date": "Jan 2020"
+  },
+  {
+    "title": "Making Beautiful Crystal Structure Diagrams",
+    "label": "crystal_structure",
+    "short": "A tutorial on making beautiful crystal structure diagrams in Python.",
     "released": true,
     "date": "Jan 2020"
   },

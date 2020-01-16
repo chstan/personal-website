@@ -11,6 +11,15 @@ const PaperSectionHeader: React.FC<{sectionTitle: string}> = ({sectionTitle, chi
 
 const PaperSummary: React.FC<PaperInfo> = (paper) => {
   switch (paper.kind) {
+    case 'published':
+      return (
+        <div className="talks-wrapper">
+          <p>
+            {paper.authors.join(', ')}, <a href={paper.url}>{paper.name}</a>, <i>{paper.journal}</i>&nbsp;
+            <strong>{paper.issue}</strong>, {paper.date}.
+          </p>
+        </div>
+      );
     case 'thesis':
       return (
         // My CSS needs cleaning up clearly
@@ -40,9 +49,10 @@ const PaperSummary: React.FC<PaperInfo> = (paper) => {
 
 const PapersPage : React.FC = () => {
   const kinds = [
-    ['arxiv', 'Preprints'],
-    ['thesis', 'Theses'],
+    ['published', "Papers"],
+    //['arxiv', 'Preprints'],
     ['longform', 'Other Longform Work'],
+    ['thesis', 'Theses'],
   ];
   return (
     <div>

@@ -10,6 +10,7 @@ const FULL_POSTS = {
   daquiri: raw('./md/daquiri.md'),
   extra_qt: raw('./md/extra_qt.md'),
   ui_generators: raw('./md/ui_generators.md'),
+  crystal_structure: raw('./md/crystal_structure.md'),
 };
 
 

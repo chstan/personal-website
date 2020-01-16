@@ -109,7 +109,7 @@ const flatLinks: Array<[string, [React.FC, string]]> = [].concat(...links.map((s
 const Navbar: React.FC = () => {
   return (
     <nav>
-      <h3 id="name-header">Conrad Stansbury</h3>
+      <WrapLink to="/"><h3 id="name-header">Conrad Stansbury</h3></WrapLink>
       <ul>
         {links.map(({kind, content, ...rest}) => {
           if (kind === 'link') {

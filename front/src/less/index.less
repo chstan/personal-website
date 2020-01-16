@@ -4,7 +4,9 @@
 @import './form';
 @import './bibliography';
 @import './go';
-
+@import './markdown';
+@import './list';
+@import './flex-utils';
 
 .callout {
   margin-left: 0.75rem;
@@ -13,62 +15,13 @@
 }
 
 #app, a {
-  font-family: 'Roboto', Helvetica, sans-serif;
+  font-family: @bodyFont;
 }
 
 * {
   box-sizing: border-box;
 }
 
-.no-indent, .no-indent .markdown {
-  p {
-    text-indent: 0;
-  }
-}
-
-#dominion, .markdown {
-  section {
-    width: 500px;
-    p, p {
-      margin-bottom: 10px;
-      line-height: 1.3;
-    }
-    h1, h2 {
-      margin-bottom: 20px;
-    }
-    h1 {
-      font-size: 24px;
-    }
-  }
-
-  section:not(:last-child) {
-    margin-bottom: 30px;
-  }
-
-  #editor-container {
-    border-right: 1px solid @editorColor;
-    border-bottom: 1px solid @editorColor;
-  }
-
-  #run-button:disabled, #run-button:disabled:hover {
-    background-color: rgba(255,235,0,0.4);
-  }
-
-  #run-button {
-    height: 28px;
-    width: 120px;
-
-    border-width: 1px;
-    border-color: rgb(232, 232, 232);
-
-    font-size: 14px;
-    color: rgb(80,80,80);
-  }
-
-  #run-button:hover {
-    background-color: rgba(109, 189, 35, 0.2);
-  }
-}
 
 #project-description-list {
   width: 660px;
@@ -184,7 +137,7 @@ nav {
   line-height: 1rem;
 
   #name-header {
-    font-family: 'Roboto Slab', Georgia, serif;
+    font-family: @logoFont;
     font-weight: 400;
     margin-bottom: 70px;
     text-transform: lowercase;
@@ -209,37 +162,6 @@ body, div, p, h1, h2, h3, h4, h5, h6 {
   height: 80px;
 }
 
-.wide .markdown {
-  width: 700px;
-}
-.markdown {
-  width: 550px;
-  h1 {
-    font-size: 24px;
-  }
-  h2 {
-    font-size: 20px;
-  }
-  h3 {
-    font-size: 18px;
-  }
-  a {
-    text-decoration: underline;
-  }
-  p {
-    line-height: 1.6;
-    margin-bottom: 12px;
-    text-indent: 28px;
-    * {
-      text-indent: initial;
-    }
-  }
-}
-.markdown h1,.markdown h2,.markdown h3,.markdown h4,.markdown h5,.markdown h6 {
-  margin-bottom: 12px;
-  margin-top: 20px;
-  color: #000;
-}
 .projects-content {
   margin-top: 70px;
 }
@@ -506,55 +428,10 @@ p, span {
   border-color: rgb(232, 232, 232);
 }
 
-.markdown {
-  > div > *:first-child {
-    margin-top: 0;
-  }
-  h1 {
-    margin-top: 45px;
-  }
-  h2 {
-    color: rgb(68,68,68);
-    margin-top: 35px;
-  }
-}
-
-#post-trello-card-form {
-  margin-left: 8px;
-
-  .create-card {
-    margin-top: 6px;
-    min-width: 80px;
-    height: 30px;
-    border-radius: 4px;
-    font-size: 14px;
-    border: 1px solid rgb(185, 185, 185);
-    background-color: rgb(90, 181, 66);
-    color: white;
-    font-weight: bold;
-
-    &:disabled {
-      background-color: #cccccc;
-    }
-  }
-
-  .main-form {
-    border-radius: 4px;
-    font-weight: 500;
-    width: 400px;
-
-    padding: 4px;
-
-    background-color: rgb(227, 227, 227);
-    border: 1px solid rgb(185, 185, 185);
-  }
-}
-
-
 a.external {
   display: inline-block;
   strong {
-    font-family: 'Source Sans Pro', 'Roboto', sans-serif;
+    font-family: @bodyFont;
     font-weight: 700;
   }
   .link-decoration {
@@ -570,24 +447,6 @@ a.external {
   }
 }
 
-.inline-markdown {
-  .markdown {
-    display: inline;
-    p {
-      display: inline;
-    }
-  }
-}
-
-.katex {
-  font: normal 1.1em KaTeX_SansSerif, sans-serif !important;
-}
-
-.inline-markdown {
-  .katex {
-    font: normal 1em KaTeX_SansSerif, sans-serif !important;
-  }
-}
 
 #tax-explorer {
   svg rect {
@@ -607,7 +466,7 @@ a.external {
   font-size: 12px;
   line-height: 0.9em;
   color: rgb(30, 30, 30);
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: @bodyFont;
   margin: 5px;
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.02);
@@ -642,7 +501,7 @@ a.external {
       margin: 0.5em 1em 2em 1em;
       padding-bottom: 1em;
       font-weight: bold;
-      font-family: 'Source Sans Pro', 'Roboto', sans-serif;
+      font-family: @bodyFont;
       font-size: 14px;
       border-bottom: 1px solid @softBorderColor;
     }

@@ -14,10 +14,19 @@
       "Ariel Schwartzman",
       "Conrad Stansbury"
     ],
-    "date": "7 September 2015",
-    "url": "http://arxiv.org/abs/1509.02216",
-    "arxivId": "arXiv:1509.02216",
-    "kind": "arxiv"
+    "date": "2016",
+    "url": "https://link.springer.com/article/10.1007%2FJHEP06%282016%29010",
+    "journal": "Journal of High Energy Physics",
+    "issue": "2016",
+    "doi": "https://doi.org/10.1007/JHEP06(2016)010",
+    "kind": "published"
+  },
+  {
+    "name": "Can Scientists Escape from LabView?",
+    "authors": ["conrad Stansbury"],
+    "date": "Dec 2019",
+    "url": "/writing/ui_generators",
+    "kind": "longform"
   },
   {
     "name": "PyARPES Documentation Site",

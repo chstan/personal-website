@@ -17,6 +17,9 @@ export type PaperInfo = { // less well typed than others. ...shrug
   date: string;
   url: string;
   arxivId?: string;
+  journal?: string;
+  issue?: string;
+  doi?: string;
   kind: string;
 };
 
