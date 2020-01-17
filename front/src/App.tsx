@@ -15,8 +15,10 @@ import {TaxExplorerPage,} from "./Marriage";
 
 const history = createHistory();
 history.listen(location => {
-  ReactGA.set({ page: location.pathname });
-  ReactGA.pageview(location.pathname);
+  if (process.env.NODE_ENV !== 'development') {
+    ReactGA.set({page: location.pathname});
+    ReactGA.pageview(location.pathname);
+  }
 });
 
 const Unimplemented: React.FC = () =>
