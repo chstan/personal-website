@@ -1,5 +1,7 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import ReactGA from 'react-ga';
+import {Router, Route, Switch, } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
 import {ContactPage, GoPage, ReadingPage, Resume, WelcomePage} from "./staticPages";
 import {ProjectsPage} from "./Project";
 import {TalksPage} from "./Talks";
@@ -10,6 +12,12 @@ import {Expandable, WrapLink} from "./common";
 import {BlogItem, BlogPage} from "./Blog";
 import SlidePuzzlePage from "./SlidePuzzlePage";
 import {TaxExplorerPage,} from "./Marriage";
+
+const history = createHistory();
+history.listen(location => {
+  ReactGA.set({ page: location.pathname });
+  ReactGA.pageview(location.pathname);
+});
 
 const Unimplemented: React.FC = () =>
   <p>Website migration in progress: this page has not been moved. You can still visit the old
@@ -132,7 +140,7 @@ const Navbar: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <Router>
+    <Router history={history}>
       <div className="container">
         <div className="nav-container">
           <Navbar />
