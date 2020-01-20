@@ -7,6 +7,13 @@
     "date": "Jan 2020"
   },
   {
+    "title": "Using Python to Interface with Scienta ARPES Analyzers",
+    "label": "pyseswrapper",
+    "short": "An introduction to Foreign Function Interface in C via CFFI",
+    "released": true,
+    "date": "Jan 2020"
+  },
+  {
     "title": "Making Beautiful Crystal Structure Diagrams",
     "label": "crystal_structure",
     "short": "A tutorial on making beautiful crystal structure diagrams in Python.",
