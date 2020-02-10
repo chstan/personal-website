@@ -7,6 +7,13 @@
     "date": "Jan 2020"
   },
   {
+    "title": "Using Python to Interface with National Instruments Motion Hardware",
+    "label": "flex_motion",
+    "short": "Python FFI Part II",
+    "released": true,
+    "date": "Feb 2020"
+  },
+  {
     "title": "Using Python to Interface with Scienta ARPES Analyzers",
     "label": "pyseswrapper",
     "short": "An introduction to Foreign Function Interface in C via CFFI",

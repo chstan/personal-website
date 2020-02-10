@@ -12,6 +12,7 @@ const FULL_POSTS = {
   ui_generators: raw('./md/ui_generators.md'),
   crystal_structure: raw('./md/crystal_structure.md'),
   pyseswrapper: raw('./md/pyseswrapper.md'),
+  flex_motion: raw('./md/flex_motion.md'),
 };
 
 

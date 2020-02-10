@@ -95,11 +95,20 @@ const WelcomePage: React.FC = () => {
             a <WrapLink to="https://reactjs.org">React</WrapLink> inspired pure functional view layer
             around the desktop UI framework <WrapLink to="https://qt.io/">Qt5</WrapLink>.
           </li>
+          <li>
+            <WrapLink to="https://github.com/chstan/py-flex-motion"><strong>PyFlexMotion</strong></WrapLink>:
+            a Python abstraction layer around National Instruments' Flex Motion library for PC-integrated
+            motion controllers.
+          </li>
+          <li>
+            <WrapLink to="https://github.com/chstan/pyseswrapper"><strong>PySESWrapper</strong></WrapLink>:
+            a Python abstraction layer around Scienta Omicrom GmbH's hemispherical electron analyzers.
+          </li>
         </ul>
       </p>
       <p>
-        When not in the lab, I also work on developing machine learning techniques to better
-        understand the huge amounts of data ARPES provides on quantum materials.
+        When not doing experiments in the lab, I also work on developing machine learning
+        techniques to better understand the huge amounts of data ARPES provides on quantum materials.
       </p>
       <p>
         Prior to graduate school, I worked as a full-stack software engineer, a data scientist,
