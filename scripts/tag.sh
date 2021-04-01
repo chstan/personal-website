@@ -11,4 +11,5 @@ echo "Rebuilding image..."
 yarn build
 
 GIT_HASH="$(git rev-parse --short HEAD)"
-docker tag personal_website:latest chstan/personal_website:$GIT_HASH
+docker tag personal_website:latest chstan/personal-website:$GIT_HASH
+docker push chstan/personal-website:$GIT_HASH
