@@ -18,6 +18,7 @@ new-website.iml
 front/src/css/
 front/node_modules/
 front/build/
+node_modules/
 
 # vim
 *.swo

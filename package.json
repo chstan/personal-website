@@ -1,0 +1,17 @@
+{
+  "name": "personal-website-management-scripts",
+  "version": "0.0.0",
+  "description": "\"Convenience scripts for management of docker\"",
+  "main": "",
+  "repository": "git@github.com:chstan/personal-website.git",
+  "author": "Conrad Stansbury <chstansbury@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "bootstrap": "$PWD/scripts/bootstrap.sh",
+    "docker-tag": "bash $PWD/scripts/tag.sh",
+    "build": "docker build --network=host -t personal_website .",
+    "start": "docker run --network=host -t personal_website",
+    "run-in-container": "./scripts/run_continuously.sh"
+  }
+}
