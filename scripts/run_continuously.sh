@@ -1,5 +1,3 @@
-#!/bin/bash
-
 yarn global add serve
 RUN_WEBSITE="serve /app/front/build -l 8001"
 

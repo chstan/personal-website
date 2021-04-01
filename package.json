@@ -10,8 +10,9 @@
   "scripts": {
     "bootstrap": "$PWD/scripts/bootstrap.sh",
     "docker-tag": "bash $PWD/scripts/tag.sh",
+    "docker-sh": "docker run --rm -it --entrypoint=/bin/sh personal_website",
     "build": "docker build --network=host -t personal_website .",
     "start": "docker run --network=host -t personal_website",
-    "run-in-container": "./scripts/run_continuously.sh"
+    "run-in-container": "$PWD/scripts/run_continuously.sh"
   }
 }

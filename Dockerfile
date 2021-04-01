@@ -4,10 +4,10 @@ WORKDIR /app
 
 # Install from yarn.lock before copying everything else
 # for cacheing reasons
-COPY package.json yarn.lock ./
 COPY front/package.json front/yarn.lock ./front/
-RUN yarn install --pure-lockfile
 RUN cd front && yarn install --pure-lockfile
+COPY package.json yarn.lock ./
+RUN yarn install --pure-lockfile
 
 COPY . ./
 RUN chmod +x ./scripts/bootstrap.sh
