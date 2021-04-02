@@ -3,7 +3,7 @@ import {Talk, TalkKind, TALKS} from "./data";
 import {InlineMarkdown} from "./common";
 
 const TalkWrapper: React.FC<{talk: Talk}> = ({talk, children}) => {
-  let link = <a href="#">[upcoming]</a>;
+  let link = <span>[upcoming]</span>;
   if (talk.presentationUrl) {
     link = <a href={talk.presentationUrl}>[slide deck]</a>
   }

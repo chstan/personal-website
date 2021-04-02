@@ -134,6 +134,7 @@ const Navbar: React.FC = () => {
               </ul>
             </NavGroup></li>
           }
+          return null;
         })}
       </ul>
     </nav>
