@@ -1,5 +1,12 @@
 [
   {
+    "title": "Setting up a Multi-user Server with Xen and Windows",
+    "label": "xen",
+    "short": "Notes and experiences in setting up a homelab with Xen and multiple Windows clients.",
+    "released": true,
+    "date": "June 2021"
+  },
+  {
     "title": "Can Scientists Escape from LabView?",
     "label": "ui_generators",
     "short": "The case for leaving LabView, the challenges, and one possible future.",

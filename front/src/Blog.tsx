@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 
 const FULL_POSTS = {
   curietemp: raw('./md/curietemp.md'),
+  xen: raw('./md/xen.md'),
   daquiri: raw('./md/daquiri.md'),
   extra_qt: raw('./md/extra_qt.md'),
   ui_generators: raw('./md/ui_generators.md'),
@@ -26,6 +27,7 @@ const BlogItem = () => {
   const { blogId } = useParams() as { blogId: string,};
 
   if (!FULL_POSTS.hasOwnProperty(blogId)) {
+    console.log(FULL_POSTS);
     return <p>Not Found.</p>
   }
 
