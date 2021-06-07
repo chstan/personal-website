@@ -27,7 +27,6 @@ const BlogItem = () => {
   const { blogId } = useParams() as { blogId: string,};
 
   if (!FULL_POSTS.hasOwnProperty(blogId)) {
-    console.log(FULL_POSTS);
     return <p>Not Found.</p>
   }
 
