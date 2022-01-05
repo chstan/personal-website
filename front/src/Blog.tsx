@@ -8,6 +8,7 @@ import {Link} from "react-router-dom";
 const FULL_POSTS = {
   curietemp: raw('./md/curietemp.md'),
   xen: raw('./md/xen.md'),
+  note_transcription: raw('./md/note_transcription.md'),
   daquiri: raw('./md/daquiri.md'),
   extra_qt: raw('./md/extra_qt.md'),
   ui_generators: raw('./md/ui_generators.md'),

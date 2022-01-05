@@ -1,5 +1,12 @@
 [
   {
+    "title": "Dictate to Notion: Revamping My Personal Notekeeping Systems",
+    "label": "note_transcription",
+    "short": "An overview of how I use AWS Transcribe to dictate into my Notion planning pages while away from my computer.",
+    "released": true,
+    "date": "January 2022"
+  },
+  {
     "title": "Setting up a Multi-user Server with Xen and Windows",
     "label": "xen",
     "short": "Notes and experiences in setting up a homelab with Xen and multiple Windows clients.",
