@@ -1,2 +1,2 @@
-yarn global add less
-yarn global add less-watch-compiler
+npm install --global less
+npm install --global less-watch-compiler

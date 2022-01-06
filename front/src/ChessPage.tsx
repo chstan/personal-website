@@ -1,8 +1,5 @@
 import React from "react";
-import {Expandable, Markdown, SimpleButton, SuperSecretCat} from "./common";
-import raw from "raw.macro";
-
-const chessContent = raw('./md/chess.md');
+import {Expandable, DynamicMarkdown, SimpleButton, SuperSecretCat} from "./common";
 
 class PlayChess extends React.Component<any, any> {
   render() {
@@ -26,7 +23,9 @@ class Opponent extends Expandable {
 const ChessPage: React.FC = () => {
   return (
     <div id="chess">
-      <section id="no-indent"> <Markdown source={chessContent} /></section>
+      <section id="no-indent"> 
+        <DynamicMarkdown articleId="chess" />
+      </section>
       <PlayChess />
       <Opponent />
     </div>

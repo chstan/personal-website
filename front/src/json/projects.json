@@ -26,13 +26,13 @@
   },
   {
     "title": "Cryogenic Magnetic Susceptibility Measurement",
-    "label": "curie-temp",
+    "label": "/writing/curietemp",
     "pictureUrl": "/img/susceptometer.jpg",
     "description": "Stanford's low temperature physics lab allows students to conduct real experiments at liquid helium temperatures, from the point of experimental design to writing up and presenting results for peers and interested professors. My group designed a magnetic susceptometer which we used to measure the Curie temperature in Dysprosium and Gadolinium Chloride, measuring the complex susceptibility at many frequencies for each compound over a large temperature range."
   },
   {
     "title": "Chess Engine",
-    "label": "/dominion",
+    "label": "/chess",
     "pictureUrl": "/img/chess.jpg",
     "description": "I built a chess engine in C together with Tom Mullins to prepare for Stanford's computer systems course in my freshman spring. I continued working on the project long after completing the course, however, and as of the date of the most recent commit the engine can hold a game with a human player, or with itself, and has played against many visitors to my website. I hope to return to this project someday and enter it into the WCCC once time permits."
   },

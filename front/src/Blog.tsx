@@ -1,21 +1,8 @@
 import React from "react";
 import {useParams} from 'react-router';
 import {WRITING} from "./data";
-import raw from "raw.macro";
-import {Markdown,} from "./common";
+import {DynamicMarkdown,} from "./common";
 import {Link} from "react-router-dom";
-
-const FULL_POSTS = {
-  curietemp: raw('./md/curietemp.md'),
-  xen: raw('./md/xen.md'),
-  note_transcription: raw('./md/note_transcription.md'),
-  daquiri: raw('./md/daquiri.md'),
-  extra_qt: raw('./md/extra_qt.md'),
-  ui_generators: raw('./md/ui_generators.md'),
-  crystal_structure: raw('./md/crystal_structure.md'),
-  pyseswrapper: raw('./md/pyseswrapper.md'),
-  flex_motion: raw('./md/flex_motion.md'),
-};
 
 
 const Breadcrumb: React.FC<{crumbs: Array<[string, string]>}> = ({crumbs}) =>
@@ -27,16 +14,10 @@ const Breadcrumb: React.FC<{crumbs: Array<[string, string]>}> = ({crumbs}) =>
 const BlogItem = () => {
   const { blogId } = useParams() as { blogId: string,};
 
-  if (!FULL_POSTS.hasOwnProperty(blogId)) {
-    return <p>Not Found.</p>
-  }
-
-  // @ts-ignore
-  const currentItem = FULL_POSTS[blogId] as any;
   return <div className="blog-item">
     <Breadcrumb crumbs={[['/writing', 'Writing']]}/>
     <article>
-      <Markdown source={currentItem}/>
+      <DynamicMarkdown articleId={blogId} />
     </article>
   </div>
 };

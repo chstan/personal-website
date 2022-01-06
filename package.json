@@ -6,7 +6,6 @@
   "repository": "git@github.com:chstan/personal-website.git",
   "author": "Conrad Stansbury <chstansbury@gmail.com>",
   "license": "MIT",
-  "private": false,
   "scripts": {
     "bootstrap": "$PWD/scripts/bootstrap.sh",
     "docker-tag": "bash $PWD/scripts/tag.sh",

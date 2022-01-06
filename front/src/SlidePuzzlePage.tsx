@@ -1,6 +1,6 @@
 import React from "react";
-import raw from "raw.macro";
-import {Markdown} from "./common";
+import {DynamicMarkdown} from "./common";
+
 
 const SlidePuzzlePage = () =>
   <div>
@@ -8,7 +8,7 @@ const SlidePuzzlePage = () =>
       <strong>Historical Note: </strong>This code no longer runs inline. Clojure build tooling has become too
       complicated so I now use React. This makes my life simpler but some old projects suffered.
     </header>
-    <Markdown source={raw('./md/slide_puzzle.md')} />
+    <DynamicMarkdown articleId="slide_puzzle"/>
   </div>;
 
 export default SlidePuzzlePage;

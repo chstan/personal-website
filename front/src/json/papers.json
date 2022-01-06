@@ -7,6 +7,32 @@
     "kind": "thesis"
   },
   {
+    "name": "Visualizing electron localization of $\\text{WS}_2$/$\\text{WSe}_2$ moiré superlattices in momentum space",
+    "authors": [
+      "Conrad H. Stansbury",
+      "et. al."
+    ],
+    "date": "2021",
+    "url": "https://www.science.org/doi/10.1126/sciadv.abf4387",
+    "journal": "Science Advances",
+    "issue": "Vol 7, Issue 37",
+    "doi": "https://doi.org/10.1126/sciadv.abf4387",
+    "kind": "published"
+  },
+  {
+    "name": "PyARPES: An analysis framework for multimodal angle-resolved photoemission spectroscopies",
+    "authors": [
+      "Conrad Stansbury",
+      "Alessandra Lanzara"
+    ],
+    "date": "2020",
+    "url": "https://www.sciencedirect.com/science/article/pii/S2352711019301633",
+    "journal": "SoftwareX",
+    "issue": "January - June 2020",
+    "doi": "https://doi.org/10.1016/j.softx.2020.100472",
+    "kind": "published"
+  },
+  {
     "name": "Fuzzy Jets",
     "authors": [
       "Lester Mackey",

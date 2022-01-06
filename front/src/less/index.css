@@ -378,11 +378,6 @@ h6 {
   margin-bottom: 100px;
   text-transform: lowercase;
 }
-ul {
-  list-style: none outside;
-  margin: 0 0 20px 0;
-  padding: 0;
-}
 li {
   padding: 0 0 8px 0;
 }

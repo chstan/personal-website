@@ -1,7 +1,3 @@
-declare module "raw.macro" {
-  declare const raw: (p: string) => string;
-  export default raw;
-}
 declare module "react-markdown" {
   declare const ReactMarkdown: React.ComponentClass<any>;
   export default ReactMarkdown;

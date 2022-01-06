@@ -20,6 +20,24 @@ front/node_modules/
 front/build/
 node_modules/
 
+.pnp.*
+
+front/.yarn/*
+!front/.yarn/patches
+!front/.yarn/plugins
+!front/.yarn/releases
+!front/.yarn/sdks
+!front/.yarn/versions
+
+/.yarn/*
+!/.yarn/patches
+!/.yarn/plugins
+!/.yarn/releases
+!/.yarn/sdks
+!/.yarn/versions
+
+
+
 # vim
 *.swo
 *.swp

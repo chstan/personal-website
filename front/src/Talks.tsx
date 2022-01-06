@@ -10,7 +10,7 @@ const TalkWrapper: React.FC<{talk: Talk}> = ({talk, children}) => {
   return (
     <div className="talks-wrapper">
       <p>
-        <strong><InlineMarkdown source={talk.presentationTitle} /></strong>
+        <strong><InlineMarkdown>{talk.presentationTitle}</InlineMarkdown></strong>
         {children}
         {link}
       </p>

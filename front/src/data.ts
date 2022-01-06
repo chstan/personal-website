@@ -7,8 +7,16 @@ import _PAPERS from './json/papers.json';
 export type Book = {
   title: string;
   author: string;
+  impression: string | null;
   finished: boolean;
-  completionDate: string;
+  completionDate: string | null;
+}
+
+export enum PapersKind {
+  Published = "published",
+  Longform = "longform",
+  Thesis = "thesis",
+  Preprint = "arxiv",
 }
 
 export type PaperInfo = { // less well typed than others. ...shrug
@@ -20,7 +28,7 @@ export type PaperInfo = { // less well typed than others. ...shrug
   journal?: string;
   issue?: string;
   doi?: string;
-  kind: string;
+  kind: PapersKind;
 };
 
 export enum TalkKind {
@@ -51,7 +59,7 @@ const BOOKS: Array<Book> = _BOOKS;
 const TALKS: Array<Talk> = _TALKS as any;
 const PROJECTS: Array<ProjectInfo> = _PROJECTS;
 const WRITING: Array<WritingInfo> = _WRITING;
-const PAPERS: Array<PaperInfo> = _PAPERS;
+const PAPERS: Array<PaperInfo> = _PAPERS as any;
 
 const BASE_INFO = {
   address: '2517 Virginia St. Apt 5',

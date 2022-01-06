@@ -1,8 +1,9 @@
 import React, {MouseEventHandler} from "react";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import ReactMarkdown from 'react-markdown';
-import RemarkMathPlugin from 'remark-math';
-import {BlockMath, InlineMath} from 'react-katex';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import rehypeRaw from 'rehype-raw';
 
 import 'katex/dist/katex.min.css';
 import {atomOneLight} from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -41,15 +42,32 @@ const Markdown = (props: any) => {
   const newProps = {
     ...props,
     className: 'markdown',
-    plugins: [
-      RemarkMathPlugin,
+    remarkPlugins: [
+      remarkMath,
+    ],
+    rehypePlugins: [
+      rehypeKatex,
+      rehypeRaw,
     ],
     escapeHtml: false,
-    renderers: {
-      ...props.renderers,
-      code: renderSyntax(),
-      math: (props: {value: string}) => <BlockMath>{props.value}</BlockMath>,
-      inlineMath: (props: {value: string}) => <InlineMath>{props.value}</InlineMath>,
+    components: {
+      ...props.components,
+      code({node, inline, className, children, ...props}: any) {
+        const match = /language-(\w+)/.exec(className || 'python')
+        return !inline && match ? (
+          <SyntaxHighlighter
+            children={String(children).replace(/\n$/, '')}
+            style={atomOneLight}
+            language={match[1]}
+            PreTag="div"
+            {...props}
+          />
+        ) : (
+          <code className={className} {...props}>
+            {children}
+          </code>
+        )
+      }
     }
   };
   return <ReactMarkdown {...newProps} />;
@@ -65,11 +83,39 @@ const WrapLink: React.FC<{ to: string, }> = ({to, children}) =>
   to.startsWith('http') ? <a className="external" href={to}>{children} <strong className="link-decoration">⤤</strong></a> :
     <Link to={to}>{children}</Link>;
 
+type DynamicMarkdownProps = {
+  articleId: string
+}
+type DynamicMarkdownState = {
+  markdown: string
+};
+class DynamicMarkdown extends React.Component<DynamicMarkdownProps, DynamicMarkdownState> {
+  constructor(props: DynamicMarkdownProps) {
+    super(props);
+    this.state = { markdown: "" }
+  }
+
+  async componentDidMount() {
+    const file = await import(`./md/${this.props.articleId}.md`);
+    const response = await fetch(file.default);
+    const text = await response.text();
+    
+    this.setState({markdown: text });
+  }
+
+  render() {
+    return (
+      <Markdown>{this.state.markdown}</Markdown>
+    );
+  }
+}
+
 export {
   SimpleButton,
   LabeledInputGroup,
   WrapLink,
   renderSyntax,
+  DynamicMarkdown,
   Markdown,
   InlineMarkdown,
   SuperSecretCat,

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactGA from 'react-ga';
-import {Router, Route, Switch, } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory';
-import {ContactPage, GoPage, ReadingPage, Resume, WelcomePage} from "./staticPages";
+import {BrowserRouter, Route, Routes, } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import {ContactPage, GoPage, ReadingPage, Resume, WelcomePage, UnmigratedTalksPage} from "./staticPages";
 import {ProjectsPage} from "./Project";
 import {TalksPage} from "./Talks";
 import PapersPage from "./Papers";
@@ -13,8 +13,9 @@ import {BlogItem, BlogPage} from "./Blog";
 import SlidePuzzlePage from "./SlidePuzzlePage";
 import {TaxExplorerPage,} from "./Marriage";
 
-const history = createHistory();
-history.listen(location => {
+const history = createBrowserHistory();
+history.listen(update => {
+  const location = update.location;
   if (process.env.NODE_ENV !== 'development') {
     ReactGA.set({page: location.pathname});
     ReactGA.pageview(location.pathname);
@@ -98,7 +99,7 @@ const links = [
   SEPARATOR,
 
   ['/writing', [BlogPage, 'writing']],
-  ['/reading', [ReadingPage, 'reading']],
+  //['/reading', [ReadingPage, 'reading']],
   ['/contact', [ContactPage, 'contact']],
 
   SEPARATOR,
@@ -143,23 +144,22 @@ const Navbar: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <Router history={history}>
+    <BrowserRouter>
       <div className="container">
         <div className="nav-container">
           <Navbar />
         </div>
         <div className="content-container">
-          <Switch>
-            <Route path='/writing/:blogId'><BlogItem /></Route>
+          <Routes>
+            <Route path="/unmigrated-talk" element={<UnmigratedTalksPage />} />
+            <Route path='/writing/:blogId' element={<BlogItem />}/>
             {flatLinks.map(([k, [C, _]]) =>
-              <Route key={k} path={k}>
-                <C />
-              </Route>
+              <Route key={k} path={k} element={<C />} />
             )}
-          </Switch>
+          </Routes>
         </div>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 };
 
