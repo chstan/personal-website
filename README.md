@@ -12,6 +12,10 @@ Core cycle is:
 2. `yarn build`
 3. `yarn run`
 
+You might find it useful to run:
+
+`docker stop (docker ps -aq); docker rm (docker ps -aq); yarn build && yarn start`
+
 ## Adding a blog post
 
 Add a .md file in `/md`, add and entry in `writing.json, and add the read macro invocation in `Blog.tsx`. 

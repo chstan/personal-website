@@ -1,8 +1,35 @@
 [
   {
+    "name": "A new approach to nano-probe photoemission microscopy by leveraging fluctuations",
+    "authors": [
+      "Conrad H. Stansbury",
+      "et al."
+    ],
+    "date": "2022",
+    "kind": "in_preparation"
+  },
+  {
+    "name": "Comprehensive band structures and evolution from mono- to multilayer in the semiconducting transition metal dihalcogenides $\\text{WS}_2$ and $\\text{WSe}_2$",
+    "authors": [
+      "Conrad H. Stansbury",
+      "et al."
+    ],
+    "date": "2022",
+    "kind": "in_preparation"
+  },
+  {
+    "name": "AutodiDAQt: simple scientific data acquisition software with analysis-in-the-loop",
+    "authors": [
+      "Conrad H. Stansbury",
+      "Alessandra Lanzara"
+    ],
+    "date": "2022",
+    "kind": "submitted"
+  },
+  {
     "name": "Fuzzy Jets (Undergraduate thesis)",
     "date": "June 2015",
-    "authors": ["Conrad Stansbury"],
+    "authors": ["Conrad H. Stansbury"],
     "url": "pdf/thesis.pdf",
     "kind": "thesis"
   },
@@ -10,7 +37,7 @@
     "name": "Visualizing electron localization of $\\text{WS}_2$/$\\text{WSe}_2$ moiré superlattices in momentum space",
     "authors": [
       "Conrad H. Stansbury",
-      "et. al."
+      "et al."
     ],
     "date": "2021",
     "url": "https://www.science.org/doi/10.1126/sciadv.abf4387",
@@ -22,7 +49,7 @@
   {
     "name": "PyARPES: An analysis framework for multimodal angle-resolved photoemission spectroscopies",
     "authors": [
-      "Conrad Stansbury",
+      "Conrad H. Stansbury",
       "Alessandra Lanzara"
     ],
     "date": "2020",
@@ -58,7 +85,7 @@
     "name": "PyARPES Documentation Site",
     "authors": ["Conrad Stansbury"],
     "date": "2018 - present",
-    "url": "http://arpes.netlify.com/",
+    "url": "http://arpes.readthedocs.io/",
     "kind": "longform"
   },
   {

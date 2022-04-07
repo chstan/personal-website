@@ -17,13 +17,15 @@ export enum PapersKind {
   Longform = "longform",
   Thesis = "thesis",
   Preprint = "arxiv",
+  Submitted = "submitted",
+  InPreparation = "in_preparation",
 }
 
 export type PaperInfo = { // less well typed than others. ...shrug
   name: string;
   authors: Array<string>;
   date: string;
-  url: string;
+  url?: string;
   arxivId?: string;
   journal?: string;
   issue?: string;

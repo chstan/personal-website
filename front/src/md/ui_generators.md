@@ -418,7 +418,7 @@ a render.
 
 ## Building UI-based DAQ Applications in `DAQuiri`  
 
-<img alt="DAQuiri Snapshot" width="550px" src="/img/DAQuiri-example-snap.png" />
+<img alt="DAQuiri Snapshot" width="550px" src="/img/DAQuiri-example-snap.PNG" />
 
 ```python
 from daquiri import Daquiri, Experiment

@@ -60,7 +60,7 @@ const openSourceSection = {
   title: 'Open-source',
   defaultOpen: true,
   content: [
-    ['https://arpes.netlify.com/', [Unimplemented, 'PyARPES']],
+    ['https://arpes.readthedocs.io/', [Unimplemented, 'PyARPES']],
     ['https://daquiri.readthedocs.io/', [Unimplemented, 'DAQuiri']],
     ['https://extra-qt.readthedocs.io/', [Unimplemented, 'extra_qt']],
   ]

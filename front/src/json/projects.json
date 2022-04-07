@@ -1,7 +1,7 @@
 [
   {
     "title": "PyARPES",
-    "label": "https://arpes.netlify.com/",
+    "label": "https://arpes.readthedocs.io/",
     "description": "A comprehensive data analysis framework for angle-resolved photoemission spectroscopy (ARPES) and other condensed matter physics disciplines."
   },
   {

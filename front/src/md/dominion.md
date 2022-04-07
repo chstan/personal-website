@@ -9,25 +9,25 @@ In order to determine what moves to make on a given turn, the simulator executes
 Public Game State
 -----------------
 
-The global game state available to a policy (through its first argument) is a Clojure map. Its structure follows this example documenting the game state at the start of a new game on Asteria's turn:
+The global game state available to a policy (through its first argument) is a Clojure map. Its structure follows this example documenting the game state at the start of a new game on Beth's turn:
 
 ```clojure
 ;; Publicly viewable state
-{:player-names #{"Abas" "Asteria"}
- :turns ["Asteria" "Abas"]
+{:player-names #{"Alex" "Beth"}
+ :turns ["Beth" "Alex"]
  :card-pool {:Province  8
              :Gold      30
              :Ironworks 8
           ;; :Card      Count
              }
- :players {"Asteria"
-           {:name "Asteria"
+ :players {"Beth"
+           {:name "Beth"
             :hand [:Copper :Copper :Copper :Estate :Copper]
             :deck {:Copper 3 :Estate 2}
             :played-cards []
             :discard []
-            "Abas"
-           {:name "Abas"
+            "Alex"
+           {:name "Alex"
             :hand-size 5
             :hand-and-deck {:Copper 7 :Estate 3}
             :played-cards []

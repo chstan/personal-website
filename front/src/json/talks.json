@@ -1,11 +1,27 @@
 [
   {
+    "name": "290K Seminar",
+    "date": "May 2, 2022",
+    "location": "UC Berkeley",
+    "presentationTitle": "How Improved Analysis Suites Expand the Impact of ARPES: Case Studies from Photoemission of 2D Materials and Superlatties",
+    "presentationUrl": "#",
+    "kind": "invited"
+  },
+  {
+    "name": "Department of Physical Chemistry Seminar",
+    "date": "November 29, 2021",
+    "location": "Fritz Haber Institut, Max Planck Gesellschaft",
+    "presentationTitle": "Visualizing Electron Localization and Minibands in $\\text{WS}_2\\text{WSe}_2$ Moiré Superlattices",
+    "presentationUrl": "https://pc.fhi-berlin.mpg.de/pc_event/department-online-seminar-tba/",
+    "kind": "invited"
+  },
+  {
     "name": "the ALS User Meeting 2019",
     "date": "October 3, 2019",
     "location": "Advanced Light Source, LBNL",
     "presentationTitle": "Studying Transition Metal Dichalcogenide Superlattices with nano-ARPES",
     "presentationUrl": "pdf/ALS_User_Meeting_2019.pdf",
-    "kind": "conference"
+    "kind": "invited"
   },
   {
     "name": "APS March Meeting 2020",

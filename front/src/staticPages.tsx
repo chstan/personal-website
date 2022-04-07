@@ -11,7 +11,59 @@ import { Baduk, AutoplayBaduk } from './lib/Baduk';
 import moves from './json/alpha_go_lee_sedol_1.json';
 import {ExampleMarriageDiagram} from "./Marriage";
 
+const HOUR = 3600;
+const NYT_MOIRE = "https://www.nytimes.com/2019/10/30/science/graphene-physics-superconductor.html";
+const LANZARA_LAB = "http://research.physics.berkeley.edu/lanzara/";
+const AUTODIDAQT_DEMO_VIDEO = "/video/autodidaqt-demo.mp4";
+const AUTODIDAQT_DEMO_POSTER = "/video/autodidaqt-demo-poster.jpg";
+const PYARPES_PAPER_URL = "https://www.sciencedirect.com/science/article/pii/S2352711019301633"
+
+const PyARPESBlurb = () => {
+  return (
+    <article className="welcome-portal-item">
+      <header><h2>PyARPES: A modern analysis framework for photoemission</h2></header>
+      <object data="/img/PyARPES-Logo.svg" type="image/svg+xml">
+        <img src="/img/PyARPES-Logo.png" />
+      </object>
+      Read the paper: <WrapLink to={PYARPES_PAPER_URL}>10.1016/j.softx.2020.100472</WrapLink>.
+    </article>
+  );
+};
+
+const AutodiDAQtBlurb = () => {
+  return (
+    <article className="welcome-portal-item">
+      <header><h2>AutodiDAQt: Batteries-included scientific DAQ</h2></header>
+      <video controls={false} autoPlay={true} muted={true} loop={true} width={350} poster={AUTODIDAQT_DEMO_POSTER}>
+        <source src={AUTODIDAQT_DEMO_VIDEO} type="video/mp4"></source>
+      </video>
+    </article>
+  );
+};
+
+const CrystalStructureBlurb = () => {
+  const IMAGE_PERIOD = HOUR / 6;
+
+  const images = [
+    "/img/crystal_structure/structure-fenbs2.png",
+    "/img/crystal_structure/structure-moire-ws2-wse2.png",
+  ];
+
+  const imageIdx = Math.floor(secondsSince1970() / IMAGE_PERIOD) % images.length;
+  const imageUrl = images[imageIdx];
+
+  return (
+    <article className="welcome-portal-item">
+      <header><h2>Ray-Tracing Crystal Structures and Moirés</h2></header>
+      <img src={imageUrl} width="350px" />
+    </article>
+  );
+};
+
 const portalOptions = [
+  ["https://arpes.readthedocs.io", () => <PyARPESBlurb />],
+  ["/writing/crystal_structure", () => <CrystalStructureBlurb />],
+  ["https://github.com/chstan/autodidaqt", () => <AutodiDAQtBlurb />],
   ['/go', () => (
       <article className="go-game go-game-small" id="go-game" style={{marginLeft: "2rem"}}>
           <AutoplayBaduk size={19} every={.25} sequence={moves} onClick={() => null}/>
@@ -22,12 +74,17 @@ const portalOptions = [
 
 const secondsSince1970 = () => Math.round(new Date().getTime() / 1000);
 
-const WelcomePortal = () => {
-  const HOUR = 3600;
+const WelcomePortal = (props: { fixIndex: number | null }) => {
   // stable over the course of a visit but repeat visits will be different
   const PORTAL_PERIOD = 8 * HOUR;
-  const portalNumber = Math.floor(secondsSince1970() / PORTAL_PERIOD);
-  const [portalUrl, Portal] = portalOptions[portalNumber % portalOptions.length];
+  let portalNumber = Math.floor(secondsSince1970() / PORTAL_PERIOD);
+  portalNumber = portalNumber % portalOptions.length
+
+  if (props.fixIndex !== null) {
+    portalNumber = props.fixIndex;
+  }
+
+  const [portalUrl, Portal] = portalOptions[portalNumber];
 
   const PortalWrapper: React.FC<{depth: number,}> = ({children, depth}) => {
     if (depth > 10) depth = 10;
@@ -68,21 +125,38 @@ const WelcomePage: React.FC = () => {
     <div className="content-header statement">
       <p>Hi, I'm Conrad.</p>
       <p>
-        I am a graduate student in physics working as part of
-        the <WrapLink to="http://research.physics.berkeley.edu/lanzara/">Lanzara Lab</WrapLink>
+        <strong>Note, April 2022 -:</strong> I'm currently looking for a post-PhD role.
+        If you work on a problem with asymmetric, positive human impact and
+        you're looking for a data scientist, research engineer, or ML engineer
+        who will bring technical leadership and cross-discipline expertise
+        I would love to learn more about it.
+      </p>
+
+      <p>
+        I am completing a physics PhD as a member of
+        the <WrapLink to={LANZARA_LAB}>Lanzara Lab</WrapLink>
         at the University of California, Berkeley.
-        My current interests include developing and using powerful new
-        spectroscopic tools like time resolved ARPES and THz optical reflectivity
-        to understand topological states of matter and correlated systems.
+
+        My graduate work focused on developing and using powerful new
+        spectroscopic tools like nanoscale and time-resolved ARPES
+        to understand correlated phases of matter in two dimensional 
+        <WrapLink to={NYT_MOIRE}>moirés</WrapLink>.
+      </p>
+
+      <p>
+        ARPES, a data heavy discipline producing 1-10s of GBs/hour of high dimensional 
+        electron spectra, requires sophisticated approaches to acquisition and interpretation.
+        A core component of my PhD centered around better solving this problem, developing 
+        ML approaches to the analysis of this data, and building open source software to better
+        serve the interests of scientists.
       </p>
       <p>
-        I also develop open source software to better serve the interests of scientists.
         Notably, I am the author and maintainer for:
       </p>
       <p>
         <ul className="welcome-callout">
           <li>
-            <WrapLink to="https://arpes.netlify.com/"><strong>PyARPES</strong></WrapLink>:
+            <WrapLink to="https://arpes.readthedocs.io/"><strong>PyARPES</strong></WrapLink>:
             a data analysis framework for angle resolved photoemission spectroscopy.
           </li>
           <li>
@@ -111,16 +185,23 @@ const WelcomePage: React.FC = () => {
         techniques to better understand the huge amounts of data ARPES provides on quantum materials.
       </p>
       <p>
+        Recently, I operated as Head of Machine Learning for a startup developing a novel diagnostic test
+        for respiratory viruses. I lead a small team building data infrastructure, developing vision-inspired
+        classification models, and productionizing ML services and APIs.
+
         Prior to graduate school, I worked as a full-stack software engineer, a data scientist,
         and in technical recruiting at <WrapLink to="https://zanbato.com">Zanbato</WrapLink>.
       </p>
       <p>
         To see some of what I've been working on, take a look around
-        or head over to my <WrapLink to={BASE_INFO.github}>GitHub</WrapLink>. Alternatively, if you want to get
-        in touch, send me an email.
+        or head over to my <WrapLink to={BASE_INFO.github}>GitHub</WrapLink>. 
+        Alternatively, if you want to get in touch, send me an email. 
+        
+        These days&mdash;more than recent years&mdash;a coffee someplace in the Berkeley/SF/Oakland area 
+        is another welcome way to connect.
       </p>
       <p>Thanks for visiting!</p>
-      <WelcomePortal />
+      <WelcomePortal fixIndex={2} />
     </div>
   );
 };

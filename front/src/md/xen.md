@@ -1,5 +1,14 @@
 # Setting up a Multi-user Server
 
+#### Note 2021: Migration ot KVM
+
+As of late 2021 I mirated from Xen to KVM in order to support
+simpler whole disk backups. The general material here should still 
+be accurate for Xen, and indicative of the process for KVM 
+if you want to use a separate network bridge.
+
+## Motivation
+
 After several frustrating near-misses with hardware failures, I set up a shared remote desktop. Our written experience of this can serve as a catalogue of failures and starting point for others taking this path in 2021.
 
 We are each primarily Windows users with relatively heavy compute needs. These requirements, together with budget, constrained options. Your needs might be different than ours.
