@@ -1,21 +1,21 @@
-FROM node
+FROM node:18-slim
 
 WORKDIR /app
 
-ENV YARN_VERSION 3.1.1
-RUN yarn policies set-version $YARN_VERSION
+# Enable Yarn 3.1.1
+COPY .yarn ./.yarn
+COPY .yarnrc.yml package.json yarn.lock ./
+RUN corepack enable && yarn install --immutable
 
-# Install from yarn.lock before copying everything else
-# for cacheing reasons
-COPY front/package.json front/yarn.lock ./front/
-RUN cd front && yarn install --immutable
-COPY package.json yarn.lock ./
-RUN yarn install --immutable
+# Copy the rest of the application
+COPY . .
 
-COPY . ./
-RUN chmod +x ./scripts/bootstrap.sh
-RUN chmod +x ./scripts/run_continuously.sh
-RUN yarn bootstrap
-RUN cd front && yarn install --immutable && yarn build
+# Build the frontend
+RUN yarn build
 
-CMD yarn run-in-container
+# Set permissions for scripts
+RUN chmod +x scripts/run_continuously.sh
+
+EXPOSE 8001
+
+CMD ["yarn", "run-in-container"]

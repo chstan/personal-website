@@ -10,27 +10,36 @@ These tasks reduce complexity and remove non-standard "glue" scripts without cha
 **Objective:** Remove the `Less` preprocessor and the fragile `less-watch-compiler` sidecar process.
 **Rationale:** Modern CSS now natively supports features that previously required Less (Variables, Nesting, Calc).
 **Steps:**
-*   [ ] Audit `front/src/less/vars.less` and convert all variables to CSS Custom Properties (e.g., `@primary-color` → `--primary-color`).
-*   [ ] Convert nested selectors in `.less` files to standard CSS (or rely on PostCSS nesting).
-*   [ ] Rename all `.less` files to `.css`.
-*   [ ] Update imports in `App.tsx` and other components.
-*   [ ] Uninstall `less`, `less-watch-compiler`.
+*   [x] Audit `front/src/less/vars.less` and convert all variables to CSS Custom Properties (e.g., `@primary-color` → `--primary-color`).
+*   [x] Convert nested selectors in `.less` files to standard CSS (or rely on PostCSS nesting).
+*   [x] Rename all `.less` files to `.css`.
+*   [x] Update imports in `App.tsx` and other components.
+*   [x] Uninstall `less`, `less-watch-compiler`.
 
 ### 2. Dependency Hygiene: Localize Global Tools
 **Objective:** Make the project self-contained and reproducible.
 **Rationale:** The current `scripts/bootstrap.sh` relies on `npm install --global`. This corrupts the user's environment and breaks in strictly sandboxed CI/CD.
 **Steps:**
-*   [ ] Add `serve` as a local dependency in `package.json` (or `front/package.json`).
-*   [ ] Update `scripts/run_continuously.sh` to use `npx serve` or `yarn serve`.
-*   [ ] Delete `scripts/bootstrap.sh`.
+*   [x] Add `serve` as a local dependency in `package.json` (or `front/package.json`).
+*   [x] Update `scripts/run_continuously.sh` to use `npx serve` or `yarn serve`.
+*   [x] Delete `scripts/bootstrap.sh`.
 
 ### 3. Remove Dead Code: The Clojure Backend
 **Objective:** Reduce cognitive load by removing the vestigial backend.
 **Rationale:** The site is deployed as a static frontend. The `src/clj` and `project.clj` files are "ghosts" that complicate the repository.
 **Steps:**
-*   [ ] Delete `src/clj/`, `test/clj/`, `dev/`.
-*   [ ] Delete `project.clj`.
-*   [ ] Clean up root `Dockerfile` to remove Leiningen/Clojure steps.
+*   [x] Delete `src/clj/`, `test/clj/`, `dev/`.
+*   [x] Delete `project.clj`.
+*   [x] Clean up root `Dockerfile` to remove Leiningen/Clojure steps.
+
+### 4. Flatten Project Structure
+**Objective:** Simplify the repository by moving the frontend to the root.
+**Rationale:** Since the backend is gone, there's no reason to have a nested `front/` directory.
+**Steps:**
+*   [x] Move `front/src`, `front/public`, `front/tsconfig.json` to root.
+*   [x] Merge `package.json` and `.gitignore`.
+*   [x] Update `Dockerfile` and deployment scripts.
+*   [x] Delete `front/` directory.
 
 ---
 

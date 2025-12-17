@@ -1,55 +1,30 @@
-/target
-/classes
-/checkouts
-pom.xml
-pom.xml.asc
-*.jar
-*.class
-/.lein-*
-/.nrepl-port
-/resources
-/out
-/.repl
-
-.idea/
-new-website.iml
-
-# generated files
-front/node_modules/
-front/build/
+# Dependency directories
 node_modules/
+/build/
 
+# Yarn
 .pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
-front/.yarn/*
-!front/.yarn/patches
-!front/.yarn/plugins
-!front/.yarn/releases
-!front/.yarn/sdks
-!front/.yarn/versions
-
-/.yarn/*
-!/.yarn/patches
-!/.yarn/plugins
-!/.yarn/releases
-!/.yarn/sdks
-!/.yarn/versions
-
-
-
-# vim
+# Editor/OS files
+.idea/
+**/.DS_STORE
 *.swo
 *.swp
 
-# scripts on server
-run_personal_website
-run_personal_website_continuously
-
-log
+# Logs
+log/
 *.log
-yarn.lock
 
-**/.DS_STORE
-
-# sssh... secrets
+# Environment/Secrets
 env.sh
+.env
+.env.local
+
+# Production build artifacts
+yarn-error.log
