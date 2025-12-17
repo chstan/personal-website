@@ -1,65 +1,70 @@
-@import './vars';
-
 .markdown {
-  p, li, span, a {
+  & p, & li, & span, & a {
     font-size: 16px;
     font-weight: 400;
   }
-  pre code span, pre code {
+  & pre code span, & pre code {
     font-size: 14px;
   }
-  h1, h2, h3, h4, h5, h6 {
+  & h1, & h2, & h3, & h4, & h5, & h6 {
     line-height: 1.3em;
     font-weight: 600;
   }
 
-  ol, ul {
+  & ol, & ul {
     margin-top: 1em;
     margin-bottom: 1em;
   }
 
-  li {
+  & li {
     &:before {
       font-size: 14px;
     }
   }
 }
 .no-indent, .no-indent .markdown {
-  p {
+  & p {
     text-indent: 0;
   }
 }
 
 .inline-code-decoration {
-  background-color: lighten(@inlineCodeColor, 10%);
+  background-color: var(--inline-code-bg);
   display: inline-block;
   padding-left: 3px;
   padding-right: 3px;
   border-radius: 2px;
-  border: 1px solid darken(@inlineCodeColor, 5%);
+  border: 1px solid var(--inline-code-border);
 
-  // provides a little daylight between the border and punctuation
-  // but not so much that it looks bad next to text
+  /* provides a little daylight between the border and punctuation */
+  /* but not so much that it looks bad next to text */
   margin-right: 0.05em;
 }
 
 .markdown {
-  // target code blocks but only those that are inline
-  > *:not(pre) > code, *:not(pre) *:not(pre) > code, figcaption code {
-    .inline-code-decoration;
+  /* target code blocks but only those that are inline */
+  & > *:not(pre) > code, & *:not(pre) *:not(pre) > code, & figcaption code {
+    /* inline-code-decoration content */
+    background-color: var(--inline-code-bg);
+    display: inline-block;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 2px;
+    border: 1px solid var(--inline-code-border);
+    margin-right: 0.05em;
   }
-  > h1, > h2, > h3, > h4, > h5, > h6 {
-    > code {
+  & > h1, & > h2, & > h3, & > h4, & > h5, & > h6 {
+    & > code {
       line-height: 1.4em;
     }
   }
-  p a code {
+  & p a code {
     text-decoration: underline;
-    color: darken(@inlineCodeLinkColor, 60%);
-    border-color: darken(@inlineCodeLinkColor, 10%);
-    background-color: lighten(@inlineCodeLinkColor, 5%);
+    color: var(--inline-code-link-text);
+    border-color: var(--inline-code-link-border);
+    background-color: var(--inline-code-link-bg);
     &:hover {
-      background-color: @inlineCodeLinkColor;
+      background-color: var(--inline-code-link-color);
     }
   }
 }
@@ -72,34 +77,34 @@
 }
 
 #dominion, .markdown {
-  section {
+  & section {
     width: 500px;
-    p, p {
+    & p {
       margin-bottom: 10px;
       line-height: 1.3;
     }
-    h1, h2 {
+    & h1, & h2 {
       margin-bottom: 20px;
     }
-    h1 {
+    & h1 {
       font-size: 24px;
     }
   }
 
-  section:not(:last-child) {
+  & section:not(:last-child) {
     margin-bottom: 30px;
   }
 
-  #editor-container {
-    border-right: 1px solid @editorColor;
-    border-bottom: 1px solid @editorColor;
+  & #editor-container {
+    border-right: 1px solid var(--editor-color);
+    border-bottom: 1px solid var(--editor-color);
   }
 
-  #run-button:disabled, #run-button:disabled:hover {
+  & #run-button:disabled, & #run-button:disabled:hover {
     background-color: rgba(255,235,0,0.4);
   }
 
-  #run-button {
+  & #run-button {
     height: 28px;
     width: 120px;
 
@@ -110,7 +115,7 @@
     color: rgb(80,80,80);
   }
 
-  #run-button:hover {
+  & #run-button:hover {
     background-color: rgba(109, 189, 35, 0.2);
   }
 }
@@ -120,22 +125,22 @@
 }
 .markdown {
   width: 550px;
-  h1 {
+  & h1 {
     font-size: 24px;
   }
-  h2 {
+  & h2 {
     font-size: 20px;
   }
-  h3 {
+  & h3 {
     font-size: 18px;
   }
-  a {
+  & a {
     text-decoration: underline;
   }
-  p {
+  & p {
     line-height: 1.6;
     margin-bottom: 12px;
-    * {
+    & * {
       text-indent: initial;
     }
   }
@@ -146,22 +151,22 @@
   color: #000;
 }
 .markdown {
-  > div > *:first-child {
+  & > div > *:first-child {
     margin-top: 0;
   }
-  h1 {
+  & h1 {
     margin-top: 45px;
   }
-  h2 {
+  & h2 {
     color: rgb(68,68,68);
     margin-top: 35px;
   }
 }
 
 .inline-markdown {
-  .markdown {
+  & .markdown {
     display: inline;
-    p {
+    & p {
       display: inline;
     }
   }
@@ -172,7 +177,7 @@
 }
 
 .inline-markdown {
-  .katex {
+  & .katex {
     font: normal 1em KaTeX_SansSerif, sans-serif !important;
   }
 }
@@ -183,11 +188,11 @@
 }
 
 .head-note {
-  :last-child {
+  & :last-child {
     margin-bottom: 0;
   }
   padding: 1em;
-  background-color: @lightGray;
+  background-color: var(--light-gray);
   border-radius: 5px;
   margin: 1em 1em;
 }

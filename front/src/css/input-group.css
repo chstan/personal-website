@@ -4,13 +4,13 @@
   display: flex;
   align-items: center;
 
-  &label, .label-text {
+  & label, & .label-text {
     vertical-align: middle;
     font-weight: normal;
     margin-bottom: 0;
   }
 
-  .label-text {
+  & .label-text {
     margin-left: 1em;
     font-size: 16px;
   }
@@ -19,7 +19,7 @@
     margin-bottom: 4px;
   }
 
-  input, textarea {
+  & input, & textarea {
     font-weight: 300;
     padding: 5px;
     margin-right: 4px;
@@ -27,7 +27,7 @@
     border: 1px solid rgb(185, 185, 185);
     border-radius: 4px;
   }
-  textarea {
+  & textarea {
     height: 90px;
     outline: 0;
     overflow: auto;

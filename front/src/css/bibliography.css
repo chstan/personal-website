@@ -2,13 +2,13 @@
   display: flex;
   flex-direction: column;
 
-  .bibliography-header {
+  & .bibliography-header {
 
   }
 }
 
 .talks-container {
-  .talks-wrapper {
+  & .talks-wrapper {
     &:not(.condensed) > *:not(:last-child) {
       margin-bottom: 1rem;
     }

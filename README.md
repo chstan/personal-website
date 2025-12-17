@@ -18,4 +18,4 @@ You might find it useful to run:
 
 ## Adding a blog post
 
-Add a .md file in `/md`, add and entry in `writing.json, and add the read macro invocation in `Blog.tsx`. 
+Add a .md file in `/md`, add and entry in `writing.json,` and add the read macro invocation in `Blog.tsx`. 

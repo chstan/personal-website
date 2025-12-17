@@ -1,22 +1,11 @@
-@import './vars';
-@import './toggle';
-@import './input-group';
-@import './form';
-@import './bibliography';
-@import './go';
-@import './markdown';
-@import './list';
-@import './flex-utils';
-@import './welcome-portal';
-
 .callout {
   margin-left: 0.75rem;
   padding-left: 0.75rem;
-  border-left: 2px solid @blockAccentColor;
+  border-left: 2px solid var(--block-accent-color);
 }
 
 #app, a {
-  font-family: @bodyFont;
+  font-family: var(--body-font);
 }
 
 * {
@@ -27,29 +16,29 @@
 #project-description-list {
   width: 660px;
 
-  > div:not(:last-child) {
+  & > div:not(:last-child) {
     margin-bottom: 60px;
   }
 
-  a, h1 {
+  & a, & h1 {
     font-size: 21px;
     color: #444;
   }
-  a {
+  & a {
     text-decoration: underline;
   }
 
-  p {
+  & p {
     margin-top: 5px;
     line-height: 1.3;
   }
 
-  .project-content {
+  & .project-content {
     vertical-align: top;
     width: 500px;
   }
 
-  .project-image {
+  & .project-image {
     width: 140px;
     height: 140px;
     border-radius: 70px;
@@ -61,28 +50,28 @@
 }
 
 #resume {
-  .experience-sections {
-    > div:not(:last-child) {
+  & .experience-sections {
+    & > div:not(:last-child) {
       margin-bottom: 20px;
     }
   }
   padding-top: 70px;
-  h1 {
+  & h1 {
     font-size: 18px;
   }
-  h2 {
+  & h2 {
     font-size: 16px;
   }
 
-  .resume-row:not(:last-child) {
+  & .resume-row:not(:last-child) {
     margin-bottom: 20px;
   }
 
-  .experience-header {
+  & .experience-header {
     padding-bottom: 6px;
   }
 
-  i {
+  & i {
     font-size: 14px;
     font-weight: 300;
   }
@@ -91,13 +80,13 @@
 .table-div {
   display: table;
   table-layout: fixed;
-  > * {
+  & > * {
     display: table-cell;
   }
 }
 
 .resume-row {
-  > *:first-child {
+  & > *:first-child {
     width: 140px;
   }
 }
@@ -120,27 +109,31 @@ a {
   color: #000;
 }
 nav {
-  a, button {
+  & a, & button {
     text-decoration: none;
     color: #444;
   }
-  ul {
+  & ul {
     float: left;
   }
 }
 
-.bulletless-list() {
+.bulletless-list {
   list-style: none outside;
   margin: 0 0 20px 0;
   padding: 0;
 }
 
 .welcome-callout {
-  .bulletless-list;
+  list-style: none outside;
+  margin: 0 0 20px 0;
+  padding: 0;
 }
 .talks-container, .nav-container {
-  ul {
-    .bulletless-list;
+  & ul {
+    list-style: none outside;
+    margin: 0 0 20px 0;
+    padding: 0;
   }
 }
 
@@ -152,8 +145,8 @@ nav {
   width: 120px;
   line-height: 1rem;
 
-  #name-header {
-    font-family: @logoFont;
+  & #name-header {
+    font-family: var(--logo-font);
     font-weight: 400;
     margin-bottom: 70px;
     text-transform: lowercase;
@@ -185,10 +178,10 @@ body, div, p, h1, h2, h3, h4, h5, h6 {
   &:not(:last-child) {
     margin-bottom: 30px;
   }
-  h2 {
+  & h2 {
     font-size: 20px;
   }
-  .project-description, .blog-short {
+  & .project-description, & .blog-short {
     margin-top: 8px;
     font-size: 16px;
     font-weight: 300;
@@ -197,14 +190,18 @@ body, div, p, h1, h2, h3, h4, h5, h6 {
 
 .welcome-callout {
   margin-top: 1rem;
-  .callout;
-  header strong {
+  /* duplicate callout styles */
+  margin-left: 0.75rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--block-accent-color);
+
+  & header strong {
     color: black;
   }
 }
 
 .nav-section {
-  button {
+  & button {
     font-size: smaller;
     text-transform: lowercase;
     border: none;
@@ -214,7 +211,7 @@ body, div, p, h1, h2, h3, h4, h5, h6 {
     text-align: left;
     display: inline;
   }
-  .contents {
+  & .contents {
     margin-left: 1rem;
     margin-top: 1rem;
   }
@@ -240,14 +237,14 @@ body, div, p, h1, h2, h3, h4, h5, h6 {
 }
 
 .talks-wrapper {
-  * {
+  & * {
     font-size: 14px !important;
   }
 
-  p {
+  & p {
     line-height: 1.6;
   }
-  a {
+  & a {
     text-decoration: none;
     color: #DD4814;
     font-weight: 300;
@@ -257,7 +254,7 @@ body, div, p, h1, h2, h3, h4, h5, h6 {
 .talks-container {
   margin-bottom: 60px;
 
-  li {
+  & li {
     margin-bottom: 0.5rem;
   }
 }
@@ -267,7 +264,7 @@ body, div, p, h1, h2, h3, h4, h5, h6 {
 }
 .book {
   font-size: 14px;
-  cite {
+  & cite {
     font-weight: 400;
   }
 }
@@ -306,22 +303,22 @@ h1, h2, h3, h4, h5, h6 {
 .table {
   width: 100%;
   display: table;
-  > * {
+  & > * {
     display: table-cell;
   }
 
-  .heading-left {
+  & .heading-left {
     width: 100px;
   }
 
-  .right {
+  & .right {
     //float: right;
     text-align: right;
   }
 }
 
 .statement {
-  p {
+  & p {
     margin-bottom: 10px;
   }
 }
@@ -333,7 +330,7 @@ h1, h2, h3, h4, h5, h6 {
 #opponent-div {
   display: none;
   margin-top: 20px;
-  img {
+  & img {
     margin: auto;
   }
 }
@@ -347,13 +344,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 .just-left-container {
   float: left;
-  p {
+  & p {
     text-align: left;
   }
 }
 .just-right-container {
   float: right;
-  p {
+  & p {
     text-align: right;
   }
 }
@@ -380,16 +377,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 .resume-paragraphs {
   line-height: 16px;
-  p {
+  & p {
     text-align: justify;
   }
-  p:not(:last-child) {
+  & p:not(:last-child) {
     margin-bottom: 5px;
   }
 }
 .resume-section-content {
   width: 580px;
-  & > :last-child {
+  & & > :last-child {
     margin-bottom: 0px;
   }
 }
@@ -421,7 +418,7 @@ p, span {
   shape-rendering: crispEdges;
 }
 .x.axis {
-  path {
+  & path {
     display: none;
   }
 }
@@ -446,17 +443,17 @@ p, span {
 
 a.external {
   display: inline-block;
-  strong {
-    font-family: @bodyFont;
+  & strong {
+    font-family: var(--body-font);
     font-weight: 700;
   }
-  .link-decoration {
-    color: @linkAccentColor;
+  & .link-decoration {
+    color: var(--link-accent-color);
   }
 }
 
 .breadcrumb {
-  a {
+  & a {
     font-weight: 600;
     text-decoration: underline;
     text-transform: lowercase;
@@ -465,24 +462,24 @@ a.external {
 
 
 #tax-explorer {
-  svg rect {
+  & svg rect {
     border-radius: 0;
   }
 }
 
 .legend {
-  .title {
+  & .title {
     margin-bottom: 0.75em;
     font-weight: normal;
     font-size: 16px;
   }
   float: right;
-  border: 1px solid @softBorderColor;
+  border: 1px solid var(--soft-border-color);
   border-radius: 8px;
   font-size: 12px;
   line-height: 0.9em;
   color: rgb(30, 30, 30);
-  font-family: @bodyFont;
+  font-family: var(--body-font);
   margin: 5px;
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.02);
@@ -491,12 +488,12 @@ a.external {
 .info-block {
   margin-top: 1.5rem;
 
-  header {
+  & header {
     font-weight: bold;
     margin-bottom: 0.5rem;
 
   }
-  .content {
+  & .content {
     font-size: 16px;
     background-color: rgba(0, 0, 0, 0.03);
     border-radius: 8px;
@@ -508,25 +505,24 @@ a.external {
 #welcome-portal {
   margin-top: 3.5em;
 
-  header h1, header h1 a {
+  & header h1, & header h1 a {
     font-size: 20px;
   }
 
-  .example-marriage-diagram {
-    .lede {
+  & .example-marriage-diagram {
+    & .lede {
       margin: 0.5em 1em 2em 1em;
       padding-bottom: 1em;
       font-weight: bold;
-      font-family: @bodyFont;
+      font-family: var(--body-font);
       font-size: 14px;
-      border-bottom: 1px solid @softBorderColor;
+      border-bottom: 1px solid var(--soft-border-color);
     }
 
-    div {
+    & div {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
   }
 }
-

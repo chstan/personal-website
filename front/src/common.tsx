@@ -6,7 +6,6 @@ import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 
 import 'katex/dist/katex.min.css';
-import {atomOneLight} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import {Link} from "react-router-dom";
 
 const SimpleButton: React.FC<{onClick: MouseEventHandler}> = ({onClick, children}) =>

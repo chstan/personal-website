@@ -2,6 +2,10 @@
   "name": "personal-website-management-scripts",
   "version": "0.0.0",
   "description": "\"Convenience scripts for management of docker\"",
+  "private": true,
+  "workspaces": [
+    "front"
+  ],
   "main": "",
   "repository": "git@github.com:chstan/personal-website.git",
   "author": "Conrad Stansbury <chstansbury@gmail.com>",
@@ -13,5 +17,8 @@
     "build": "docker build --network=host -t personal_website .",
     "start": "docker run --network=host -t personal_website",
     "run-in-container": "$PWD/scripts/run_continuously.sh"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
   }
 }

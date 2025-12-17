@@ -3,13 +3,13 @@ ol.bibliography, ol {
   list-style: none outside;
   counter-reset: item;
 
-  li {
+  & li {
     display: block;
     counter-increment: item;
     position: relative;
   }
 
-  li:before {
+  & li:before {
     position: absolute;
     left: -1.1em;
     content: counter(item);

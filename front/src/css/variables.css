@@ -1,0 +1,37 @@
+:root {
+  --light-gray: rgb(248, 248, 248);
+  --editor-color: rgb(232, 232, 232);
+  --block-accent-color: rgb(180, 180, 180);
+  --soft-border-color: rgba(0, 0, 0, 0.25);
+  --link-accent-color: green;
+
+  --inline-code-color: rgb(247, 200, 183);
+  --inline-code-link-color: rgb(214, 234, 248);
+
+  /* Pre-calculated colors from markdown.less */
+  /* lighten(@inlineCodeColor, 10%) */
+  --inline-code-bg: rgb(250, 226, 217); 
+  /* darken(@inlineCodeColor, 5%) */
+  --inline-code-border: rgb(240, 179, 157);
+  
+  /* darken(@inlineCodeLinkColor, 60%) */
+  --inline-code-link-text: rgb(29, 84, 127);
+  /* darken(@inlineCodeLinkColor, 10%) */
+  --inline-code-link-border: rgb(169, 209, 240);
+  /* lighten(@inlineCodeLinkColor, 5%) */
+  --inline-code-link-bg: rgb(235, 245, 252);
+
+  /* fonts */
+  --body-font: 'Source Sans Pro', 'Roboto', sans-serif;
+  --logo-font: 'Roboto Slab', Georgia, serif;
+
+  /* toggle colors */
+  --toggle-off-color: rgb(180, 180, 180);
+  --toggle-hover-off-color: rgb(160, 160, 160);
+
+  /* go colors */
+  --small-go-size: 300px;
+  --go-size: 400px;
+  --board-color: rgb(221, 180, 84);
+  --board-color-shadow: rgba(255, 255, 255, 0.08);
+}
