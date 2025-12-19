@@ -1,8 +1,7 @@
 import React from "react";
-import {useParams} from 'react-router';
 import {WRITING} from "./data";
 import {DynamicMarkdown,} from "./common";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 
 const Breadcrumb: React.FC<{crumbs: Array<[string, string]>}> = ({crumbs}) =>

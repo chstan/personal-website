@@ -23,6 +23,7 @@
     "d3-scale": "^4.0.2",
     "d3-scale-chromatic": "^3.0.0",
     "history": "^5.2.0",
+    "katex": "^0.16.27",
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
@@ -39,8 +40,8 @@
     "typescript": "^4.5.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "vite",
+    "build": "vite build",
     "serve": "serve build -l 8001 -c serve.json",
     "eject": "react-scripts eject",
     "docker:build": "docker build --network=host -t personal_website .",

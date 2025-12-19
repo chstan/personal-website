@@ -2,14 +2,9 @@
 node_modules/
 /build/
 
-# Yarn
+# Package manager
 .pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+.pnpm-debug.log*
 
 # Editor/OS files
 .idea/
@@ -26,8 +21,6 @@ env.sh
 .env
 .env.local
 
-# Production build artifacts
-yarn-error.log
 
-# PNPM
+# Ignore local PNPM stores
 .pnpm-store/

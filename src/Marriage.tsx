@@ -23,13 +23,13 @@
 
 import React from 'react';
 import { format } from 'd3-format';
-import { Group } from '@vx/group';
+import { Group } from '@vx/vx';
 import { interpolateRdBu, interpolateGreens } from 'd3-scale-chromatic';
-import { scaleLinear, scaleThreshold } from '@vx/scale';
-import { HeatmapRect } from '@vx/heatmap';
-import { AxisLeft, AxisBottom } from '@vx/axis';
-import { LegendQuantile, LegendItem, LegendLabel } from '@vx/legend';
-import { Text } from '@vx/text';
+import { scaleLinear, scaleThreshold } from '@vx/vx';
+import { HeatmapRect } from '@vx/vx';
+import { AxisLeft, AxisBottom } from '@vx/vx';
+import { LegendQuantile, LegendItem, LegendLabel } from '@vx/vx';
+import { Text } from '@vx/vx';
 
 import Toggle from 'react-toggle';
 import Select from 'react-select';
