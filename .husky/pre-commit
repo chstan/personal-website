@@ -1,1 +1,1 @@
-pnpm build
+pnpm type-check && pnpm build

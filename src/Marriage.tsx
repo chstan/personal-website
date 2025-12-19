@@ -400,8 +400,8 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
       <div className="legend">
         <div className="title">Income Change ($k)</div>
         <LegendQuantile scale={legendColorScale as any}>
-          {labels => {
-            return labels.filter((label: any) => typeof(label.extent[0]) !== 'undefined').map((label: any, i) => {
+          {(labels: any) => {
+            return labels.filter((label: any) => typeof(label.extent[0]) !== 'undefined').map((label: any, i: number) => {
               const fmt = format('.2f');
               const [low, high] = label.extent;
               const size = 16;
@@ -427,8 +427,8 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
       <div className="legend">
         <div className="title">Income Change (%)</div>
         <LegendQuantile scale={legendColorScale as any}>
-          {labels => {
-            return labels.filter((label: any) => typeof(label.extent[0]) !== 'undefined').map((label: any, i) => {
+          {(labels: any) => {
+            return labels.filter((label: any) => typeof(label.extent[0]) !== 'undefined').map((label: any, i: number) => {
               const fmt = format('.2f');
               const [low, high] = label.extent;
               const size = 16;
@@ -474,7 +474,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
             }}
             stroke="rgb(50, 50, 50)"
             tickStroke="rgb(50, 50, 50)"
-            tickLabelProps={(value, index) => ({
+            tickLabelProps={(value: any, index: any) => ({
               fill: 'rgb(50, 50, 50)',
               textAnchor: 'end',
               fontSize: 10,
@@ -482,7 +482,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
               dx: '-0.5em',
               dy: '0.25em'
             })}
-            tickComponent={({ formattedValue, ...tickProps }) =>
+            tickComponent={({ formattedValue, ...tickProps }: any) =>
               <text {...tickProps}>{100 * INCOME_SHARES[parseInt(formattedValue as any) || 0]}%</text>
             }
           />
@@ -499,7 +499,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
             }}
             stroke="rgb(50, 50, 50)"
             tickStroke="rgb(50, 50, 50)"
-            tickLabelProps={(value, index) => ({
+            tickLabelProps={(value: any, index: any) => ({
               fill: 'rgb(50, 50, 50)',
               textAnchor: 'middle',
               fontSize: 10,
@@ -507,7 +507,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
               dx: '0',
               dy: '0',
             })}
-            tickComponent={({ formattedValue, ...tickProps }) =>
+            tickComponent={({ formattedValue, ...tickProps }: any) =>
               <text {...tickProps}>{INCOMES[parseInt(formattedValue as any) || 0] / 1000}</text>
             }
           />
@@ -521,8 +521,8 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
             binHeight={binWidth}
             gap={-0.25}
           >
-            {heatmap => {
-              return heatmap.map(bins => {
+            {(heatmap: any) => {
+              return heatmap.map((bins: any) => {
                 return bins.map((bin: any) => {
                   return (
                     <rect
