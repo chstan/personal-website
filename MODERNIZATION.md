@@ -43,7 +43,7 @@ These tasks reduce complexity and remove non-standard "glue" scripts without cha
 
 ---
 
-## Phase 2: Build Tooling (High Impact)
+## Phase 2: Build Tooling (Completed)
 
 Replacing the deprecated Create React App (CRA) harness with modern tooling.
 
@@ -51,19 +51,24 @@ Replacing the deprecated Create React App (CRA) harness with modern tooling.
 **Objective:** drastically improve startup time and build performance.
 **Rationale:** `react-scripts` (CRA) is deprecated and relies on heavy Webpack configurations. Vite is the industry standard for SPA development in 2025.
 **Steps:**
-*   [ ] Remove `react-scripts`.
-*   [ ] Install `vite` and `@vitejs/plugin-react`.
-*   [ ] Move `front/public/index.html` to `front/index.html`.
-*   [ ] Update entry point references.
-*   [ ] Verify environment variable handling (`REACT_APP_` → `VITE_`).
+*   [x] Remove `react-scripts`.
+*   [x] Install `vite` and `@vitejs/plugin-react`.
+*   [x] Move `front/public/index.html` to `front/index.html`.
+*   [x] Update entry point references.
+*   [x] Verify environment variable handling (`REACT_APP_` → `VITE_`).
+
+### 5. Package Management: Yarn → pnpm
+**Objective:** Faster, disk-efficient package management.
+*   [x] Migrate from Yarn to pnpm.
+*   [x] Configure `.gitignore` and `.pnpm-store`.
 
 ---
 
-## Phase 3: Architectural Modernization (Long Term)
+## Phase 3: Architectural Modernization (Current)
 
 Changing *how* the site works to improve performance and SEO.
 
-### 5. Content Delivery: Client-side Fetch → Static Generation (SSG)
+### 6. Content Delivery: Client-side Fetch → Static Generation (SSG)
 **Objective:** Improve Initial Content Paint (ICP) and SEO.
 **Rationale:** Currently, the browser downloads the app, *then* fetches Markdown. This causes a layout shift/loading state.
 **Proposal:** Migrate to **Next.js** (or use Vite SSG plugins).

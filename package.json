@@ -43,7 +43,6 @@
     "start": "vite",
     "build": "vite build",
     "serve": "serve build -l 8001 -c serve.json",
-    "eject": "react-scripts eject",
     "docker:build": "docker build --network=host -t personal_website .",
     "docker:run": "docker run --network=host -t personal_website",
     "docker:tag": "bash scripts/tag.sh",
