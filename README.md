@@ -30,6 +30,30 @@ This is the personal website of Conrad Stansbury.
     ```
     Output will be in `dist/` (or `build/` depending on vite config, currently `build/`).
 
+## Testing
+
+The project uses **Playwright** for visual regression testing to ensure UI consistency.
+
+*   **Run Visual Tests:**
+    ```bash
+    pnpm exec playwright test
+    ```
+    This builds the site, starts a server, and compares screenshots against baselines in `tests/visual.spec.ts-snapshots/`.
+
+*   **Update Snapshots:**
+    If valid UI changes cause tests to fail, update the baselines:
+    ```bash
+    pnpm exec playwright test --update-snapshots
+    ```
+
+## Quality Assurance
+
+Git hooks (via Husky) automatically run the following checks in parallel before every commit:
+1.  **Type Check:** `tsc`
+2.  **Build:** `pnpm build`
+3.  **Docker Verification:** Builds the container and probes the endpoint.
+4.  **Visual Tests:** Runs Playwright visual regression tests.
+
 ## Docker
 
 The site is deployed via Docker. You can emulate the production environment locally:
