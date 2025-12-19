@@ -1,1 +1,5 @@
-pnpm type-check && pnpm build && pnpm verify-docker
+(pnpm type-check) &
+(pnpm build) &
+(pnpm verify-docker) &
+(pnpm exec playwright test) &
+wait
