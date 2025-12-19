@@ -48,7 +48,8 @@
     "docker:run": "docker run --network=host -t personal_website",
     "docker:tag": "bash scripts/tag.sh",
     "docker:sh": "docker run --rm -it --entrypoint=/bin/sh personal_website",
-    "run-in-container": "scripts/run_continuously.sh"
+    "run-in-container": "scripts/run_continuously.sh",
+    "prepare": "husky"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -67,6 +68,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.1.2",
+    "husky": "^9.1.7",
     "raw-loader": "^4.0.2",
     "serve": "^14.2.4",
     "vite": "^7.3.0"
