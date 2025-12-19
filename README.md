@@ -1,21 +1,74 @@
-# Personal website
+# Personal Website
 
-Some quick history. The original version of this website consisted of a minimal web framework (basically just routing and templating and some middleware) I wrote in Haskell. I wanted to support more dynamic views after a time, so I migrated to this repo and used (clj, cljs) for (backend, frontend) respectively.
+This is the personal website of Conrad Stansbury.
 
-I still use clj for the backend, but I couldn't keep up to date enough on cljs practices (and quirks of the compilers) to justify continuing to use cljs. Around 2018 I migrated the frontend to React, where it lives now in ./front.
+## Architecture
 
-# Developing
+*   **Stack:** React, TypeScript, CSS (Modules/Variables).
+*   **Build System:** Vite.
+*   **Routing:** React Router.
+*   **Deployment:** Dockerized static site served via `serve`.
 
-Core cycle is: 
+## Developing
 
-1. Make changes
-2. `yarn build`
-3. `yarn run`
+**Prerequisites:** Node.js (v18+) and pnpm.
 
-You might find it useful to run:
+1.  **Install dependencies:**
+    ```bash
+    pnpm install
+    ```
 
-`docker stop (docker ps -aq); docker rm (docker ps -aq); yarn build && yarn start`
+2.  **Start development server:**
+    ```bash
+    pnpm start
+    ```
+    The site will be available at `http://localhost:5173` (Vite's default).
 
-## Adding a blog post
+3.  **Build for production:**
+    ```bash
+    pnpm build
+    ```
+    Output will be in `dist/` (or `build/` depending on vite config, currently `build/`).
 
-Add a .md file in `/md`, add and entry in `writing.json,` and add the read macro invocation in `Blog.tsx`. 
+## Docker
+
+The site is deployed via Docker. You can emulate the production environment locally:
+
+*   **Build image:**
+    ```bash
+    pnpm docker:build
+    ```
+
+*   **Run container:**
+    ```bash
+    pnpm docker:run
+    ```
+    This runs the container on the host network.
+
+## Adding Content
+
+### Blog Posts
+
+1.  Add a Markdown file to `src/md/` (e.g., `my-new-post.md`).
+2.  Add an entry to `src/json/writing.json` with the metadata:
+    ```json
+    {
+      "title": "My New Post",
+      "label": "my-new-post",
+      "short": "A short description...",
+      "released": true,
+      "date": "2025-01-01"
+    }
+    ```
+    The `label` must match the filename (without extension).
+
+### Other Lists
+
+Update the corresponding JSON files in `src/json/`:
+*   **Talks:** `talks.json`
+*   **Projects:** `projects.json`
+*   **Reading:** `reading.json`
+
+## History
+
+The original version of this website was written in Haskell. It later migrated to Clojure (backend) and ClojureScript (frontend). Around 2018, the frontend was migrated to React. In 2025, the project was modernized to a standard React/Vite stack, removing the legacy Clojure backend and Less stylesheets.

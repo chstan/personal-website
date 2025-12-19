@@ -2,20 +2,24 @@ FROM node:18-slim
 
 WORKDIR /app
 
-# Enable Yarn 3.1.1
-COPY .yarn ./.yarn
-COPY .yarnrc.yml package.json yarn.lock ./
-RUN corepack enable && yarn install --immutable
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# Copy package management files
+COPY package.json pnpm-lock.yaml ./
+
+# Install dependencies
+RUN pnpm install --frozen-lockfile
 
 # Copy the rest of the application
 COPY . .
 
 # Build the frontend
-RUN yarn build
+RUN pnpm build
 
 # Set permissions for scripts
 RUN chmod +x scripts/run_continuously.sh
 
 EXPOSE 8001
 
-CMD ["yarn", "run-in-container"]
+CMD ["pnpm", "run-in-container"]

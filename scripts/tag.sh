@@ -8,7 +8,7 @@ else
 fi
 
 echo "Rebuilding image..."
-yarn build --no-cache
+pnpm docker:build
 
 echo "Requesting DockerHub credentials..."
 docker login

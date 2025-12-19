@@ -1,4 +1,9 @@
-RUN_WEBSITE="npx serve /app/build -l 8001 -c /app/serve.json"
+#!/bin/bash
+
+# This script is used by the Docker container to restart the server if it crashes.
+# It relies on the "serve" script defined in package.json.
+
+RUN_WEBSITE="pnpm serve"
 
 trap 'exit' INT TERM
 
