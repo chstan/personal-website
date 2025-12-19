@@ -8,7 +8,7 @@
   --inline-code-color: rgb(247, 200, 183);
   --inline-code-link-color: rgb(214, 234, 248);
 
-  /* Pre-calculated colors from markdown.less */
+  --primary-color: #333;
   /* lighten(@inlineCodeColor, 10%) */
   --inline-code-bg: rgb(250, 226, 217); 
   /* darken(@inlineCodeColor, 5%) */

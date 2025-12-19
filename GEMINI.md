@@ -1,80 +1,72 @@
 # Project Context: Personal Website
 
 ## Overview
-This is the personal website of Conrad Stansbury. It is a historical project that has evolved through several technology stacks (Haskell -> Clojure/ClojureScript -> Clojure/React). The current active iteration is a **Single Page Application (SPA)** built with **React and TypeScript**, styled with **Less**, and served primarily as static assets.
+The personal website of Conrad Stansbury. This is a Single Page Application (SPA) built with **React**, **TypeScript**, and **Vite**. It is designed to be a modern, static-friendly site served via a lightweight Node.js server (`serve`) inside a Docker container.
 
 ## Architecture
-
-### Frontend (Active)
-*   **Location:** `./front`
-*   **Stack:** React, TypeScript, Less.
-*   **Routing:** `react-router-dom` handles client-side routing.
-*   **Content:**
-    *   **Metadata:** JSON files in `front/src/json/` (e.g., `writing.json`, `talks.json`) drive lists of content.
-    *   **Long-form:** Markdown files in `front/src/md/` are fetched dynamically and rendered using `react-markdown`.
-*   **Styling:** Less files in `front/src/less/` are compiled to CSS in `front/src/css/`.
-
-### Backend (Legacy/Alternative)
-*   **Location:** `./src/clj`
-*   **Stack:** Clojure (Ring/Compojure).
-*   **Status:** While the README mentions using Clojure for the backend, the current Docker deployment strategy bypasses it in favor of a static Node.js server (`serve`). The Clojure backend is likely preserved for local development or specific legacy features not yet migrated.
-
-### Deployment / Infrastructure
-*   **Containerization:** The project is Dockerized (`Dockerfile`).
-*   **Production Server:** The Docker container builds the frontend and uses `serve` (a static file server) to serve the `front/build` directory on port 8001.
-*   **Configuration:** `serve.json` handles SPA rewrite rules (redirecting all traffic to `index.html`).
+- **Frontend:** React 17+, TypeScript, React Router 6.
+- **Styling:** Standard CSS using CSS Modules and Variables (migrated from Less).
+- **Build System:** Vite.
+- **Content Management:** 
+  - Metadata is stored in `src/json/`.
+  - Long-form content is written in Markdown (`src/md/`) and rendered dynamically using `react-markdown` via the `DynamicMarkdown` component.
+- **Infrastructure:**
+  - Containerized with a **multi-stage Docker build**.
+  - Serves static assets from the `build/` directory using the `serve` package.
+  - Client-side routing is handled by `public/serve.json`.
 
 ## Key Directories
+- `src/`: Main source code.
+  - `src/md/`: Markdown source for blog posts and pages.
+  - `src/json/`: Data driving lists (talks, projects, writing).
+  - `src/css/`: Source stylesheets.
+- `public/`: Static assets and configuration (e.g., `serve.json`).
+- `tests/`: Visual regression tests using **Playwright**.
+- `scripts/`: Utility scripts for automation and verification.
 
-*   `front/`: The main workspace for the React application.
-    *   `src/`: Source code.
-        *   `md/`: Markdown content files.
-        *   `json/`: Data files defining lists of talks, papers, projects, etc.
-        *   `less/`: Source stylesheets.
-        *   `common.tsx`: Contains the `DynamicMarkdown` component responsible for fetching and rendering content.
-*   `src/clj/`: Clojure backend source (legacy/dev).
-*   `scripts/`: Utility scripts for bootstrapping and running the Docker container.
+## Building and Running
 
-## Development Workflows
+### Development
+```bash
+# Install dependencies
+pnpm install
 
-### Standard (Frontend Focus)
-To work on the website content or UI:
+# Start Vite development server (HMR)
+pnpm start
+```
 
-1.  Navigate to the frontend directory:
-    ```bash
-    cd front
-    ```
-2.  Install dependencies (if needed):
-    ```bash
-    yarn install
-    ```
-3.  Start the development server:
-    ```bash
-    yarn start
-    ```
-    This runs `react-scripts start` and usually opens the site at `http://localhost:3000`.
+### Production Build
+```bash
+# Compile the React application
+pnpm build
 
-### Docker (Full Environment)
-To test the production-like build:
+# Serve the production build locally
+pnpm serve
+```
 
-1.  From the root directory:
-    ```bash
-    yarn start
-    ```
-    (Note: This triggers `docker run ...` defined in the root `package.json`).
+### Testing
+```bash
+# Run visual regression tests
+pnpm exec playwright test
 
-### Adding Content
-1.  **Blog Posts:**
-    *   Add a `.md` file to `front/src/md/`.
-    *   Add an entry to `front/src/json/writing.json` referencing the file label.
-2.  **Other Lists:** Update the corresponding JSON file in `front/src/json/`.
+# Update snapshots if visual changes are intentional
+pnpm exec playwright test --update-snapshots
+```
 
-## Important Commands
+### Docker
+```bash
+# Build the production image
+pnpm docker:build
 
-| Command | Location | Description |
-| :--- | :--- | :--- |
-| `yarn start` | `front/` | Starts the React dev server (Hot Module Replacement). |
-| `yarn build` | `front/` | Compiles the React app to `front/build/`. |
-| `yarn watch-css` | `front/` | Watches and compiles Less files. |
-| `yarn start` | Root | Runs the project inside a Docker container. |
-| `yarn bootstrap` | Root | Installs global dependencies (`less`) via `scripts/bootstrap.sh`. |
+# Run the container locally
+pnpm docker:run
+
+# Build and verify the container serves traffic correctly
+pnpm verify-docker
+```
+
+## Development Conventions
+- **Quality Assurance:** A Husky pre-commit hook runs `type-check`, `build`, `verify-docker`, and `playwright test` in parallel to ensure stability.
+- **Type Safety:** Rigorous use of TypeScript (`tsc --noEmit`).
+- **CSS:** Use CSS Variables defined in `src/css/variables.css`.
+- **Content:** Adding a blog post involves creating a `.md` file in `src/md/` and adding an entry to `src/json/writing.json`.
