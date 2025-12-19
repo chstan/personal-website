@@ -1,6 +1,26 @@
+# Dependencies
 node_modules/
-front/node_modules/
+.pnpm-store/
 
+# Version Control
 .git/
-.cache/
+.gitignore
+
+# Build Artifacts
 build/
+dist/
+coverage/
+
+# Temporary Files
+.cache/
+.DS_Store
+*.log
+
+# IDE / Editors
+.idea/
+.vscode/
+
+# Agent/Local
+.gemini/
+MODERNIZATION.md
+GEMINI.md
