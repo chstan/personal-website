@@ -42,7 +42,7 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "serve": "serve build -l 8001 -c serve.json",
+    "serve": "serve build -l 8001",
     "docker:build": "DOCKER_BUILDKIT=0 docker build --network=host -t personal_website .",
     "docker:run": "docker run --network=host -t personal_website",
     "docker:tag": "bash scripts/tag.sh",
@@ -67,9 +67,11 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.57.0",
     "@types/node": "^25.0.3",
     "@vitejs/plugin-react": "^5.1.2",
     "husky": "^9.1.7",
+    "playwright": "^1.57.0",
     "raw-loader": "^4.0.2",
     "serve": "^14.2.4",
     "vite": "^7.3.0"

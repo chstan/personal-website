@@ -1,13 +1,21 @@
 # Dependency directories
 node_modules/
 /build/
+/.playwright/
 
 # Package manager
 .pnp.*
 .pnpm-debug.log*
+.pnpm-store/
+
+# Playwright Test Results
+/test-results/
+/playwright-report/
+/blob-report/
 
 # Editor/OS files
 .idea/
+.vscode/
 **/.DS_STORE
 *.swo
 *.swp
@@ -21,6 +29,5 @@ env.sh
 .env
 .env.local
 
-
-# Ignore local PNPM stores
-.pnpm-store/
+# Local Agent/Temp
+.gemini/

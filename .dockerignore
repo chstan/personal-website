@@ -24,3 +24,8 @@ coverage/
 .gemini/
 MODERNIZATION.md
 GEMINI.md
+.playwright/
+
+# Tests
+tests/
+playwright.config.ts

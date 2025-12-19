@@ -22,13 +22,12 @@ WORKDIR /app
 # Install 'serve' globally in the runner stage (lightweight)
 RUN npm install -g serve
 
-# Copy only the build output and config from the builder stage
+# Copy only the build output from the builder stage
 COPY --from=builder /app/build ./build
-COPY --from=builder /app/serve.json ./build/serve.json
 
 # Run as non-root user for security
 USER node
 
 EXPOSE 8001
 
-CMD ["serve", "build", "-l", "8001", "-c", "serve.json"]
+CMD ["serve", "build", "-l", "8001"]
