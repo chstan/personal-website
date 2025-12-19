@@ -43,11 +43,11 @@
     "start": "vite",
     "build": "vite build",
     "serve": "serve build -l 8001 -c serve.json",
-    "docker:build": "docker build --network=host -t personal_website .",
+    "docker:build": "DOCKER_BUILDKIT=0 docker build --network=host -t personal_website .",
     "docker:run": "docker run --network=host -t personal_website",
     "docker:tag": "bash scripts/tag.sh",
     "docker:sh": "docker run --rm -it --entrypoint=/bin/sh personal_website",
-    "run-in-container": "scripts/run_continuously.sh",
+    "verify-docker": "scripts/verify_docker.sh",
     "prepare": "husky",
     "type-check": "tsc --noEmit"
   },

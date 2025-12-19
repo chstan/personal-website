@@ -45,6 +45,12 @@ The site is deployed via Docker. You can emulate the production environment loca
     ```
     This runs the container on the host network.
 
+*   **Verify Container:**
+    ```bash
+    pnpm verify-docker
+    ```
+    This builds the image, starts a container, and probes the endpoint to ensure it's serving traffic.
+
 ## Adding Content
 
 ### Blog Posts

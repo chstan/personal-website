@@ -1,25 +1,34 @@
-FROM node:18-slim
+# Stage 1: Build
+FROM node:22-slim AS builder
 
 WORKDIR /app
 
-# Install pnpm
+# Enable pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Copy package management files
+# Install dependencies (cached if package.json/lockfile don't change)
 COPY package.json pnpm-lock.yaml ./
-
-# Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# Copy the rest of the application
+# Copy source and build
 COPY . .
-
-# Build the frontend
 RUN pnpm build
 
-# Set permissions for scripts
-RUN chmod +x scripts/run_continuously.sh
+# Stage 2: Serve
+FROM node:22-slim
+
+WORKDIR /app
+
+# Install 'serve' globally in the runner stage (lightweight)
+RUN npm install -g serve
+
+# Copy only the build output and config from the builder stage
+COPY --from=builder /app/build ./build
+COPY --from=builder /app/serve.json ./build/serve.json
+
+# Run as non-root user for security
+USER node
 
 EXPOSE 8001
 
-CMD ["pnpm", "run-in-container"]
+CMD ["serve", "build", "-l", "8001", "-c", "serve.json"]
