@@ -1,1 +1,1 @@
-pnpm type-check && pnpm build
+pnpm type-check && pnpm build && pnpm verify-docker
