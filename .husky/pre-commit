@@ -1,5 +1,20 @@
+#!/bin/bash
+
+# Run verification tasks in parallel
 (pnpm type-check) &
 (pnpm build) &
 (pnpm verify-docker) &
 (pnpm exec playwright test) &
-wait
+
+# Wait for all background jobs to finish and capture exit codes
+FAIL=0
+for job in $(jobs -p); do
+    wait "$job" || let "FAIL+=1"
+done
+
+if [ "$FAIL" -ne 0 ]; then
+    echo "❌ One or more pre-commit checks failed."
+    exit 1
+fi
+
+echo "✅ All pre-commit checks passed."
