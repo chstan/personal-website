@@ -9,9 +9,9 @@ node_modules/
 .pnpm-store/
 
 # Playwright Test Results
-/test-results/
-/playwright-report/
-/blob-report/
+test-results/
+playwright-report/
+blob-report/
 
 # Editor/OS files
 .idea/
