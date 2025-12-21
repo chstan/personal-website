@@ -2,7 +2,7 @@ import React from 'react';
 import ReactGA from 'react-ga';
 import {BrowserRouter, Route, Routes, } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import {ContactPage, GoPage, ReadingPage, Resume, WelcomePage, UnmigratedTalksPage} from "./staticPages";
+import {ContactPage, GoPage, Resume, WelcomePage, UnmigratedTalksPage} from "./staticPages";
 import {ProjectsPage} from "./Project";
 import {TalksPage} from "./Talks";
 import PapersPage from "./Papers";
@@ -42,7 +42,7 @@ class NavGroup extends Expandable {
   }
 }
 
-const projectLinksSection = {
+const projectLinksSection: NavLinkSection = {
   kind: 'navgroup',
   title: 'Quicklinks',
   defaultOpen: false,
@@ -55,7 +55,7 @@ const projectLinksSection = {
   ]
 };
 
-const openSourceSection = {
+const openSourceSection: NavLinkSection = {
   kind: 'navgroup',
   title: 'Open-source',
   defaultOpen: true,
@@ -66,8 +66,15 @@ const openSourceSection = {
   ]
 };
 
-const SEPARATOR = { kind: 'separator' };
-const linkify = (c: any) => {
+const SEPARATOR = { kind: 'separator' } as const;
+
+type NavLinkItem = [string, [React.FC, string]];
+type NavLinkSection = 
+  | { kind: 'link', content: NavLinkItem }
+  | { kind: 'separator' }
+  | { kind: 'navgroup', title: string, content: Array<NavLinkItem>, defaultOpen: boolean };
+
+const linkify = (c: any): NavLinkSection => {
   if (c.kind) {
     return c;
   }
@@ -77,7 +84,7 @@ const linkify = (c: any) => {
   }
 };
 
-const links = [
+const links: Array<NavLinkSection> = [
   ['/', [WelcomePage, '/']],
   ['/talks', [TalksPage, 'talks']],
   ['/papers', [PapersPage, 'papers']],
@@ -105,9 +112,9 @@ const links = [
   SEPARATOR,
 
   ['/resume', [Resume, 'resume']],
-].map(linkify);
+].map(linkify) as Array<NavLinkSection>;
 
-const flatLinks: Array<[string, [React.FC, string]]> = [].concat(...links.map((section: any) => {
+const flatLinks: Array<[string, [React.FC, string]]> = [].concat(...links.map((section) => {
   if (section.kind === 'separator') {
     return [];
   } else if (section.kind === 'link') {
@@ -115,23 +122,23 @@ const flatLinks: Array<[string, [React.FC, string]]> = [].concat(...links.map((s
   } else {
     return section.content; // navgroup
   }
-})).filter((ls: any) => !ls[0].startsWith('http')).reverse();
+}) as any).filter((ls: [string, any]) => !ls[0].startsWith('http')).reverse();
 
 const Navbar: React.FC = () => {
   return (
     <nav>
       <WrapLink to="/"><h3 id="name-header">Conrad Stansbury</h3></WrapLink>
       <ul>
-        {links.map(({kind, content, ...rest}) => {
-          if (kind === 'link') {
-            const [k, [_, l]] = content;
+        {links.map((section, index) => {
+          if (section.kind === 'link') {
+            const [k, [__, l]] = section.content;
             return <li key={k}><WrapLink to={k}>{l}</WrapLink></li>
-          } else if (kind === 'separator') {
-            return <li><div className="nav-separator"></div></li>
-          } else if (kind === 'navgroup') {
-            return <li><NavGroup {...rest}>
+          } else if (section.kind === 'separator') {
+            return <li key={`sep-${index}`}><div className="nav-separator"></div></li>
+          } else if (section.kind === 'navgroup') {
+            return <li key={`${section.title}-${index}`}><NavGroup title={section.title} defaultOpen={section.defaultOpen}>
               <ul>
-                {content.map(([k, [_, l]]: any) => <li key={k}><WrapLink to={k}>{l}</WrapLink></li>)}
+                {section.content.map(([k, [___, l]]) => <li key={k}><WrapLink to={k}>{l}</WrapLink></li>)}
               </ul>
             </NavGroup></li>
           }
@@ -153,7 +160,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/unmigrated-talk" element={<UnmigratedTalksPage />} />
             <Route path='/writing/:blogId' element={<BlogItem />}/>
-            {flatLinks.map(([k, [C, _]]) =>
+            {flatLinks.map(([k, [C, __]]) =>
               <Route key={k} path={k} element={<C />} />
             )}
           </Routes>

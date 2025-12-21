@@ -66,7 +66,7 @@ const Bibliography: React.FC<{references: Array<Reference>}> = ({references,}) =
   <div className="bibliography">
     <header className="bibliography-header">References</header>
     <ol className="bibliography-contents">
-      {references.map((r, i) => <BibItem reference={r} index={i} />)}
+      {references.map((r, i) => <BibItem key={i} reference={r} index={i} />)}
     </ol>
   </div>;
 

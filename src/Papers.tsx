@@ -77,8 +77,8 @@ const PapersPage: React.FC = () => {
   return (
     <div>
       {orders.map(([ks, heading]) => (
-        <PaperSectionHeader sectionTitle={heading as any}>
-          {PAPERS.filter(p => ks.includes(p.kind)).map(p => <li><PaperSummary {...p} /></li>)}
+        <PaperSectionHeader key={heading as string} sectionTitle={heading as any}>
+          {PAPERS.filter(p => ks.includes(p.kind)).map(p => <li key={p.name}><PaperSummary {...p} /></li>)}
         </PaperSectionHeader>
       ))}
     </div>

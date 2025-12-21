@@ -29,7 +29,7 @@ const ProjectSummary: React.FC<ProjectInfo> = ({title, pictureUrl, description, 
 const ProjectsPage: React.FC = () => {
   return (
     <div id="project-description-list">
-      {PROJECTS.map(p => <ProjectSummary {...p}/>)}
+      {PROJECTS.map(p => <ProjectSummary key={p.title} {...p}/>)}
     </div>
   );
 };

@@ -6,8 +6,8 @@ WORKDIR /app
 # Enable pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Install dependencies (cached if package.json/lockfile don't change)
-COPY package.json pnpm-lock.yaml ./
+# Install dependencies
+COPY package.json pnpm-lock.yaml ./ 
 RUN pnpm install --frozen-lockfile
 
 # Copy source and build
@@ -19,8 +19,10 @@ FROM node:22-slim
 
 WORKDIR /app
 
-# Install 'serve' globally in the runner stage (lightweight)
-RUN npm install -g serve
+# Install 'serve' and 'curl' for healthchecks
+RUN apt-get update && apt-get install -y curl && \
+    rm -rf /var/lib/apt/lists/* && \
+    npm install -g serve
 
 # Copy only the build output from the builder stage
 COPY --from=builder /app/build ./build
@@ -29,5 +31,8 @@ COPY --from=builder /app/build ./build
 USER node
 
 EXPOSE 8001
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8001/ || exit 1
 
 CMD ["serve", "build", "-l", "8001"]

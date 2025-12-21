@@ -48,10 +48,10 @@ const TalksPage: React.FC = () => {
   return (
     <div>
       {orders.map(([k, l]) =>
-        <div className="talks-container">
+        <div key={l} className="talks-container">
           <header className="talks-section-header">{l}</header>
           <ul>
-            {TALKS.filter(t => t.kind === k).map(t => <li><TalkSummary talk={t} /></li>)}
+            {TALKS.filter(t => t.kind === k).map(t => <li key={t.presentationTitle}><TalkSummary talk={t} /></li>)}
           </ul>
         </div>
       )}

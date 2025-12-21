@@ -213,7 +213,7 @@ const ContactPage: React.FC = () => {
       </div>
       <div className="table">
         <div className="heading-left"><p>Email</p></div>
-        <div className="right">{BASE_INFO.emails.map(e => <p>{e}</p>)}</div>
+        <div className="right">{BASE_INFO.emails.map(e => <p key={e}>{e}</p>)}</div>
       </div>
     </div>
   );
@@ -238,7 +238,7 @@ class ReadingPage extends Expandable {
       <div>
         <div className="books-header"><p>A record of books I've read lately, to come back to later.</p></div>
         <ul>
-          {renderBooks.map(BookSummary)}
+          {renderBooks.map((b) => <BookSummary key={b.title} {...b} />)}
         </ul>
         <SimpleButton onClick={this.toggle}>{this.state.expanded ? 'Hide' : 'Older'}</SimpleButton>
       </div>
@@ -249,12 +249,12 @@ class ReadingPage extends Expandable {
 const EducationSection = ({gpa, content, school}: EducationContent) => (
   <div>
     <div className="table"><i>{school}</i><div className="right"><p>{`GPA ${gpa}`}</p></div></div>
-    <div>{content.map(c => <p>{c}</p>)}</div>
+    <div>{content.map((c, i) => <p key={i}>{c}</p>)}</div>
   </div>
 );
 
 const RawContentSection = ({paragraphs}: ParagraphsContent) => (
-  <div className="resume-paragraphs">{paragraphs.map(p => <p>{p}</p>)}</div>
+  <div className="resume-paragraphs">{paragraphs.map((p, i) => <p key={i}>{p}</p>)}</div>
 );
 
 const SkillGroup = ({title, skills}: { title: string, skills: Array<string>}) => (
@@ -283,11 +283,11 @@ const Experience = ({title, at, start, end, content}: ExperienceContent) => (
 
 const ExperienceSection = (experiences: Array<ExperienceContent>) => (
   <div className="experience-sections">
-    {experiences.map(e => <Experience {...e} />)}
+    {experiences.map((e, i) => <Experience key={i} {...e} />)}
   </div>
 );
 
-const TalkSection = (talks: Array<Talk>) => <div>{talks.map(t => <TalkSummary talk={t}/>)}</div>;
+const TalkSection = (talks: Array<Talk>) => <div>{talks.map((t, i) => <TalkSummary key={i} talk={t}/>)}</div>;
 
 const buildResumeRow: React.FC<ResumeRow> = ({kind, title, content}) => {
   const Components = new Map<ResumeRowKind, any>([
@@ -316,7 +316,7 @@ const Resume: React.FC = () => {
         <p>{BASE_INFO.address}</p>
         <p>{BASE_INFO.addressCont}</p>
       </div>
-      {RESUME_INFO.map(buildResumeRow)}
+      {RESUME_INFO.map((r, i) => <React.Fragment key={i}>{buildResumeRow(r)}</React.Fragment>)}
     </article>
   );
 };
