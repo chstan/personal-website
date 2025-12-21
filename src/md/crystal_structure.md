@@ -21,9 +21,9 @@ The tools we need are
 2. POV-Ray
 
 I'll assume you already have Python and ASE installed or are capable of doing this yourself
-as there is good documentation elsewhere. Installing POV-ray is a little trickier but 
+as there is good documentation elsewhere. Installing POV-Ray is a little trickier but 
 not difficult. To avoid any sticking points I recommend using a system package manager like
-[Chocolately](https://chocolatey.org/) on Windows, [Homebrew](https://brew.sh/) on OS X, 
+[Chocolatey](https://chocolatey.org/) on Windows, [Homebrew](https://brew.sh/) on macOS, 
 or your system package manager on Linux. On Windows this looks like
 
 ```powershell
@@ -47,7 +47,7 @@ skutterudite = crystal(('Co', 'Sb'),
                        spacegroup=204,
                        cellpar=[a, a, a, 90, 90, 90])
 
-# Create a new atoms instance with Co at origo including all atoms on the
+# Create a new atoms instance with Co at origin including all atoms on the
 # surface of the unit cell
 cosb3 = cut(skutterudite, origo=(0.25, 0.25, 0.25), extend=1.01)
 ```
@@ -89,18 +89,18 @@ As long as you do this before calling `io.write` you should be good.
 ## Adding bonds
 
 To add bonds, we need to collect all the desired bond pairs. Here's a simple way to do it
-for our $\\text{MX}_2$ example:
+for our $\text{MX}_2$ example:
 
-```
+```python
 import numpy as np
 from scipy.spatial.distance import pdist, squareform
 site_positions = [site.position for site in ws2]
 pair_distances = squareform(pdist(np.stack(site_positions)))
 
 bonds = []
-for i in range(vs.shape[0]):
+for i in range(pair_distances.shape[0]):
     for j in range(i):
-        if vs[i, j] < 3: # up to 3 angstrom distance show a bond
+        if pair_distances[i, j] < 3: # up to 3 angstrom distance show a bond
             bonds.append((i, j))
 ```
 
@@ -156,9 +156,9 @@ site_positions = [site.position for site in ws2]
 pair_distances = squareform(pdist(np.stack(site_positions)))
 
 bonds = []
-for i in range(vs.shape[0]):
+for i in range(pair_distances.shape[0]):
     for j in range(i):
-        if vs[i, j] < 3: # up to 3 angstrom distance show a bond
+        if pair_distances[i, j] < 3: # up to 3 angstrom distance show a bond
             bonds.append((i, j))
 
 io.write('ws2.pov', ws2,
@@ -185,7 +185,7 @@ files below
 
 ## Getting Transparency in our POV-Ray Renders
 
-POV-Ray renders our crystal structure from two files, the `.pov` file which
+POV-Ray renders our crystal structure from two files: the `.pov` file which
 contains the geometry we would like it to render--in our case the lighting, the
 atom locations, and all the bonds--and a `.ini` file which has general configuration
 for the ray tracer.
@@ -209,8 +209,8 @@ find the directive that specifies the background color:
 background {srgbt <RED, GREEN, BLUE, TRANSPARENCY>}
 ```
 
-you want to se it so that the value of the transparency channel is 1, like so (make sure
-that it says `srgbt`:
+you want to set it so that the value of the transparency channel is 1, like so (make sure
+that it says `srgbt`):
 
 ```
 background {srgbt <0.00, 0.00, 0.00, 1.00>}
@@ -223,21 +223,21 @@ Now, if you re-run POV-Ray you should have a transparent background!
 The simplest way to get high resolution renders is to adjust the `Width` and `Height` 
 directives in the `.ini` file. You will want to make sure you keep the aspect ratio (`Width`/`Height`) the same or else your output will look distorted.
 
-When I tweaking settings I typically use dimensions around 800px because this renders
-very quickly on my computer, while for high resolution renders I roughly 4k pixels
+When I am tweaking settings I typically use dimensions around 800px because this renders
+very quickly on my computer, while for high resolution renders I use roughly 4k pixels
 on the larger axis of the render. These settings are high enough resolution for
 almost any purpose and still render in at most a minute or two on modern hardware,
 even with thousands of atomic sites like in the moiré example I showed at the 
 beginning of this post.  
 
-### Adjusing Lighting
+### Adjusting Lighting
 
 I don't have any hard and fast rules for making the lighting look right. I tend
 to prefer more diffuse lighting and less specular lighting, but enough specular 
 lighting to give the spheres of the atoms some apparent texture, especially if they 
 are small.
 
-You can adjust these settings in the `.pov` files with the following directives
+You can adjust these settings in the `.pov` files with the following directives:
 
 ```
 light_source { <2.00, 3.00, 4000.00> color White

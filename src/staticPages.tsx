@@ -137,12 +137,11 @@ const WelcomePage: React.FC = () => {
         the <WrapLink to={LANZARA_LAB}>Lanzara Lab</WrapLink>
         at the University of California, Berkeley.
 
-        My graduate work focused on developing and using powerful new
-        spectroscopic tools like nanoscale and time-resolved ARPES
-        to understand correlated phases of matter in two dimensional 
-        <WrapLink to={NYT_MOIRE}>moirés</WrapLink>.
-      </p>
-
+            My graduate work focused on developing and using powerful new
+             spectroscopic tools like nanoscale and time-resolved ARPES
+             to understand correlated phases of matter in two-dimensional 
+            <WrapLink to={NYT_MOIRE}>moirés</WrapLink>.
+          </p>
       <p>
         ARPES, a data heavy discipline producing 1-10s of GBs/hour of high dimensional 
         electron spectra, requires sophisticated approaches to acquisition and interpretation.
@@ -174,38 +173,37 @@ const WelcomePage: React.FC = () => {
             a Python abstraction layer around National Instruments' Flex Motion library for PC-integrated
             motion controllers.
           </li>
-          <li>
-            <WrapLink to="https://github.com/chstan/pyseswrapper"><strong>PySESWrapper</strong></WrapLink>:
-            a Python abstraction layer around Scienta Omicrom GmbH's hemispherical electron analyzers.
-          </li>
-        </ul>
-      </p>
-      <p>
-        When not doing experiments in the lab, I also work on developing machine learning
-        techniques to better understand the huge amounts of data ARPES provides on quantum materials.
-      </p>
-      <p>
-        Recently, I operated as Head of Machine Learning for a startup developing a novel diagnostic test
-        for respiratory viruses. I lead a small team building data infrastructure, developing vision-inspired
-        classification models, and productionizing ML services and APIs.
-
-        Prior to graduate school, I worked as a full-stack software engineer, a data scientist,
-        and in technical recruiting at <WrapLink to="https://zanbato.com">Zanbato</WrapLink>.
-      </p>
-      <p>
-        To see some of what I've been working on, take a look around
-        or head over to my <WrapLink to={BASE_INFO.github}>GitHub</WrapLink>. 
-        Alternatively, if you want to get in touch, send me an email. 
-        
-        These days&mdash;more than recent years&mdash;a coffee someplace in the Berkeley/SF/Oakland area 
-        is another welcome way to connect.
-      </p>
-      <p>Thanks for visiting!</p>
-      <WelcomePortal fixIndex={2} />
-    </div>
-  );
-};
-
+                <li>
+                  <WrapLink to="https://github.com/chstan/pyseswrapper"><strong>PySESWrapper</strong></WrapLink>:
+                  a Python abstraction layer around Scienta Omicron GmbH's hemispherical electron analyzers.
+                </li>
+              </ul>
+            </p>
+            <p>
+              When not doing experiments in the lab, I also work on developing machine learning
+              techniques to better understand the huge amounts of data ARPES provides on quantum materials.
+            </p>
+            <p>
+              Recently, I operated as Head of Machine Learning for a startup developing a novel diagnostic test
+              for respiratory viruses. I led a small team building data infrastructure, developing vision-inspired
+              classification models, and productionizing ML services and APIs.
+          
+              Prior to graduate school, I worked as a full-stack software engineer, a data scientist,
+              and in technical recruiting at <WrapLink to="https://zanbato.com">Zanbato</WrapLink>.
+            </p>
+            <p>
+              To see some of what I've been working on, take a look around
+              or head over to my <WrapLink to={BASE_INFO.github}>GitHub</WrapLink>. 
+              Alternatively, if you want to get in touch, send me an email. 
+              
+              These days&mdash;more than in recent years&mdash;a coffee someplace in the Berkeley/SF/Oakland area 
+              is another welcome way to connect.
+            </p>
+            <p>Thanks for visiting!</p>
+            <WelcomePortal fixIndex={2} />
+          </div>
+          );
+          };
 const ContactPage: React.FC = () => {
   return (
     <div className="contact-table contact-container">
