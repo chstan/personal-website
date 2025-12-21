@@ -5,9 +5,8 @@ echo "🐳 Building Docker image..."
 pnpm docker:build
 
 echo "🚀 Starting container..."
-# Run container in background, mapping port 8001
-# Use -p 8001:8001 explicitly.
-CONTAINER_ID=$(docker run -d -p 8001:8001 personal_website)
+# Run container in background, mapping port 8002 to container port 8001
+CONTAINER_ID=$(docker run -d -p 8002:8001 personal_website)
 
 # Function to clean up container on exit
 cleanup() {
@@ -23,7 +22,8 @@ COUNT=0
 SUCCESS=0
 
 until [ $COUNT -ge $MAX_RETRIES ]; do
-  if curl -s -o /dev/null -w "%{http_code}" http://localhost:8001 | grep 200 > /dev/null; then
+  # Check port 8002 which is mapped to container port 8001
+  if curl -s -o /dev/null -w "%{http_code}" http://localhost:8002 | grep 200 > /dev/null; then
     SUCCESS=1
     break
   fi

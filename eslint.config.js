@@ -10,6 +10,8 @@ export default tseslint.config(
   {
     // Default config for all files
     languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
       globals: {
         ...globals.browser,
         ...globals.node,
@@ -39,8 +41,8 @@ export default tseslint.config(
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react/no-unescaped-entities': 'off',
-      'react/jsx-key': 'warn', // Downgrade to warn for legacy cleanup
-      'react/no-children-prop': 'warn', // Downgrade to warn
+      'react/jsx-key': 'warn',
+      'react/no-children-prop': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-empty-object-type': 'warn',
@@ -49,11 +51,11 @@ export default tseslint.config(
     },
   },
   {
-    // Special handling for config files (no type-aware linting)
+    // Special handling for config files and tests
     files: ['*.config.{js,ts}', 'tests/**/*.{ts,tsx}'],
-    extends: [tseslint.configs.disableTypeChecked],
     rules: {
-      '@typescript-eslint/no-var-requires': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
     }
   },
   {

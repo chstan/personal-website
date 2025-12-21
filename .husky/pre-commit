@@ -1,9 +1,11 @@
 #!/bin/bash
 
-# Run verification tasks in parallel
+# Ensure build exists first to avoid race conditions in parallel tasks
+pnpm build
+
+# Run remaining verification tasks in parallel
 (pnpm type-check) &
 (pnpm lint) &
-(pnpm build) &
 (pnpm verify-docker) &
 (pnpm exec playwright test) &
 
