@@ -2,21 +2,31 @@ import { test, expect } from '@playwright/test';
 import writing from '../src/json/writing.json' with { type: 'json' };
 
 test.describe('Visual Regression', () => {
-  test('home page', async ({ page }) => {
-    await page.goto('/');
-    await expect(page).toHaveScreenshot('home-page.png');
-  });
+  const staticRoutes = [
+    { name: 'home', path: '/' },
+    { name: 'writing-list', path: '/writing' },
+    { name: 'chess', path: '/chess', selector: '#chess' },
+    { name: 'dominion', path: '/dominion', selector: '.markdown' },
+    { name: 'go', path: '/go', selector: '#go-game' },
+    { name: 'slide-puzzles', path: '/slide-puzzles', selector: '.markdown' },
+    { name: 'marriage', path: '/marriage', selector: '#tax-explorer' },
+    { name: 'projects', path: '/projects', selector: '#project-description-list' },
+    { name: 'talks', path: '/talks', selector: '.markdown' },
+    { name: 'papers', path: '/papers', selector: '.talks-container' },
+    { name: 'resume', path: '/resume', selector: '#resume' },
+    { name: 'contact', path: '/contact', selector: '.contact-container' },
+  ];
 
-  test('writing list page', async ({ page }) => {
-    await page.goto('/writing');
-    await expect(page).toHaveScreenshot('writing-list-page.png');
-  });
-
-  test('chess page', async ({ page }) => {
-    await page.goto('/chess');
-    await page.waitForSelector('#chess'); 
-    await expect(page).toHaveScreenshot('chess-page.png');
-  });
+  for (const route of staticRoutes) {
+    test(`route: ${route.name}`, async ({ page }) => {
+      await page.goto(route.path);
+      await page.waitForLoadState('load');
+      if (route.selector) {
+        await page.waitForSelector(route.selector);
+      }
+      await expect(page).toHaveScreenshot(`${route.name}-page.png`);
+    });
+  }
 
   // Dynamically create tests for each blog post
   for (const post of writing) {
