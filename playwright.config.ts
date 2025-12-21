@@ -6,7 +6,9 @@ process.env.PLAYWRIGHT_BROWSERS_PATH = path.join(import.meta.dirname, '.playwrig
 export default defineConfig({
   testDir: './tests',
   reporter: 'list',
-  timeout: 5000,
+  timeout: 7500,
+  fullyParallel: true,
+  workers: '100%',
   use: {
     baseURL: 'http://localhost:8001',
   },
