@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 import path from 'path';
 
 // Use the local browser path we set up
-process.env.PLAYWRIGHT_BROWSERS_PATH = path.join(__dirname, '.playwright');
+process.env.PLAYWRIGHT_BROWSERS_PATH = path.join(import.meta.dirname, '.playwright');
 
 export default defineConfig({
   testDir: './tests',

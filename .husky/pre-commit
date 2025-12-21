@@ -2,6 +2,7 @@
 
 # Run verification tasks in parallel
 (pnpm type-check) &
+(pnpm lint) &
 (pnpm build) &
 (pnpm verify-docker) &
 (pnpm exec playwright test) &

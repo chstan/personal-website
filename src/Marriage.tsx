@@ -217,8 +217,8 @@ const calcTaxFromBrackets = (filingStatus: FilingStatus, agi: number, year: TaxY
   let remainingAgi = agi;
   let due = 0.0;
   let bracketStart = 0;
-  for (let [bracketEnd, rate] of brackets) {
-    let agiInBracket = Math.min(remainingAgi, bracketEnd - bracketStart);
+  for (const [bracketEnd, rate] of brackets) {
+    const agiInBracket = Math.min(remainingAgi, bracketEnd - bracketStart);
 
     due += rate * agiInBracket;
     remainingAgi = remainingAgi - agiInBracket;
@@ -302,7 +302,7 @@ const TAX_CHILDREN_OPTIONS = [
 
 
 const optionFor = (value: any, options: any) => {
-  for (let option of options) {
+  for (const option of options) {
     if (option.value === value) return option;
   }
   return '';
@@ -327,10 +327,10 @@ type ComparisonDiagramProps = {
   }
 }
 const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) => {
-  const taxData: Array<Object> = [];
-  for (let income of INCOMES) {
-    let working = [];
-    for (let incomeShare of INCOME_SHARES) {
+  const taxData: Array<object> = [];
+  for (const income of INCOMES) {
+    const working = [];
+    for (const incomeShare of INCOME_SHARES) {
       const taxesDueA = calculateTaxes(
         a.filingStatus,
         incomeShare,
@@ -379,7 +379,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
   const colorScaleComp = (x: number) => interpolateRdBu((x / colorMax + 0.5));
   const colorScaleRaw = (x: number) => interpolateGreens(x / 10000);
 
-  let colorScale = colorScaleComp;
+  const colorScale = colorScaleComp;
 
   const legendColorScale = scaleThreshold({
     domain: LEGEND_DOMAIN.map(x => x * colorMax),

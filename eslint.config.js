@@ -1,0 +1,69 @@
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import reactPlugin from 'eslint-plugin-react';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import globals from 'globals';
+
+export default tseslint.config(
+  eslint.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    // Default config for all files
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
+  },
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    plugins: {
+      react: reactPlugin,
+      'react-hooks': reactHooksPlugin,
+    },
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+    rules: {
+      ...reactPlugin.configs.recommended.rules,
+      ...reactHooksPlugin.configs.recommended.rules,
+      'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off',
+      'react/no-unescaped-entities': 'off',
+      'react/jsx-key': 'warn', // Downgrade to warn for legacy cleanup
+      'react/no-children-prop': 'warn', // Downgrade to warn
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-empty-object-type': 'warn',
+      '@typescript-eslint/no-wrapper-object-types': 'warn',
+      'prefer-const': 'warn',
+    },
+  },
+  {
+    // Special handling for config files (no type-aware linting)
+    files: ['*.config.{js,ts}', 'tests/**/*.{ts,tsx}'],
+    extends: [tseslint.configs.disableTypeChecked],
+    rules: {
+      '@typescript-eslint/no-var-requires': 'off',
+    }
+  },
+  {
+    ignores: [
+      'build/**',
+      'dist/**',
+      '.playwright/**',
+      'playwright-report/**',
+      'test-results/**',
+      'node_modules/**',
+    ],
+  }
+);

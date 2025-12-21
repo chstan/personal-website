@@ -13,7 +13,7 @@ const SimpleButton: React.FC<{onClick: MouseEventHandler}> = ({onClick, children
   <button className="simple-button" onClick={onClick}>{children}</button>;
 
 function renderSyntax(language: string = 'python') {
-  let outerLanguage = language;
+  const outerLanguage = language;
 
   const Renderer: React.FC<{value: string, language?: string,}> = ({value, language}) =>
     <SyntaxHighlighter
