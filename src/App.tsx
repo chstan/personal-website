@@ -74,8 +74,8 @@ type NavLinkSection =
   | { kind: 'separator' }
   | { kind: 'navgroup', title: string, content: Array<NavLinkItem>, defaultOpen: boolean };
 
-const linkify = (c: any): NavLinkSection => {
-  if (c.kind) {
+const linkify = (c: NavLinkItem | NavLinkSection): NavLinkSection => {
+  if ('kind' in c) {
     return c;
   }
   return {
@@ -84,7 +84,7 @@ const linkify = (c: any): NavLinkSection => {
   }
 };
 
-const links: Array<NavLinkSection> = [
+const links: Array<NavLinkSection> = ([
   ['/', [WelcomePage, '/']],
   ['/talks', [TalksPage, 'talks']],
   ['/papers', [PapersPage, 'papers']],
@@ -112,9 +112,9 @@ const links: Array<NavLinkSection> = [
   SEPARATOR,
 
   ['/resume', [Resume, 'resume']],
-].map(linkify) as Array<NavLinkSection>;
+] as Array<NavLinkItem | NavLinkSection>).map(linkify);
 
-const flatLinks: Array<[string, [React.FC, string]]> = [].concat(...links.map((section) => {
+const flatLinks: Array<[string, [React.FC, string]]> = ([] as Array<NavLinkItem>).concat(...links.map((section) => {
   if (section.kind === 'separator') {
     return [];
   } else if (section.kind === 'link') {
@@ -122,7 +122,7 @@ const flatLinks: Array<[string, [React.FC, string]]> = [].concat(...links.map((s
   } else {
     return section.content; // navgroup
   }
-}) as any).filter((ls: [string, any]) => !ls[0].startsWith('http')).reverse();
+})).filter((ls) => !ls[0].startsWith('http')).reverse();
 
 const Navbar: React.FC = () => {
   return (

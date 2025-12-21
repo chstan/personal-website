@@ -43,9 +43,6 @@ type Reference = {
   documentPublishDate: string;
 };
 
-const BibCite: React.FC<{index: number,}> = ({index,}) =>
-  <a href={`#reference-${index}`} className="bibliography-inline-citation">[{index + 1}]</a>;
-
 const BibItem: React.FC<{reference: Reference, index: number}> = ({reference, index}) => {
   let combinedAuthors = reference.organization;
   if (typeof(reference.authors) !== 'undefined') {
@@ -81,8 +78,7 @@ const range = (n: number) => {
 };
 
 // utils
-const max = (data: any, value = (d: any) => d) => Math.max(...data.map(value));
-const min = (data: any, value = (d: any) => d) => Math.min(...data.map(value));
+const max = <T,>(data: Array<T>, value: (d: T) => number = (d: any) => d as number) => Math.max(...data.map(value));
 
 const N_POINTS = 51;
 const INCOMES = range(N_POINTS).map(x => x * 5000);
@@ -217,8 +213,8 @@ const calcTaxFromBrackets = (filingStatus: FilingStatus, agi: number, year: TaxY
   let remainingAgi = agi;
   let due = 0.0;
   let bracketStart = 0;
-  for (const [bracketEnd, rate] of brackets) {
-    const agiInBracket = Math.min(remainingAgi, bracketEnd - bracketStart);
+  for (let [bracketEnd, rate] of brackets) {
+    let agiInBracket = Math.min(remainingAgi, bracketEnd - bracketStart);
 
     due += rate * agiInBracket;
     remainingAgi = remainingAgi - agiInBracket;
@@ -302,7 +298,7 @@ const TAX_CHILDREN_OPTIONS = [
 
 
 const optionFor = (value: any, options: any) => {
-  for (const option of options) {
+  for (let option of options) {
     if (option.value === value) return option;
   }
   return '';
@@ -327,10 +323,10 @@ type ComparisonDiagramProps = {
   }
 }
 const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) => {
-  const taxData: Array<object> = [];
-  for (const income of INCOMES) {
-    const working = [];
-    for (const incomeShare of INCOME_SHARES) {
+  const taxData: Array<Object> = [];
+  for (let income of INCOMES) {
+    let working = [];
+    for (let incomeShare of INCOME_SHARES) {
       const taxesDueA = calculateTaxes(
         a.filingStatus,
         incomeShare,
@@ -360,10 +356,8 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
 
   // accessors
   const bins = (d: any) => d.bins;
-  const count = (d: any) => d.count || 0;
-  const absCount = (d: any) => Math.abs(d.count) || 0;
 
-  const colorMax = max(taxData, d => max(bins(d), absCount));
+  const colorMax = max(taxData, d => max(bins(d), (b: any) => Math.abs(b.count) || 0));
   const bucketSizeMax = max(taxData, d => bins(d).length);
 
   // scales
@@ -374,12 +368,10 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
     domain: [0, bucketSizeMax]
   });
 
-  const DOMAIN = [-1, -2./3, -1./3, 0, 1./3, 2./3, 1];
   const LEGEND_DOMAIN = [-1., -2./3, -1./3, 0, 1./3, 2./3, 1];
   const colorScaleComp = (x: number) => interpolateRdBu((x / colorMax + 0.5));
-  const colorScaleRaw = (x: number) => interpolateGreens(x / 10000);
 
-  const colorScale = colorScaleComp;
+  let colorScale = colorScaleComp;
 
   const legendColorScale = scaleThreshold({
     domain: LEGEND_DOMAIN.map(x => x * colorMax),
@@ -398,10 +390,9 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
     title = 'Marriage Tax Diagram ($k Δ)';
     legend = (
       <div className="legend">
-        <div className="title">Income Change ($k)</div>
         <LegendQuantile scale={legendColorScale as any}>
-          {(labels: any) => {
-            return labels.filter((label: any) => typeof(label.extent[0]) !== 'undefined').map((label: any, i: number) => {
+          {(_labels: any) => {
+            return _labels.filter((label: any) => typeof(label.extent[0]) !== 'undefined').map((label: any, i: number) => {
               const fmt = format('.2f');
               const [low, high] = label.extent;
               const size = 16;
@@ -427,8 +418,8 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
       <div className="legend">
         <div className="title">Income Change (%)</div>
         <LegendQuantile scale={legendColorScale as any}>
-          {(labels: any) => {
-            return labels.filter((label: any) => typeof(label.extent[0]) !== 'undefined').map((label: any, i: number) => {
+          {(_labels: any) => {
+            return _labels.filter((label: any) => typeof(label.extent[0]) !== 'undefined').map((label: any, i: number) => {
               const fmt = format('.2f');
               const [low, high] = label.extent;
               const size = 16;
@@ -534,7 +525,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
                       y={bin.y}
                       fill={bin.color}
                       fillOpacity={bin.opacity}
-                      onClick={event => {
+                      onClick={_event => {
                         const { row, column } = bin;
                         props.onClickCell({ row, column, ...bin.bin });
                       }}

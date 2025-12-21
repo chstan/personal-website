@@ -1,14 +1,14 @@
 import React from 'react';
 import {DynamicMarkdown} from "./common";
 
-const DEFAULT_POLICY = `;; Example policy always forfeits turn.
+const _DEFAULT_POLICY = `;; Example policy always forfeits turn.
 ;; Write your own policy here!
 
 {:plays
  (fn [_ _]
    {:intent :finish-turn})}`;
 
-class PlayDominion extends React.Component<any, any> {
+class PlayDominion extends React.Component<{}, {}> {
   render() {
     return <p>Not migrated, you can look at the old version of the site.</p>;
   }
