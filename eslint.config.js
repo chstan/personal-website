@@ -41,16 +41,16 @@ export default tseslint.config(
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react/no-unescaped-entities': 'off',
-      'react/jsx-key': 'warn',
-      'react/no-children-prop': 'warn',
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': ['warn', { 
+      'react/jsx-key': 'error',
+      'react/no-children-prop': 'error',
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unused-vars': ['error', { 
         argsIgnorePattern: '^_',
         varsIgnorePattern: '^_',
       }],
-      '@typescript-eslint/no-empty-object-type': 'warn',
-      '@typescript-eslint/no-wrapper-object-types': 'warn',
-      'prefer-const': 'warn',
+      '@typescript-eslint/no-empty-object-type': 'error',
+      '@typescript-eslint/no-wrapper-object-types': 'error',
+      'prefer-const': 'error',
     },
   },
   {
