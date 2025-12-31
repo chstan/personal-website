@@ -70,3 +70,11 @@ pnpm verify-docker
 - **Type Safety:** Rigorous use of TypeScript (`tsc --noEmit`).
 - **CSS:** Use CSS Variables defined in `src/css/variables.css`.
 - **Content:** Adding a blog post involves creating a `.md` file in `src/md/` and adding an entry to `src/json/writing.json`.
+
+## Change Philosophy
+- **Minimize Blast Radius:** Keep changes tightly scoped to the specific task. Avoid making non-functional changes (refactoring, linting, formatting) that are unrelated to the primary objective.
+- **Atomic Commits:** Prefer many small, focused commits over large ones that change several things simultaneously.
+- **Separation of Concerns:** NEVER mix functional changes (e.g., website content, features) with infrastructure or development harness changes (e.g., `Dockerfile`, pre-commit hooks, testing methodology) in the same commit. These must be handled as separate, independent units of work.
+
+## Building and Running
+
