@@ -8,7 +8,7 @@ const _DEFAULT_POLICY = `;; Example policy always forfeits turn.
  (fn [_ _]
    {:intent :finish-turn})}`;
 
-class PlayDominion extends React.Component<{}, {}> {
+class PlayDominion extends React.Component<object, object> {
   render() {
     return <p>Not migrated, you can look at the old version of the site.</p>;
   }

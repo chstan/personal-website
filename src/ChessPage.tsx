@@ -1,7 +1,7 @@
 import React from "react";
 import {Expandable, DynamicMarkdown, SimpleButton, SuperSecretCat} from "./common";
 
-class PlayChess extends React.Component<{}, {}> {
+class PlayChess extends React.Component<object, object> {
   render() {
     return <p>Not Migrated.</p>;
   }

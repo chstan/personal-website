@@ -25,10 +25,10 @@ function renderSyntax(language: string = 'python') {
 
 const initialExpandState = {expanded: false};
 type ExpandState = Readonly<typeof initialExpandState>;
-class Expandable extends React.Component<any, any> {
-  readonly state: ExpandState = initialExpandState;
+class Expandable<P = object, S = object> extends React.Component<P, ExpandState & S> {
+  readonly state: ExpandState & S = initialExpandState as ExpandState & S;
   toggle = () => {
-    this.setState({expanded: !this.state.expanded});
+    this.setState((prevState) => ({ ...prevState, expanded: !prevState.expanded }));
   };
 }
 
@@ -38,7 +38,12 @@ const LabeledInputGroup: React.FC<{label: string,}> = ({label, children,}) =>
     <span className="label-text">{label}</span>
   </label>;
 
-const Markdown = (props: any) => {
+type MarkdownProps = {
+  children: string;
+  components?: Record<string, React.ComponentType<any>>;
+};
+
+const Markdown = (props: MarkdownProps) => {
   const newProps = {
     ...props,
     className: 'markdown',
@@ -52,28 +57,29 @@ const Markdown = (props: any) => {
     escapeHtml: false,
     components: {
       ...props.components,
-      code({node, inline, className, children, ...props}: any) {
+      code({inline, className, children, ...rest}: {inline?: boolean, className?: string, children: React.ReactNode}) {
         const match = /language-(\w+)/.exec(className || 'python')
         return !inline && match ? (
           <SyntaxHighlighter
-            children={String(children).replace(/\n$/, '')}
             style={atomOneLight}
             language={match[1]}
             PreTag="div"
-            {...props}
-          />
+            {...(rest as Record<string, unknown>)}
+          >
+            {String(children).replace(/\n$/, '')}
+          </SyntaxHighlighter>
         ) : (
-          <code className={className} {...props}>
+          <code className={className} {...(rest as Record<string, unknown>)}>
             {children}
           </code>
         )
       }
     }
   };
-  return <ReactMarkdown {...newProps} />;
+  return <ReactMarkdown {...(newProps as any)} />;
 };
 
-const InlineMarkdown = (props: any) => {
+const InlineMarkdown = (props: MarkdownProps) => {
   return <span className="inline-markdown"><Markdown {...props}/></span>
 };
 

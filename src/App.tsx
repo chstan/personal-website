@@ -27,7 +27,12 @@ const Unimplemented: React.FC = () =>
     version at <WrapLink to={"http://historical.conradstansbury.com"}>the archived copy</WrapLink></p>;
 
 
-class NavGroup extends Expandable {
+interface NavGroupProps {
+  title: string;
+  defaultOpen: boolean;
+}
+
+class NavGroup extends Expandable<NavGroupProps> {
   componentDidMount() {
     this.setState({ expanded: this.props.defaultOpen, });
   }
