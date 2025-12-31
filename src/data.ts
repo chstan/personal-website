@@ -59,10 +59,10 @@ export type WritingInfo = {
 }
 
 const BOOKS: Array<Book> = _BOOKS;
-const TALKS: Array<Talk> = _TALKS as any;
+const TALKS: Array<Talk> = _TALKS as unknown as Array<Talk>;
 const PROJECTS: Array<ProjectInfo> = _PROJECTS;
 const WRITING: Array<WritingInfo> = _WRITING;
-const PAPERS: Array<PaperInfo> = _PAPERS as any;
+const PAPERS: Array<PaperInfo> = _PAPERS as unknown as Array<PaperInfo>;
 
 const BASE_INFO = {
   address: '2517 Virginia St. Apt 5',

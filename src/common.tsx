@@ -40,7 +40,7 @@ const LabeledInputGroup: React.FC<{label: string,}> = ({label, children,}) =>
 
 type MarkdownProps = {
   children: string;
-  components?: Record<string, React.ComponentType<any>>;
+  components?: Record<string, React.ComponentType>;
 };
 
 const Markdown = (props: MarkdownProps) => {
@@ -54,7 +54,6 @@ const Markdown = (props: MarkdownProps) => {
       rehypeKatex,
       rehypeRaw,
     ],
-    escapeHtml: false,
     components: {
       ...props.components,
       code({inline, className, children, ...rest}: {inline?: boolean, className?: string, children: React.ReactNode}) {
@@ -76,7 +75,7 @@ const Markdown = (props: MarkdownProps) => {
       }
     }
   };
-  return <ReactMarkdown {...(newProps as any)} />;
+  return <ReactMarkdown {...newProps} />;
 };
 
 const InlineMarkdown = (props: MarkdownProps) => {

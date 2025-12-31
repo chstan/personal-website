@@ -328,6 +328,18 @@ type ComparisonDiagramProps = {
 type TaxBinData = { bin: number, count: number };
 type TaxDataPoint = { bin: number, bins: Array<TaxBinData> };
 
+type HeatmapCell = {
+  row: number;
+  column: number;
+  width: number;
+  height: number;
+  x: number;
+  y: number;
+  color: string;
+  opacity: number;
+  bin: TaxBinData;
+};
+
 const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) => {
   const taxData: Array<TaxDataPoint> = [];
   for (const income of INCOMES) {
@@ -396,8 +408,8 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
     title = 'Marriage Tax Diagram ($k Δ)';
     legend = (
       <div className="legend">
-        <LegendQuantile scale={legendColorScale as any}>
-          {(_labels: Array<{ extent: [number, number], value: any }>) => {
+        <LegendQuantile scale={legendColorScale}>
+          {(_labels: Array<{ extent: [number, number], value: string }>) => {
             return _labels.filter((label) => typeof(label.extent[0]) !== 'undefined').map((label, i: number) => {
               const fmt = format('.2f');
               const [low, high] = label.extent;
@@ -405,7 +417,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
               return (
                 <LegendItem key={`legend-${i}`}>
                   <svg width={size} height={size} style={{ margin: '2px 0' }}>
-                    <rect fill={label.value as any}
+                    <rect fill={label.value}
                           width={size} height={size} />
                   </svg>
                   <LegendLabel align={'left'} margin={'0 1rem'}>
@@ -423,8 +435,8 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
     legend = (
       <div className="legend">
         <div className="title">Income Change (%)</div>
-        <LegendQuantile scale={legendColorScale as any}>
-          {(_labels: Array<{ extent: [number, number], value: any }>) => {
+        <LegendQuantile scale={legendColorScale}>
+          {(_labels: Array<{ extent: [number, number], value: string }>) => {
             return _labels.filter((label) => typeof(label.extent[0]) !== 'undefined').map((label, i: number) => {
               const fmt = format('.2f');
               const [low, high] = label.extent;
@@ -432,7 +444,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
               return (
                 <LegendItem key={`legend-${i}`}>
                   <svg width={size} height={size} style={{ margin: '2px 0' }}>
-                    <rect fill={label.value as any}
+                    <rect fill={label.value}
                           width={size} height={size} />
                   </svg>
                   <LegendLabel align={'left'} margin={'0 1rem'}>
@@ -457,10 +469,10 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
             dx={size / 2}
             dy={-20}
             style={{fontSize: '24px', fontFamily: 'Source Sans Pro, Roboto'}}
-          >{title as any}</Text>
+          >{title}</Text>
           <AxisLeft
             top={3.5}
-            scale={yScale as any}
+            scale={yScale}
             numTicks={11}
             label="(Single Income) ← Income % of Less-Earning Partner → (Equal Earning)"
             labelProps={{
@@ -471,7 +483,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
             }}
             stroke="rgb(50, 50, 50)"
             tickStroke="rgb(50, 50, 50)"
-            tickLabelProps={(_value: any, _index: any) => ({
+            tickLabelProps={(_value: number, _index: number) => ({
               fill: 'rgb(50, 50, 50)',
               textAnchor: 'end',
               fontSize: 10,
@@ -479,13 +491,13 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
               dx: '-0.5em',
               dy: '0.25em'
             })}
-            tickComponent={({ formattedValue, ...tickProps }: any) =>
-              <text {...tickProps}>{100 * INCOME_SHARES[parseInt(formattedValue as any) || 0]}%</text>
+            tickComponent={({ formattedValue, ...tickProps }: { formattedValue: string } & React.SVGProps<SVGTextElement>) =>
+              <text {...tickProps}>{100 * INCOME_SHARES[parseInt(formattedValue) || 0]}%</text>
             }
           />
           <AxisBottom
             top={size + 4}
-            scale={xScale as any}
+            scale={xScale}
             numTicks={11}
             label={'Combined Income ($1,000s)'}
             labelProps={{
@@ -496,7 +508,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
             }}
             stroke="rgb(50, 50, 50)"
             tickStroke="rgb(50, 50, 50)"
-            tickLabelProps={(_value: any, _index: any) => ({
+            tickLabelProps={(_value: number, _index: number) => ({
               fill: 'rgb(50, 50, 50)',
               textAnchor: 'middle',
               fontSize: 10,
@@ -504,23 +516,23 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
               dx: '0',
               dy: '0',
             })}
-            tickComponent={({ formattedValue, ...tickProps }: any) =>
-              <text {...tickProps}>{INCOMES[parseInt(formattedValue as any) || 0] / 1000}</text>
+            tickComponent={({ formattedValue, ...tickProps }: { formattedValue: string } & React.SVGProps<SVGTextElement>) =>
+              <text {...tickProps}>{INCOMES[parseInt(formattedValue) || 0] / 1000}</text>
             }
           />
           <HeatmapRect<TaxDataPoint, TaxBinData>
             data={taxData}
-            xScale={xScale as any}
-            yScale={yScale as any}
-            colorScale={colorScale as any}
+            xScale={xScale}
+            yScale={yScale}
+            colorScale={colorScale}
             opacity={1}
             binWidth={binWidth}
             binHeight={binWidth}
             gap={-0.25}
           >
-            {(heatmap: any) => {
-              return heatmap.map((bins: any) => {
-                return bins.map((bin: any) => {
+            {(heatmap: HeatmapCell[][]) => {
+              return heatmap.map((bins) => {
+                return bins.map((bin) => {
                   return (
                     <rect
                       key={`heatmap-rect-${bin.row}-${bin.column}`}
@@ -533,7 +545,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
                       fillOpacity={bin.opacity}
                       onClick={_event => {
                         const { row, column } = bin;
-                        props.onClickCell({ row, column, count: (bin.bin as any).count });
+                        props.onClickCell({ row, column, count: bin.bin.count });
                       }}
                     />
                   );

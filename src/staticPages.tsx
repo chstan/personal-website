@@ -290,20 +290,29 @@ const ExperienceSection = (experiences: Array<ExperienceContent>) => (
 const TalkSection = (talks: Array<Talk>) => <div>{talks.map((t, i) => <TalkSummary key={i} talk={t}/>)}</div>;
 
 const buildResumeRow: React.FC<ResumeRow> = ({kind, title, content}) => {
-  const Components = new Map<ResumeRowKind, any>([
-    [ResumeRowKind.Education, EducationSection],
-    [ResumeRowKind.RawContent, RawContentSection],
-    [ResumeRowKind.Skills, SkillsSection],
-    [ResumeRowKind.Experiences, ExperienceSection],
-    [ResumeRowKind.Talks, TalkSection],
-  ]);
-
-  const C: React.FC<any> = Components.get(kind);
+  let node: React.ReactNode = null;
+  switch (kind) {
+    case ResumeRowKind.Education:
+      node = EducationSection(content as EducationContent);
+      break;
+    case ResumeRowKind.RawContent:
+      node = RawContentSection(content as ParagraphsContent);
+      break;
+    case ResumeRowKind.Skills:
+      node = SkillsSection(content as SkillDescription);
+      break;
+    case ResumeRowKind.Experiences:
+      node = ExperienceSection(content as Array<ExperienceContent>);
+      break;
+    case ResumeRowKind.Talks:
+      node = TalkSection(content as Array<Talk>);
+      break;
+  }
 
   return (
     <div className="table resume-row">
       <div><h2>{title}</h2></div>
-      {C(content)}
+      {node}
     </div>
   );
 };

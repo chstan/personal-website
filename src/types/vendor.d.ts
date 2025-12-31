@@ -1,11 +1,7 @@
-declare module "react-markdown" {
-  declare const ReactMarkdown: React.ComponentClass<any>;
-  export default ReactMarkdown;
-}
 declare module "react-baduk" {
-  declare const Baduk: React.ComponentClass<any>;
-  declare const BadukBoard: React.ComponentClass<any>;
-  declare const Piece: React.ComponentClass<any>;
+  declare const Baduk: React.ComponentType<unknown>;
+  declare const BadukBoard: React.ComponentType<unknown>;
+  declare const Piece: React.ComponentType<unknown>;
   export {
     Baduk,
     BadukBoard,
@@ -14,13 +10,13 @@ declare module "react-baduk" {
 }
 declare module 'remark-math' {}
 declare module 'react-katex' {
-  declare const InlineMath: any;
-  declare const BlockMath: any;
+  declare const InlineMath: React.ComponentType<unknown>;
+  declare const BlockMath: React.ComponentType<unknown>;
 }
 declare module 'react-vis' {
-  declare const XYPlot: any;
-  declare const XAxis: any;
-  declare const YAxis: any;
-  declare const HeatmapSeries: any;
-  declare const Hint: any;
+  declare const XYPlot: React.ComponentType<unknown>;
+  declare const XAxis: React.ComponentType<unknown>;
+  declare const YAxis: React.ComponentType<unknown>;
+  declare const HeatmapSeries: React.ComponentType<unknown>;
+  declare const Hint: React.ComponentType<unknown>;
 }
