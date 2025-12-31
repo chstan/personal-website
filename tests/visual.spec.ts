@@ -30,7 +30,7 @@ test.describe('Visual Regression', () => {
 
   // Dynamically create tests for each blog post
   for (const post of writing) {
-    if (post.released) {
+    if (post.released && !post.externalUrl) {
       test(`blog post: ${post.label}`, async ({ page }) => {
         await page.goto(`/writing/${post.label}`);
         await page.waitForLoadState('networkidle');

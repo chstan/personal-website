@@ -3,15 +3,17 @@
     "title": "PyARPES Explainer",
     "label": "pyarpes",
     "short": "A look into how PyARPES integrates data sources and modernizes ARPES data analysis.",
-    "released": false,
-    "date": "April 2022"
+    "released": true,
+    "date": "April 2022",
+    "externalUrl": "https://arpes.readthedocs.io/"
   },
   {
     "title": "AutodiDAQt Explainer",
     "label": "autodidaqt",
     "short": "A deep dive into automating and systemizating scientific data acquisition.",
-    "released": false,
-    "date": "April 2022"
+    "released": true,
+    "date": "April 2022",
+    "externalUrl": "https://daquiri.readthedocs.io/"
   },
   {
     "title": "Dictate to Notion: Revamping My Personal Notekeeping Systems",

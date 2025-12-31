@@ -55,6 +55,7 @@ export type WritingInfo = {
   short: string;
   released: boolean;
   date: string;
+  externalUrl?: string;
 }
 
 const BOOKS: Array<Book> = _BOOKS;

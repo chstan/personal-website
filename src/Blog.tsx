@@ -23,9 +23,11 @@ const BlogItem = () => {
 
 const BlogPage = () => <div className="project-container">
   {WRITING.map(w => {
+    if (!w.released) return null;
+    const link = w.externalUrl ? w.externalUrl : `/writing/${w.label}`;
     return (
       <div key={w.title} className="blog">
-        {w.label ? <a href={`/writing/${w.label}`}><h2>{w.title}</h2></a> : <h2>{w.title}</h2>}
+        {w.label || w.externalUrl ? <a href={link}><h2>{w.title}</h2></a> : <h2>{w.title}</h2>}
         <p className="blog-short">{w.short}</p>
       </div>
     );
