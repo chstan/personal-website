@@ -1,23 +1,36 @@
 #!/bin/bash
 
-# Ensure build exists first to avoid race conditions in parallel tasks
-pnpm build
+# Pre-commit hook to ensure code quality before every commit
+# 2025 Standard: Build -> Fast parallel checks (lint/type-check) -> Sequential slow tests
 
-# Run remaining verification tasks in parallel
-(pnpm type-check) &
-(pnpm lint) &
-(pnpm verify-docker) &
-(pnpm exec playwright test) &
+echo "🚀 Running pre-commit checks..."
 
-# Wait for all background jobs to finish and capture exit codes
-FAIL=0
-for job in $(jobs -p); do
-    wait "$job" || let "FAIL+=1"
-done
+# 1. Build the project first
+pnpm build || { echo "❌ Build failed."; exit 1; }
 
-if [ "$FAIL" -ne 0 ]; then
-    echo "❌ One or more pre-commit checks failed."
-    exit 1
+# 2. Run fast checks in parallel (lint and type-check)
+echo "🏃 Running lint and type-check..."
+rm -f .check_failed
+
+pnpm lint &
+P1=$!
+pnpm type-check &
+P2=$!
+
+wait $P1 || touch .check_failed
+wait $P2 || touch .check_failed
+
+if [ -f .check_failed ]; then
+  rm .check_failed
+  echo "❌ Lint or type-check failed. Fix errors before committing."
+  exit 1
 fi
+
+# 3. Run higher latency tests sequentially
+echo "🐳 Running verify-docker..."
+pnpm verify-docker || { echo "❌ Docker verification failed."; exit 1; }
+
+echo "🧪 Running Playwright tests..."
+pnpm exec playwright test || { echo "❌ Playwright tests failed."; exit 1; }
 
 echo "✅ All pre-commit checks passed."

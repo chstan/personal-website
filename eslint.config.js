@@ -44,7 +44,10 @@ export default tseslint.config(
       'react/jsx-key': 'warn',
       'react/no-children-prop': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': ['warn', { 
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      }],
       '@typescript-eslint/no-empty-object-type': 'warn',
       '@typescript-eslint/no-wrapper-object-types': 'warn',
       'prefer-const': 'warn',

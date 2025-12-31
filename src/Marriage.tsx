@@ -24,7 +24,7 @@
 import React from 'react';
 import { format } from 'd3-format';
 import { Group } from '@vx/vx';
-import { interpolateRdBu, interpolateGreens } from 'd3-scale-chromatic';
+import { interpolateRdBu } from 'd3-scale-chromatic';
 import { scaleLinear, scaleThreshold } from '@vx/vx';
 import { HeatmapRect } from '@vx/vx';
 import { AxisLeft, AxisBottom } from '@vx/vx';
@@ -32,7 +32,7 @@ import { LegendQuantile, LegendItem, LegendLabel } from '@vx/vx';
 import { Text } from '@vx/vx';
 
 import Toggle from 'react-toggle';
-import Select from 'react-select';
+import Select, { SingleValue } from 'react-select';
 import {LabeledInputGroup, WrapLink} from "./common";
 
 type Reference = {
@@ -78,7 +78,7 @@ const range = (n: number) => {
 };
 
 // utils
-const max = <T,>(data: Array<T>, value: (d: T) => number = (d: any) => d as number) => Math.max(...data.map(value));
+const max = <T,>(data: Array<T>, value: (d: T) => number = (d: T) => d as unknown as number) => Math.max(...data.map(value));
 
 const N_POINTS = 51;
 const INCOMES = range(N_POINTS).map(x => x * 5000);
@@ -129,7 +129,7 @@ const eitc2020 = new Map([
   [EITCChildren.MORE_CHILDREN, { cap: 6660, phaseinFinished: 14570, phaseoutStartSingle: 19330, phaseoutFinishedSingle: 50954, phaseoutStart: 25220, phaseoutFinished: 56844 }],
 ]);
 
-type Bracket = Array<Array<number>>;
+type Bracket = Array<[number, number]>;
 
 // Earned income tax credit (DONE)
 // Alternative minimum tax (SKIP but note, very few americans pay it)
@@ -162,7 +162,7 @@ const BRACKETS_HEAD_2020 = [14100, 53700, 85500, 163300, 207350, 518400, Infinit
 const BRACKETS_MARRIED_2020 = [19750, 80250, 171050, 326600, 414700, 622050, Infinity];
 const BRACKETS_SEPARATELY_2020 = [9875, 40125, 85525, 163300, 207350, 311025, Infinity];
 
-const buildBracket = (bracket: Array<number>) =>
+const buildBracket = (bracket: Array<number>): Bracket =>
   BRACKET_RATES.map((rate, i) => [bracket[i], rate]);
 
 const noBracket = buildBracket(BRACKETS_SINGLE_2019);
@@ -277,19 +277,21 @@ const STATIC_CONFIG = {
   margin: MARGIN,
 };
 
-const TAX_FILING_OPTIONS = [
+type SelectOption<T> = { value: T, label: string };
+
+const TAX_FILING_OPTIONS: Array<SelectOption<FilingStatus>> = [
   { value: FilingStatus.SINGLE, label: 'Single', },
   { value: FilingStatus.MARRIED, label: 'Married', },
   { value: FilingStatus.SEPARATELY, label: 'Filing Separately', },
   { value: FilingStatus.HEAD_OF_HOUSEHOLD, label: 'Head of Household', },
 ];
 
-const TAX_YEAR_OPTIONS = [
+const TAX_YEAR_OPTIONS: Array<SelectOption<TaxYear>> = [
   { value: '2019', label: '2019-2020', },
   { value: '2020', label: '2020-2021', },
 ];
 
-const TAX_CHILDREN_OPTIONS = [
+const TAX_CHILDREN_OPTIONS: Array<SelectOption<EITCChildren>> = [
   { value: EITCChildren.NO_CHILDREN, label: 'No Children' },
   { value: EITCChildren.ONE_CHILD, label: 'One Child' },
   { value: EITCChildren.TWO_CHILDREN, label: 'Two Children' },
@@ -297,11 +299,11 @@ const TAX_CHILDREN_OPTIONS = [
 ];
 
 
-const optionFor = (value: any, options: any) => {
+const optionFor = <T,>(value: T, options: Array<SelectOption<T>>) => {
   for (const option of options) {
     if (option.value === value) return option;
   }
-  return '';
+  return null;
 };
 
 type TaxSettings = {
@@ -315,17 +317,21 @@ type ComparisonDiagramProps = {
   b: TaxSettings;
   useAbsoluteAmounts: boolean;
   useEITC: boolean;
-  onClickCell: any;
+  onClickCell: (cell: { row: number, column: number, count: number }) => void;
   config: {
     width: number,
     height: number,
     margin: number,
   }
 }
+
+type TaxBinData = { bin: number, count: number };
+type TaxDataPoint = { bin: number, bins: Array<TaxBinData> };
+
 const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) => {
-  const taxData: Array<object> = [];
+  const taxData: Array<TaxDataPoint> = [];
   for (const income of INCOMES) {
-    const working = [];
+    const working: Array<TaxBinData> = [];
     for (const incomeShare of INCOME_SHARES) {
       const taxesDueA = calculateTaxes(
         a.filingStatus,
@@ -355,9 +361,9 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
   const binWidth = xMax / taxData.length;
 
   // accessors
-  const bins = (d: any) => d.bins;
+  const bins = (d: TaxDataPoint) => d.bins;
 
-  const colorMax = max(taxData, d => max(bins(d), (b: any) => Math.abs(b.count) || 0));
+  const colorMax = max(taxData, d => max(bins(d), (b: TaxBinData) => Math.abs(b.count) || 0));
   const bucketSizeMax = max(taxData, d => bins(d).length);
 
   // scales
@@ -391,8 +397,8 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
     legend = (
       <div className="legend">
         <LegendQuantile scale={legendColorScale as any}>
-          {(_labels: any) => {
-            return _labels.filter((label: any) => typeof(label.extent[0]) !== 'undefined').map((label: any, i: number) => {
+          {(_labels: Array<{ extent: [number, number], value: any }>) => {
+            return _labels.filter((label) => typeof(label.extent[0]) !== 'undefined').map((label, i: number) => {
               const fmt = format('.2f');
               const [low, high] = label.extent;
               const size = 16;
@@ -418,8 +424,8 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
       <div className="legend">
         <div className="title">Income Change (%)</div>
         <LegendQuantile scale={legendColorScale as any}>
-          {(_labels: any) => {
-            return _labels.filter((label: any) => typeof(label.extent[0]) !== 'undefined').map((label: any, i: number) => {
+          {(_labels: Array<{ extent: [number, number], value: any }>) => {
+            return _labels.filter((label) => typeof(label.extent[0]) !== 'undefined').map((label, i: number) => {
               const fmt = format('.2f');
               const [low, high] = label.extent;
               const size = 16;
@@ -465,7 +471,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
             }}
             stroke="rgb(50, 50, 50)"
             tickStroke="rgb(50, 50, 50)"
-            tickLabelProps={(value: any, index: any) => ({
+            tickLabelProps={(_value: any, _index: any) => ({
               fill: 'rgb(50, 50, 50)',
               textAnchor: 'end',
               fontSize: 10,
@@ -490,7 +496,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
             }}
             stroke="rgb(50, 50, 50)"
             tickStroke="rgb(50, 50, 50)"
-            tickLabelProps={(value: any, index: any) => ({
+            tickLabelProps={(_value: any, _index: any) => ({
               fill: 'rgb(50, 50, 50)',
               textAnchor: 'middle',
               fontSize: 10,
@@ -502,7 +508,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
               <text {...tickProps}>{INCOMES[parseInt(formattedValue as any) || 0] / 1000}</text>
             }
           />
-          <HeatmapRect
+          <HeatmapRect<TaxDataPoint, TaxBinData>
             data={taxData}
             xScale={xScale as any}
             yScale={yScale as any}
@@ -527,7 +533,7 @@ const ComparisonDiagram: React.FC<ComparisonDiagramProps> = ({a, b, ...props}) =
                       fillOpacity={bin.opacity}
                       onClick={_event => {
                         const { row, column } = bin;
-                        props.onClickCell({ row, column, ...bin.bin });
+                        props.onClickCell({ row, column, count: (bin.bin as any).count });
                       }}
                     />
                   );
@@ -560,28 +566,30 @@ const initialExplorerState = {
   } as TaxSettings,
 };
 type TaxExplorerState = Readonly<typeof initialExplorerState>;
-class TaxExplorer extends React.Component<{}, TaxExplorerState> {
+
+class TaxExplorer extends React.Component<object, TaxExplorerState> {
   readonly state: TaxExplorerState = initialExplorerState;
 
-  toggleAbsolute = (e: any) => { this.setState({ useAbsoluteAmounts: e.target.checked }) };
-  toggleEITC = (e: any) => { this.setState({ useEITC: e.target.checked }) };
+  toggleAbsolute = (e: React.ChangeEvent<HTMLInputElement>) => { this.setState({ useAbsoluteAmounts: e.target.checked }) };
+  toggleEITC = (e: React.ChangeEvent<HTMLInputElement>) => { this.setState({ useEITC: e.target.checked }) };
 
-  setOption = (option: string, key: string, v: any) => {
+  setOption = <T,>(option: 'taxOptionsA' | 'taxOptionsB', key: keyof TaxSettings, v: SingleValue<SelectOption<T>>) => {
+    if (!v) return;
     const newState = JSON.parse(JSON.stringify(this.state)); // UGH... MY LIFE
     newState[option][key] = v.value;
     newState.modalText = '';
     this.setState(newState);
   };
 
-  setAFilingStatus = (v: any) => this.setOption('taxOptionsA', 'filingStatus', v);
-  setBFilingStatus = (v: any) => this.setOption('taxOptionsB', 'filingStatus', v);
+  setAFilingStatus = (v: SingleValue<SelectOption<FilingStatus>>) => this.setOption('taxOptionsA', 'filingStatus', v);
+  setBFilingStatus = (v: SingleValue<SelectOption<FilingStatus>>) => this.setOption('taxOptionsB', 'filingStatus', v);
 
-  setAYear = (v: any) => this.setOption('taxOptionsA', 'year', v);
-  setBYear = (v: any) => this.setOption('taxOptionsB', 'year', v);
+  setAYear = (v: SingleValue<SelectOption<TaxYear>>) => this.setOption('taxOptionsA', 'year', v);
+  setBYear = (v: SingleValue<SelectOption<TaxYear>>) => this.setOption('taxOptionsB', 'year', v);
 
-  setAChildren = (v: any) => this.setOption('taxOptionsA', 'children', v);
-  setBChildren = (v: any) => this.setOption('taxOptionsB', 'children', v);
-  onClickCell = ({ row, column, count, }: any) => {
+  setAChildren = (v: SingleValue<SelectOption<EITCChildren>>) => this.setOption('taxOptionsA', 'children', v);
+  setBChildren = (v: SingleValue<SelectOption<EITCChildren>>) => this.setOption('taxOptionsB', 'children', v);
+  onClickCell = ({ row, column, count, }: { row: number, column: number, count: number }) => {
     const incomeShare = INCOME_SHARES[row];
     const income = INCOMES[column];
     const fmt = format('.1f');
@@ -619,21 +627,21 @@ class TaxExplorer extends React.Component<{}, TaxExplorerState> {
               <div>
                 <Select
                   value={optionFor(this.state.taxOptionsA.filingStatus, TAX_FILING_OPTIONS)}
-                  onChange={this.setAFilingStatus}
+                  onChange={(v: SingleValue<SelectOption<FilingStatus>>) => this.setAFilingStatus(v)}
                   options={TAX_FILING_OPTIONS}
                 />
               </div>
               <div>
                 <Select
                   value={optionFor(this.state.taxOptionsA.year, TAX_YEAR_OPTIONS)}
-                  onChange={this.setAYear}
+                  onChange={(v: SingleValue<SelectOption<TaxYear>>) => this.setAYear(v)}
                   options={TAX_YEAR_OPTIONS}
                 />
               </div>
               <div>
                 <Select
                   value={optionFor(this.state.taxOptionsA.children, TAX_CHILDREN_OPTIONS)}
-                  onChange={this.setAChildren}
+                  onChange={(v: SingleValue<SelectOption<EITCChildren>>) => this.setAChildren(v)}
                   options={TAX_CHILDREN_OPTIONS}
                 />
               </div>
@@ -645,21 +653,21 @@ class TaxExplorer extends React.Component<{}, TaxExplorerState> {
               <div>
                 <Select
                   value={optionFor(this.state.taxOptionsB.filingStatus, TAX_FILING_OPTIONS)}
-                  onChange={this.setBFilingStatus}
+                  onChange={(v: SingleValue<SelectOption<FilingStatus>>) => this.setBFilingStatus(v)}
                   options={TAX_FILING_OPTIONS}
                 />
               </div>
               <div>
                 <Select
                   value={optionFor(this.state.taxOptionsB.year, TAX_YEAR_OPTIONS)}
-                  onChange={this.setBYear}
+                  onChange={(v: SingleValue<SelectOption<TaxYear>>) => this.setBYear(v)}
                   options={TAX_YEAR_OPTIONS}
                 />
               </div>
               <div>
                 <Select
                   value={optionFor(this.state.taxOptionsB.children, TAX_CHILDREN_OPTIONS)}
-                  onChange={this.setBChildren}
+                  onChange={(v: SingleValue<SelectOption<EITCChildren>>) => this.setBChildren(v)}
                   options={TAX_CHILDREN_OPTIONS}
                 />
               </div>
@@ -740,7 +748,8 @@ const ExampleMarriageDiagram = () => {
   );
 };
 
+
 export {
   TaxExplorerPage,
   ExampleMarriageDiagram,
-}
+};
