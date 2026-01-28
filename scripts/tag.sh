@@ -1,18 +1,33 @@
 #!/bin/bash
+set -e
+
+# 1. Check for clean working directory
 if [ -z "$(git status --porcelain)" ]
 then 
-    echo "Clean working directory. Tagging..."
+    echo "✅ Clean working directory."
 else 
-    echo "You have uncommitted changes. Please commit them."
-    exit 1 || return 1
+    echo "❌ You have uncommitted changes. Please commit them."
+    exit 1
 fi
 
-echo "Rebuilding image..."
-pnpm docker:build
+# 2. Run Pre-commit hooks (Build, Lint, Type-check, Verify Docker, Playwright)
+echo "🛠️ Running pre-commit hooks..."
+bash .husky/pre-commit
 
-echo "Requesting DockerHub credentials..."
+# 3. Docker Login
+echo "🔑 Requesting DockerHub credentials..."
 docker login
 
+# 4. Tag and Push
 GIT_HASH="$(git rev-parse --short HEAD)"
-docker tag personal_website:latest chstan/personal-website:$GIT_HASH
-docker push chstan/personal-website:$GIT_HASH
+IMAGE_NAME="chstan/personal-website"
+
+echo "🏷️ Tagging and pushing $IMAGE_NAME:$GIT_HASH..."
+docker tag personal_website:latest $IMAGE_NAME:$GIT_HASH
+docker push $IMAGE_NAME:$GIT_HASH
+
+echo "🏷️ Tagging and pushing $IMAGE_NAME:latest..."
+docker tag personal_website:latest $IMAGE_NAME:latest
+docker push $IMAGE_NAME:latest
+
+echo "🎉 Done!"
