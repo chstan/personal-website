@@ -23,11 +23,8 @@ vi.mock('./staticPages', () => ({
   UnmigratedTalksPage: () => <div data-testid="page">unmigrated</div>,
 }));
 
-// react-ga performs window-only side effects on import; stub it to a no-op.
-vi.mock('react-ga', () => ({ default: { initialize: vi.fn(), set: vi.fn(), pageview: vi.fn() } }));
-
 // App ships its own <BrowserRouter>, so navigate via jsdom's history before mounting.
-const App = (await import('./App')).default;
+import App from './App';
 
 const renderAt = (path: string) => {
   window.history.pushState({}, '', path);

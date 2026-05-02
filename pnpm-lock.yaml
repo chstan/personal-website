@@ -29,9 +29,6 @@ importers:
       '@types/react-dom':
         specifier: ^17.0.11
         version: 17.0.26(@types/react@17.0.90)
-      '@types/react-ga':
-        specifier: ^2.3.0
-        version: 2.3.0(prop-types@15.8.1)(react@17.0.2)
       '@types/react-router-dom':
         specifier: ^5.3.2
         version: 5.3.3
@@ -74,9 +71,6 @@ importers:
       react-dom:
         specifier: ^17.0.2
         version: 17.0.2(react@17.0.2)
-      react-ga:
-        specifier: ^3.3.0
-        version: 3.3.1(prop-types@15.8.1)(react@17.0.2)
       react-markdown:
         specifier: ^7.1.2
         version: 7.1.2(@types/react@17.0.90)(react@17.0.2)
@@ -861,10 +855,6 @@ packages:
     resolution: {integrity: sha512-Z+2VcYXJwOqQ79HreLU/1fyQ88eXSSFh6I3JdrEHQIfYSI0kCQpTGvOrbE6jFGGYXKsHuwY9tBa/w5Uo6KzrEg==}
     peerDependencies:
       '@types/react': ^17.0.0
-
-  '@types/react-ga@2.3.0':
-    resolution: {integrity: sha512-7Vkv6wH1Kem4vkjuJxRYxDgLfokm0shugDk0W5p9C28POrsPAXezLbgP5C2tyFZ7lKARdyrCxwkdRTC1UV0dHg==}
-    deprecated: This is a stub types definition for react-ga (https://github.com/react-ga/react-ga). react-ga provides its own type definitions, so you don't need @types/react-ga installed!
 
   '@types/react-router-dom@5.3.3':
     resolution: {integrity: sha512-kpqnYK4wcdm5UaWI3fLcELopqLrHgLqNsdpHauzlQktfkHL3npOSwtj1Uz9oKBAzs7lFtVkV8j83voAz2D8fhw==}
@@ -2625,12 +2615,6 @@ packages:
     peerDependencies:
       react: 17.0.2
 
-  react-ga@3.3.1:
-    resolution: {integrity: sha512-4Vc0W5EvXAXUN/wWyxvsAKDLLgtJ3oLmhYYssx+YzphJpejtOst6cbIHCIyF50Fdxuf5DDKqRYny24yJ2y7GFQ==}
-    peerDependencies:
-      prop-types: ^15.6.0
-      react: ^15.6.2 || ^16.0 || ^17 || ^18
-
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -3967,13 +3951,6 @@ snapshots:
   '@types/react-dom@17.0.26(@types/react@17.0.90)':
     dependencies:
       '@types/react': 17.0.90
-
-  '@types/react-ga@2.3.0(prop-types@15.8.1)(react@17.0.2)':
-    dependencies:
-      react-ga: 3.3.1(prop-types@15.8.1)(react@17.0.2)
-    transitivePeerDependencies:
-      - prop-types
-      - react
 
   '@types/react-router-dom@5.3.3':
     dependencies:
@@ -6249,11 +6226,6 @@ snapshots:
       object-assign: 4.1.1
       react: 17.0.2
       scheduler: 0.20.2
-
-  react-ga@3.3.1(prop-types@15.8.1)(react@17.0.2):
-    dependencies:
-      prop-types: 15.8.1
-      react: 17.0.2
 
   react-is@16.13.1: {}
 
