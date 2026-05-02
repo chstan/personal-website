@@ -17,9 +17,6 @@ importers:
       '@types/d3-scale-chromatic':
         specifier: ^3.0.0
         version: 3.1.0
-      '@types/history':
-        specifier: ^4.7.9
-        version: 4.7.11
       '@types/lodash':
         specifier: ^4.14.178
         version: 4.17.21
@@ -29,12 +26,6 @@ importers:
       '@types/react-dom':
         specifier: ^17.0.11
         version: 17.0.26(@types/react@17.0.90)
-      '@types/react-router-dom':
-        specifier: ^5.3.2
-        version: 5.3.3
-      '@types/react-select':
-        specifier: ^5.0.1
-        version: 5.0.1(@types/react@17.0.90)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       '@types/react-syntax-highlighter':
         specifier: ^13.5.2
         version: 13.5.2
@@ -53,9 +44,6 @@ importers:
       d3-scale-chromatic:
         specifier: ^3.0.0
         version: 3.1.0
-      history:
-        specifier: ^5.2.0
-        version: 5.3.0
       katex:
         specifier: ^0.16.27
         version: 0.16.27
@@ -815,9 +803,6 @@ packages:
   '@types/hast@2.3.10':
     resolution: {integrity: sha512-McWspRw8xx8J9HurkVBfYj0xKoE25tOFlHGdx4MJ5xORQrMGZNqJhVQWaIbm6Oyla5kYOXtDiopzKRJzEOkwJw==}
 
-  '@types/history@4.7.11':
-    resolution: {integrity: sha512-qjDJRrmvBMiTx+jyLxvLfJU7UznFuokDv4f3WRuriHKERccVpFU+8XMQUAbDzoiJCsmexxRExQeMwwCdamSKDA==}
-
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
@@ -855,16 +840,6 @@ packages:
     resolution: {integrity: sha512-Z+2VcYXJwOqQ79HreLU/1fyQ88eXSSFh6I3JdrEHQIfYSI0kCQpTGvOrbE6jFGGYXKsHuwY9tBa/w5Uo6KzrEg==}
     peerDependencies:
       '@types/react': ^17.0.0
-
-  '@types/react-router-dom@5.3.3':
-    resolution: {integrity: sha512-kpqnYK4wcdm5UaWI3fLcELopqLrHgLqNsdpHauzlQktfkHL3npOSwtj1Uz9oKBAzs7lFtVkV8j83voAz2D8fhw==}
-
-  '@types/react-router@5.1.20':
-    resolution: {integrity: sha512-jGjmu/ZqS7FjSH6owMcD5qpq19+1RS9DeVRqfl1FeBMxTDQAGwlMWOcs52NDoXaNKyG3d1cYQFMs9rCrb88o9Q==}
-
-  '@types/react-select@5.0.1':
-    resolution: {integrity: sha512-h5Im0AP0dr4AVeHtrcvQrLV+gmPa7SA0AGdxl2jOhtwiE6KgXBFSogWw8az32/nusE6AQHlCOHQWjP1S/+oMWA==}
-    deprecated: This is a stub types definition. react-select provides its own type definitions, so you do not need this installed.
 
   '@types/react-syntax-highlighter@13.5.2':
     resolution: {integrity: sha512-sRZoKZBGKaE7CzMvTTgz+0x/aVR58ZYUTfB7HN76vC+yQnvo1FWtzNARBt0fGqcLGEVakEzMu/CtPzssmanu8Q==}
@@ -1920,9 +1895,6 @@ packages:
 
   highlightjs-vue@1.0.0:
     resolution: {integrity: sha512-PDEfEF102G23vHmPhLyPboFCD+BkMGu+GuJe2d9/eH4FsCwvgBpnc9n0pGE+ffKdph38s6foEZiEjdgHdzp+IA==}
-
-  history@5.3.0:
-    resolution: {integrity: sha512-ZqaKwjjrAYUYfLG+htGaIIZ4nioX2L70ZUMIFysS3xvBsSG4x/n1V6TXV3N8ZYNuFGlDirFg32T7B6WOUPDYcQ==}
 
   hoist-non-react-statics@1.2.0:
     resolution: {integrity: sha512-r8huvKK+m+VraiRipdZYc+U4XW43j6OFG/oIafe7GfDbRpCduRoX9JI/DRxqgtBSCeL+et6N6ibZoedHS2NyOQ==}
@@ -3920,8 +3892,6 @@ snapshots:
     dependencies:
       '@types/unist': 2.0.11
 
-  '@types/history@4.7.11': {}
-
   '@types/json-schema@7.0.15': {}
 
   '@types/katex@0.14.0': {}
@@ -3951,26 +3921,6 @@ snapshots:
   '@types/react-dom@17.0.26(@types/react@17.0.90)':
     dependencies:
       '@types/react': 17.0.90
-
-  '@types/react-router-dom@5.3.3':
-    dependencies:
-      '@types/history': 4.7.11
-      '@types/react': 17.0.90
-      '@types/react-router': 5.1.20
-
-  '@types/react-router@5.1.20':
-    dependencies:
-      '@types/history': 4.7.11
-      '@types/react': 17.0.90
-
-  '@types/react-select@5.0.1(@types/react@17.0.90)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)':
-    dependencies:
-      react-select: 5.10.2(@types/react@17.0.90)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
-    transitivePeerDependencies:
-      - '@types/react'
-      - react
-      - react-dom
-      - supports-color
 
   '@types/react-syntax-highlighter@13.5.2':
     dependencies:
@@ -5430,10 +5380,6 @@ snapshots:
   highlight.js@10.7.3: {}
 
   highlightjs-vue@1.0.0: {}
-
-  history@5.3.0:
-    dependencies:
-      '@babel/runtime': 7.28.4
 
   hoist-non-react-statics@1.2.0: {}
 
