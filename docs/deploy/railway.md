@@ -32,6 +32,10 @@ deployed instance.
 
 ## DNS cutover (Linode → Railway)
 
+> See `docs/deploy/migration-checklist.md` for the full operational
+> checklist — this section is a high-level summary.
+
+
 1. **24h before**: drop the TTL on the Linode A/AAAA records to 300s
    (Cloudflare DNS, or wherever the apex is managed). This bounds the
    propagation window during the flip.
