@@ -30,9 +30,11 @@ COPY --from=builder /app/build ./build
 # Run as non-root user for security
 USER node
 
+ENV PORT=8001
 EXPOSE 8001
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:8001/ || exit 1
+  CMD curl -f http://localhost:${PORT:-8001}/ || exit 1
 
-CMD ["serve", "build", "-l", "8001"]
+# Shell form so $PORT is honored at runtime (Railway, Fly, etc. inject it).
+CMD serve build -l ${PORT:-8001}
