@@ -1,171 +1,171 @@
 # Linode → Railway migration checklist
 
-Companion to `docs/deploy/railway.md`. This file is the **operational checklist** for the actual cutover, plus the discovery I need from Conrad before I can drive most of it. Fill in the inline `<TODO>` blocks and check off the steps as we go.
+Companion to `docs/deploy/railway.md`. Operational checklist for the cutover, populated with concrete answers from discovery on 2026-05-01.
 
 ---
 
-## Part 1 — Information I need from you
+## Discovery summary
 
-These are blockers. Without them I can't generate the right `railway.toml` overrides, write a safe DNS plan, or know what's safe to tear down on the Linode box.
+**Site / DNS state on 2026-05-01:**
 
-### 1.1 Identity & accounts
+| Item | Finding |
+|---|---|
+| Production domain | `conradstansbury.com` (apex + `www`) |
+| Registrar | Namecheap |
+| Authoritative DNS | **Linode DNS Manager** (`ns{1..5}.linode.com`). Namecheap just delegates to Linode. |
+| Linode VM | `198.74.51.35` / `2600:3c01::f03c:91ff:fe56:6e8b` |
+| TLS cert | Let's Encrypt R12, **expired 2026-03-28**. HTTPS has been broken for ~5 weeks. |
+| Apex + www | Serving a stale React build (older than current `master`). |
+| `historical.conradstansbury.com` | Haskell server + C++ binaries. **Already 502** — backend is dead. No Wayback snapshots. |
+| `memory.conradstansbury.com` | In TLS SAN list, no DNS record, also 502 if reached via host header. |
+| `mail.conradstansbury.com` | A record + MX record exist but backend is 502; Conrad confirmed no actual mail. |
+| Other DNS | No TXT, SPF, DKIM, DMARC, or CAA. Zero email-deliverability records to preserve. |
+| Railway project | `serene-laughter` (`ee87e6b5-…`), region `us-west2`, GitHub source connected. |
+| Railway preview URL | `https://personal-website-production-6b37.up.railway.app` (currently 502 — see Open Items §1). |
 
-- [ ] **Production domain(s).** What hostnames must answer after cutover?
-  - Apex: `<TODO: e.g. conradstansbury.com>`
-  - `www` subdomain in scope? `<TODO: yes/no>`
-  - Any other subdomains served from the same Linode (e.g. `historical.conradstansbury.com`, `notes.…`, `pdf.…`)? List them.
-- [ ] **Domain registrar.** Where is the domain registered? `<TODO: Namecheap / Google Domains / Cloudflare Registrar / …>`
-- [ ] **Authoritative DNS provider** (often the same as the registrar but not always). `<TODO: Cloudflare DNS / Route 53 / Linode DNS Manager / Namecheap BasicDNS / …>`
-  - This matters because **apex CNAMEs are not standard DNS**; Railway's preferred path is a CNAME, which only works at the apex if the provider supports CNAME flattening / ALIAS / ANAME. Cloudflare, Route 53, DNSimple, and Hetzner do; Namecheap BasicDNS and GoDaddy don't.
-- [ ] **Railway account.** Account email + whether you want this in the existing project (the one for your other service) or a fresh project. `<TODO>`
-- [ ] **Railway region preference.** Default is `us-west2`; pick whatever's closest to the bulk of your traffic. `<TODO>`
+A frozen snapshot of the zone is at `docs/deploy/dns-snapshot-2026-05-01.txt`.
 
-### 1.2 Linode current state
+**Implications that reshape the plan:**
 
-- [ ] **IPv4 / IPv6** of the Linode VM. `<TODO>`
-- [ ] **SSH access**: do I have credentials, or do you want to run the inspection commands yourself? `<TODO>`
-- [ ] **What else runs on this box besides the website?** The two big risk categories:
-  - Mail (Postfix, Dovecot, anything listening on 25/465/587/993).
-  - Anything serving other domains (reverse proxy for a side project, a VPN, monitoring, jump host, etc.).
-  - `<TODO: list services or "nothing else">`
-- [ ] **TLS certificates.** Let's Encrypt via certbot? Cloudflare Origin Certs? Something else? Railway issues its own certs once the domain is verified, so the Linode certbot can be retired — but only if nothing else on the box needs it.
-- [ ] **Web server config.** Path to the nginx/apache config currently serving the site. I want to check for redirects / rewrites that exist outside the React app:
-  - Hard redirects (e.g. `historical.conradstansbury.com` → archive)?
-  - HTTP-to-HTTPS upgrades?
-  - Custom error pages?
-  - Any path-based rewrites that the SPA fallback in `public/serve.json` might not cover?
-- [ ] **Static assets not in the repo.** Anything in `/var/www/...` that the site links to but that isn't checked in? PDFs, large media, generated bundles?
-- [ ] **Cron jobs** (`crontab -l` for relevant users) and **systemd timers** (`systemctl list-timers`).
-
-### 1.3 DNS zone snapshot
-
-Before touching anything, I want a **complete** export of the current zone so we can diff before/after. Either:
-
-- Export from the DNS provider's UI (BIND zone file or CSV), commit it under `docs/deploy/dns-snapshot-<date>.txt` (it's not secret), **or**
-- Run `dig +noall +answer @<authoritative-ns> <domain> ANY` and `dig +noall +answer @<authoritative-ns> <domain> AAAA / MX / TXT / NS / CAA` and paste the output.
-
-Records that **must not change** during the migration:
-
-- `MX`, `SPF (TXT)`, `DKIM (TXT)`, `DMARC (TXT)` — touching these breaks email.
-- `NS` — only change if you're moving DNS providers, which we're not.
-- `CAA` — must allow Railway's certificate issuer (Let's Encrypt, `letsencrypt.org`).
-
-`<TODO: paste zone export or attach the file path>`
-
-### 1.4 Decisions I need
-
-- [ ] **Cutover window.** Day + hour. I'd suggest a low-traffic window with at least 2 hours of buffer.
-- [ ] **Acceptable downtime.** Target is zero (DNS-only flip; the old VM stays up); the realistic worst case is a few minutes for resolvers with stale caches. OK?
-- [ ] **www handling.** If `www.<domain>` is in scope, do you want it to (a) serve the same site, or (b) 301 to the apex? (b) is the modern default.
-- [ ] **Analytics.** Stay deleted (current state)? Add Plausible or GA4 later? `<TODO>`
-- [ ] **Uptime monitoring.** Want me to wire UptimeRobot / BetterStack against the Railway URL? `<TODO>`
-- [ ] **Linode shutdown.** Confirm I can recommend destroying the VM after the 72-hour soak. (If the box also runs mail or other services, the answer is "no, just stop nginx".)
+1. **DNS lives on Linode**, not Namecheap. Destroying the Linode account also destroys DNS. So the migration sequence must be **(1) move DNS off Linode → (2) flip site to Railway → (3) destroy Linode**. This wasn't true in the previous draft.
+2. **Recommended DNS provider: Cloudflare DNS** (free, 5-minute setup). It supports apex `CNAME` flattening, which Namecheap's BasicDNS does not. So pointing the apex at Railway is trivial there. Linode DNS technically supports A/AAAA at apex too, but it's bundled with the VM we want to kill.
+3. **historical / memory backends are already gone.** No salvage required from the running box. If Conrad has the source somewhere, fine. Otherwise: write off, redirect at Railway, or 410 Gone.
+4. **Cert expiry means migration is a fix**, not just a move. Railway issues and renews Let's Encrypt certs automatically. The "Let's Encrypt is unreliable" pain goes away.
+5. **TTL is currently 86400 (24h)** on every record. Drop to 300 before cutover.
 
 ---
 
-## Part 2 — Pre-flight (T minus 1 week)
+## Decisions taken (from chat 2026-05-01)
 
-These are independent of the cutover and can happen any time before. I can do everything that doesn't require a credential.
+- ✅ **www in scope**, serves the same site (no apex redirect requested).
+- ✅ **historical.conradstansbury.com**: deprecate, do not dockerize. (See "What to do with historical" below for redirect options.)
+- ✅ **No mail server**, MX is vestigial. Drop it during the DNS move.
+- ✅ **Outage acceptable.** No need for a hot-swap; we can run the new site on the Railway URL, do DNS in our own time, and accept brief propagation gaps.
+- ✅ **Verify on Railway preview URL** before any DNS change.
 
-- [ ] Railway project exists with the GitHub repo connected and a successful build from `master`. (Needs your Railway login.)
-- [ ] Railway-provided URL (`https://<service>.up.railway.app`) returns 200 on `/`.
-- [ ] Run the full Playwright suite against the Railway URL:
-  ```bash
-  PLAYWRIGHT_BASE_URL=https://<service>.up.railway.app pnpm exec playwright test
+## What to do with `historical.conradstansbury.com`
+
+Pick one. The first is the default unless you say otherwise:
+
+- **A. Drop it.** Don't create the subdomain on the new DNS. After cutover the name simply doesn't resolve. Anyone hitting an old link gets `NXDOMAIN`.
+- **B. Redirect to apex.** Point the subdomain at Railway and add a Railway "Redirect to" pointing at `https://conradstansbury.com/`. Old links still 301 somewhere reasonable.
+- **C. Dockerize and revive.** Possible but probably not worth it: the Haskell binary + C++ tooling means a custom Dockerfile, a separate Railway service, and ongoing maintenance for content the React site doesn't link to. If there's content you actually want to keep, the cheapest thing is to extract the static HTML output from your local Haskell build and serve it from the existing Railway service under `/historical/*`.
+
+`memory.conradstansbury.com` and `mail.conradstansbury.com` get the same treatment as historical — i.e. dropped — unless you say otherwise.
+
+---
+
+## Open items (need your input)
+
+1. **Railway preview is 502.** Container logs show `Accepting connections at http://localhost:8001` but the edge can't reach it. The deployed code is commit `060e8549` (pre-Dockerfile-`$PORT` work on this branch). I tentatively set `PORT=8001` and triggered a redeploy; the edge still 502s. The most likely fix is one of:
+   - Push the worktree branch's Dockerfile changes to `master` so the new commit redeploys.
+   - Set the service's HTTP target port to 8001 explicitly via the dashboard (Settings → Networking → Public Networking → target port).
+   Confirm which path you want; I should not keep poking at the live Railway service without explicit go-ahead.
+2. **DNS provider for the new home.** Default recommendation: Cloudflare DNS (free, fast, supports apex CNAME flattening). Alternative: stay on Linode DNS for now and only move the website (DNS migration as a separate later step) — slower path but valid if you'd rather not touch DNS plumbing.
+3. **`historical` decision** — A / B / C above.
+4. **Old C++ binaries** that historical exposed — anything you want pulled off the box before it dies? Without SSH I can't pull them. If yes, you'll need to copy them locally yourself or grant me a key.
+
+---
+
+## Step 1 — Push the cleanup branch (no production impact)
+
+These commits are sitting on `worktree-make_it_compile` and need to land on `master` for Railway's auto-deploy to pick them up.
+
+- [ ] `git push origin worktree-make_it_compile`
+- [ ] Open a PR. CI runs `lint + type-check + vitest + build + Playwright + verify-docker`. Merge once green.
+- [ ] Railway auto-deploys the new commit. Verify the preview URL returns 200.
+
+## Step 2 — Move DNS to Cloudflare (no production impact yet)
+
+This is the safest decoupling step: it changes who answers DNS but keeps every record value pointing at the Linode VM. No user-visible change.
+
+- [ ] Create a free Cloudflare account.
+- [ ] Add `conradstansbury.com` as a site. Cloudflare scans existing records; review the import.
+- [ ] **Critical**: turn the orange-cloud proxy **off** for the apex / www records during migration. We want Cloudflare doing DNS only, not proxying through their edge yet. (You can turn the proxy back on later if you want CDN benefits.)
+- [ ] Verify the Cloudflare-imported zone matches `docs/deploy/dns-snapshot-2026-05-01.txt`. Drop the `mail.*` A/AAAA and the apex `MX` record now (no mail anyway). Drop `historical.*` and `memory.*` per the decision above.
+- [ ] Add a `CAA` record allowing `letsencrypt.org` (so Railway can issue certs without retries):
   ```
-  This is already plumbed through `playwright.config.ts`. Snapshots are pixel-tolerant, so small font-rendering differences against the Linode baseline won't fail.
-- [ ] Capture and commit the DNS zone snapshot (Part 1.3).
-- [ ] Inspect the Linode box and write down what's there (Part 1.2). I'll generate a "what gets retired vs what stays" table from your answers.
-- [ ] Decide on a cutover window.
-
-## Part 3 — T minus 24 hours
-
-- [ ] Lower the TTL on the records that will change. **Only the records that will change** — leave email and unrelated records alone.
-  - Apex `A`/`AAAA`: drop to **300 seconds**.
-  - `www` `CNAME` (or `A`): drop to **300 seconds**.
-  - This bounds the propagation window during cutover.
-- [ ] Confirm the lowered TTL has propagated:
-  ```bash
-  dig +noall +answer <domain> | awk '{print $2, $4}'
-  # Expected: 300 A/AAAA
+  conradstansbury.com.  CAA  0 issue "letsencrypt.org"
   ```
-- [ ] Final Playwright run against the Railway preview URL (same command as pre-flight).
-- [ ] Last `git push` of any pending content. Anything merged after this point ships in the next deploy cycle, not this one.
-- [ ] Confirm Conrad is reachable during the cutover window (rollback decisions need a human).
+- [ ] In **Namecheap**, change the nameservers from Linode's (`ns{1..5}.linode.com`) to Cloudflare's (Cloudflare gives you two assigned NS values like `kara.ns.cloudflare.com` and `nick.ns.cloudflare.com` when you add the site).
+- [ ] Wait for nameserver propagation. Cloudflare emails when the change takes effect (usually under an hour, can take up to 48h for full propagation).
+- [ ] Verify:
+  ```bash
+  dig +short NS conradstansbury.com
+  # Expected: the Cloudflare nameservers, not Linode
+  dig +short conradstansbury.com
+  # Expected: still 198.74.51.35 (no site change yet)
+  ```
 
-## Part 4 — Cutover (T = 0)
+After this step the site still serves from the Linode VM via Cloudflare DNS — no user-visible change, but we've decoupled DNS from the doomed VM.
 
-Estimated wall time: 15–30 minutes including verification.
+## Step 3 — T-24h: drop TTL on records about to change
 
-1. [ ] **In Railway**, add the apex domain to the service. Railway will display either a CNAME target (e.g. `<service>.up.railway.app`) or an A record (e.g. `66.33.x.x`). Note which.
-2. [ ] **In your DNS provider**:
-   - **Apex**: replace the existing `A`/`AAAA` records that point at the Linode IP with whatever Railway gave you. If Railway gave a CNAME and your DNS provider supports CNAME flattening / ALIAS / ANAME at the apex, use that. Otherwise use the A record.
-   - **www** (if in scope and option (a) above): `CNAME www → <service>.up.railway.app`.
-   - **www** (if option (b), 301 to apex): handled at Railway's edge — add `www.<domain>` as an additional domain on the same Railway service and configure the redirect there. (Railway has a per-service "Redirect to" toggle.)
-   - **Do not touch** `MX`, `TXT`, `NS`, `CAA`, or any record that doesn't point at the Linode IP.
-3. [ ] Verify DNS has flipped from a clean cache:
+- [ ] In Cloudflare, set TTL to **300s** on `conradstansbury.com` (apex `A`/`AAAA`) and `www.conradstansbury.com`. Leave everything else alone.
+- [ ] 30 minutes later: `dig +noall +answer @1.1.1.1 conradstansbury.com | awk '{print $2}'` — expect `300`.
+
+## Step 4 — Cutover (estimated 15–30 min wall time)
+
+1. [ ] In **Railway** (project `serene-laughter`, service `personal-website`):
+   - Settings → Domains → "Custom Domain" → enter `conradstansbury.com`. Railway will display either a CNAME target or an A/AAAA record. Note which it gave you.
+   - Repeat for `www.conradstansbury.com`.
+2. [ ] In **Cloudflare DNS** for `conradstansbury.com`:
+   - **Apex (`@`)**: replace the `A` (`198.74.51.35`) and `AAAA` records with whatever Railway gave you. For an apex CNAME, Cloudflare flattens it automatically — just create a `CNAME @ <service>.up.railway.app` and Cloudflare publishes A records to resolvers transparently. Proxy: **off** until Railway has issued the cert.
+   - **`www`**: same — `CNAME www <service>.up.railway.app`, proxy off.
+3. [ ] Verify resolution from clean caches (a few minutes after the change):
    ```bash
-   # 1.1.1.1 and 8.8.8.8 are independent resolvers
-   dig @1.1.1.1 +short <domain>
-   dig @8.8.8.8 +short <domain>
-   dig @1.1.1.1 +short www.<domain>
+   dig @1.1.1.1 +short conradstansbury.com
+   dig @8.8.8.8 +short conradstansbury.com
+   dig @1.1.1.1 +short www.conradstansbury.com
    ```
-4. [ ] Verify TLS issued correctly. Railway provisions Let's Encrypt automatically; this can take 1–5 minutes after DNS resolves.
+4. [ ] Railway issues the Let's Encrypt cert automatically once it sees DNS pointing at it (1–5 min). Verify:
    ```bash
-   curl -I https://<domain>/
-   # Expected: HTTP/2 200
+   curl -I https://conradstansbury.com/
+   # Expected: HTTP/2 200, served by Railway (not nginx)
+   curl -I https://www.conradstansbury.com/
    ```
-5. [ ] Smoke-test in a browser: home, /writing, one blog post, /resume, the Marriage page (the JS-heavy one).
-6. [ ] **Run the production-targeted Playwright suite**:
+5. [ ] Smoke-test in a browser: `/`, `/writing`, one blog post, `/marriage`, `/resume`.
+6. [ ] Run the Playwright suite against production:
    ```bash
-   PLAYWRIGHT_BASE_URL=https://<domain> pnpm exec playwright test
+   PLAYWRIGHT_BASE_URL=https://conradstansbury.com pnpm exec playwright test
    ```
-7. [ ] Verify `MX` / `TXT` are unchanged:
-   ```bash
-   dig +short MX <domain>
-   dig +short TXT <domain>
-   # These should be byte-identical to the pre-flight snapshot.
-   ```
+   Visual snapshots have a small `maxDiffPixelRatio` tolerance; sub-pixel font drift won't fail. Note: snapshots were captured against the *new* Vite build, so they should match Railway, not the stale Linode build.
+7. [ ] (Optional) After 24h of green, turn on Cloudflare's orange-cloud proxy for apex / www if you want the CDN. Test again — proxying changes the request path slightly.
 
-If any of steps 3–7 fail beyond a quick fix, **roll back immediately** (Part 6) — the Linode VM is still running.
+If any of steps 3–6 fail beyond a quick fix → **Rollback** (Step 6).
 
-## Part 5 — T plus 24h / 72h
+## Step 5 — Soak (T+24h, T+72h, T+1 week)
 
-- [ ] **+24h**: check Railway request metrics, error logs, and any uptime monitor for anomalies.
-- [ ] **+24h**: restore TTL on the apex / www records to a normal value (e.g. 3600s).
-- [ ] **+72h**: assuming everything is green:
-  - Snapshot the Linode VM (in case we want anything off it later).
-  - Stop services on the box: `sudo systemctl stop nginx` (and anything else web-facing).
-  - **Hold off on destroying the VM** until Conrad explicitly confirms. Once destroyed, the snapshot is the only path back.
-- [ ] **+1 week**: if still green, destroy the VM and cancel the Linode subscription.
+- [ ] **+24h**: review Railway request logs and metrics for anomalies.
+- [ ] **+24h**: restore TTL on apex / www to 3600s in Cloudflare.
+- [ ] **+72h**: in Railway, confirm cert renewal is scheduled (Let's Encrypt renews ~30 days before expiry, automatic).
+- [ ] **+1 week**: assuming all green, destroy the Linode VM. **Once destroyed, the Haskell server / C++ binaries / nginx config are gone permanently.** If you want any of it for a backup, snapshot the VM in the Linode dashboard *before* destroying.
 
-## Part 6 — Rollback
+## Step 6 — Rollback
 
-If we discover a problem in steps 3–7 of cutover:
+If we discover a problem during Step 4 cutover and need to revert:
 
-1. In your DNS provider, restore the previous `A`/`AAAA` records pointing at the Linode IP. (Worth keeping these noted in a scratchpad before step 2 of cutover so the restore is copy-paste.)
-2. Wait for propagation (~5 minutes given the lowered TTL).
-3. Verify with `dig @1.1.1.1 +short <domain>`.
-4. File the failure mode under "what to fix in the Railway config before retrying".
+1. In Cloudflare DNS: restore `A 198.74.51.35` and `AAAA 2600:3c01::f03c:91ff:fe56:6e8b` on `@` and `www`. (Worth keeping these noted in a scratch doc before Step 4.2 so the restore is copy-paste.)
+2. Wait ~5 min for the lowered TTL to expire from resolvers.
+3. Verify `dig @1.1.1.1 +short conradstansbury.com` returns the Linode IP again.
+4. **Note**: HTTPS will go back to its broken-cert state. Browsers will warn. This is the existing behavior of the last 5 weeks, not a new problem.
 
-If the discovery is later (24h+), Railway also supports per-deploy rollback within the service's Deployments tab — but DNS rollback is the real safety net.
+If the discovery is later (>24h post-cutover), Railway's per-deploy rollback in the Deployments tab is faster than DNS rollback.
 
 ---
 
-## Part 7 — What I can do without you
+## What I can do without further input from you
 
-Once you fill in Part 1, here's what I can drive end-to-end:
+- ✅ Inspect Railway state (`railway status`, `railway logs`) and report.
+- ✅ Generate the exact `dig` and `curl` commands for any verification.
+- ✅ Pre-cutover Playwright runs against the Railway preview URL once it returns 200.
+- ✅ Diff the live DNS against `dns-snapshot-2026-05-01.txt` and flag drift.
+- ✅ Land the worktree branch on `master` once you say go (push + open PR).
 
-- ✅ Generate any required Railway config (env vars, build args, additional services).
-- ✅ Pre-cutover Playwright runs against the Railway preview URL — if you give me the URL.
-- ✅ Write the exact `dig` / `curl` verification commands for your specific domain.
-- ✅ Diff the DNS zone before/after and flag any unexpected drift.
-- ✅ Inspect the Linode box (with SSH access) and produce the "what's safe to retire" table.
-- ✅ Wire up uptime monitoring / analytics post-cutover, given the credentials.
+## What I can't do without you
 
-What I **can't** do without you in the loop:
-
-- ❌ Log into Railway, create the project, attach domains.
-- ❌ Edit DNS records at your registrar / DNS provider.
-- ❌ SSH into the Linode VM (unless you provision a key for me).
+- ❌ Add custom domains in Railway (UI step + may require billing-tier confirmation).
+- ❌ Create the Cloudflare account or change nameservers at Namecheap.
+- ❌ Edit DNS records (need Cloudflare access — can be done via API token if you'd rather delegate).
+- ❌ SSH the Linode box (you said no SSH; that's fine, the box is a write-off).
 - ❌ Cancel the Linode subscription.

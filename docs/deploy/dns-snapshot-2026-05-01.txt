@@ -1,0 +1,25 @@
+# Captured 2026-05-01 from ns1.linode.com
+# `dig +noall +answer @ns1.linode.com conradstansbury.com <RR>`
+
+conradstansbury.com.            86400 IN  SOA   ns1.linode.com. chstansbury.gmail.com. 2021000078 14400 14400 1209600 86400
+conradstansbury.com.            86400 IN  NS    ns1.linode.com.
+conradstansbury.com.            86400 IN  NS    ns2.linode.com.
+conradstansbury.com.            86400 IN  NS    ns3.linode.com.
+conradstansbury.com.            86400 IN  NS    ns4.linode.com.
+conradstansbury.com.            86400 IN  NS    ns5.linode.com.
+conradstansbury.com.            86400 IN  A     198.74.51.35
+conradstansbury.com.            86400 IN  AAAA  2600:3c01::f03c:91ff:fe56:6e8b
+conradstansbury.com.            86400 IN  MX    10 mail.conradstansbury.com.
+www.conradstansbury.com.        86400 IN  A     198.74.51.35
+www.conradstansbury.com.        86400 IN  AAAA  2600:3c01::f03c:91ff:fe56:6e8b
+historical.conradstansbury.com. 86400 IN  A     198.74.51.35
+historical.conradstansbury.com. 86400 IN  AAAA  2600:3c01::f03c:91ff:fe56:6e8b
+mail.conradstansbury.com.       86400 IN  A     198.74.51.35
+mail.conradstansbury.com.       86400 IN  AAAA  2600:3c01::f03c:91ff:fe56:6e8b
+# memory.conradstansbury.com appears in the TLS cert SAN list but has no
+# A/AAAA/CNAME of its own, so nginx must be matching it via a wildcard
+# or the cert covers a name with no DNS. Treated as dead.
+
+# No TXT, no CAA, no DKIM, no SPF, no DMARC.
+# All backends behind historical/memory/mail return 502 (process dead).
+# Cert: Let's Encrypt R12, expired 2026-03-28.
