@@ -6,7 +6,7 @@ import {TalksPage} from "./Talks";
 import PapersPage from "./Papers";
 import DominionPage from "./DominionPage";
 import ChessPage from "./ChessPage";
-import {Expandable, WrapLink} from "./common";
+import {WrapLink} from "./common";
 import {BlogItem, BlogPage} from "./Blog";
 import SlidePuzzlePage from "./SlidePuzzlePage";
 import {TaxExplorerPage,} from "./Marriage";
@@ -21,20 +21,19 @@ type NavGroupProps = React.PropsWithChildren<{
   defaultOpen: boolean;
 }>;
 
-class NavGroup extends Expandable<NavGroupProps> {
-  componentDidMount() {
-    this.setState({ expanded: this.props.defaultOpen, });
-  }
-
-  render() {
-    return <section className="nav-section">
-      <header><button onClick={this.toggle}>
-        {this.props.title} [{this.state.expanded ? '-' : '+'}]
-      </button></header>
-      <div className="contents" style={{display: this.state.expanded ? 'block' : 'none'}}>{this.props.children}</div>
-    </section>;
-  }
-}
+const NavGroup: React.FC<NavGroupProps> = ({title, defaultOpen, children}) => {
+  const [expanded, setExpanded] = React.useState(defaultOpen);
+  return (
+    <section className="nav-section">
+      <header>
+        <button onClick={() => setExpanded((v) => !v)}>
+          {title} [{expanded ? '-' : '+'}]
+        </button>
+      </header>
+      <div className="contents" style={{display: expanded ? 'block' : 'none'}}>{children}</div>
+    </section>
+  );
+};
 
 const projectLinksSection: NavLinkSection = {
   kind: 'navgroup',
