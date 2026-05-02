@@ -86,7 +86,7 @@ const WelcomePortal = (props: { fixIndex: number | null }) => {
 
   const [portalUrl, Portal] = portalOptions[portalNumber];
 
-  const PortalWrapper: React.FC<{depth: number,}> = ({children, depth}) => {
+  const PortalWrapper: React.FC<React.PropsWithChildren<{depth: number,}>> = ({children, depth}) => {
     if (depth > 10) depth = 10;
     if (depth < 0) return <div style={{margin: '10px'}}>{children}</div>;
     const N_LEVELS = 4;

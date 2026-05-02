@@ -9,7 +9,7 @@ import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import 'katex/dist/katex.min.css';
 import {Link} from "react-router-dom";
 
-const SimpleButton: React.FC<{onClick: MouseEventHandler}> = ({onClick, children}) =>
+const SimpleButton: React.FC<React.PropsWithChildren<{onClick: MouseEventHandler}>> = ({onClick, children}) =>
   <button className="simple-button" onClick={onClick}>{children}</button>;
 
 function renderSyntax(language: string = 'python') {
@@ -32,7 +32,7 @@ class Expandable<P = object, S = object> extends React.Component<P, ExpandState 
   };
 }
 
-const LabeledInputGroup: React.FC<{label: string,}> = ({label, children,}) =>
+const LabeledInputGroup: React.FC<React.PropsWithChildren<{label: string,}>> = ({label, children,}) =>
   <label className="input-group input-group-label">
     {children}
     <span className="label-text">{label}</span>
@@ -84,7 +84,7 @@ const InlineMarkdown = (props: MarkdownProps) => {
 
 const SuperSecretCat: React.FC = () => <section><img width="320px" src="img/kash.jpg" alt="Formidable!"/></section>;
 
-const WrapLink: React.FC<{ to: string, }> = ({to, children}) =>
+const WrapLink: React.FC<React.PropsWithChildren<{ to: string, }>> = ({to, children}) =>
   to.startsWith('http') ? <a className="external" href={to}>{children} <strong className="link-decoration">⤤</strong></a> :
     <Link to={to}>{children}</Link>;
 

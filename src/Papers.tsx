@@ -2,7 +2,7 @@ import React from "react";
 import {PaperInfo, PAPERS, PapersKind} from "./data";
 import {InlineMarkdown, WrapLink} from "./common";
 
-const PaperSectionHeader: React.FC<{sectionTitle: string}> = ({sectionTitle, children}) => (
+const PaperSectionHeader: React.FC<React.PropsWithChildren<{sectionTitle: string}>> = ({sectionTitle, children}) => (
   <div className="talks-container">
     <header className="talks-section-header">{sectionTitle}</header>
     <ul>

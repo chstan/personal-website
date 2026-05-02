@@ -2,7 +2,7 @@ import React from "react";
 import {Talk, TalkKind, TALKS} from "./data";
 import {InlineMarkdown} from "./common";
 
-const TalkWrapper: React.FC<{talk: Talk}> = ({talk, children}) => {
+const TalkWrapper: React.FC<React.PropsWithChildren<{talk: Talk}>> = ({talk, children}) => {
   let link = <span>[upcoming]</span>;
   if (talk.presentationUrl) {
     link = <a href={talk.presentationUrl}>[slide deck]</a>

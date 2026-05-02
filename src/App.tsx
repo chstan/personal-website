@@ -16,10 +16,10 @@ const Unimplemented: React.FC = () =>
     version at <WrapLink to={"http://historical.conradstansbury.com"}>the archived copy</WrapLink></p>;
 
 
-interface NavGroupProps {
+type NavGroupProps = React.PropsWithChildren<{
   title: string;
   defaultOpen: boolean;
-}
+}>;
 
 class NavGroup extends Expandable<NavGroupProps> {
   componentDidMount() {
