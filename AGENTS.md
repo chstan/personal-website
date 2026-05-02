@@ -17,6 +17,8 @@ Package manager is **pnpm**.
 | `pnpm test:run` | Vitest single-shot (CI mode). |
 | `pnpm precheck` | Runs the full strict gate: build + lint + type-check + vitest + verify-docker + Playwright. |
 | `pnpm verify-docker` | `scripts/verify_docker.sh`: builds the image, runs it, curls `:8001` until 200 (max 30s). |
+| `pnpm check:railway` | `scripts/check-railway.sh`: asserts the Railway project/service/deployment is healthy. Set `CUSTOM_DOMAIN=conradstansbury.com` to also verify DNS, HTTP 200, and TLS expiry on the apex. |
+| `pnpm capture:linode` | `scripts/capture-linode-state.sh`: writes a DNS + HTTP + TLS snapshot of the live Linode-hosted site to `docs/deploy/dns-snapshot-<date>.txt`. Read-only — no SSH. |
 | `pnpm exec playwright test` | Visual + content suite. Spawns its *own* `pnpm serve` on 8001 with `reuseExistingServer: false`, so kill any local server first. Browsers cache under `./.playwright`. |
 | `pnpm exec playwright test --update-snapshots` | Refresh baselines in `tests/visual.spec.ts-snapshots/`. |
 | `pnpm exec playwright test tests/blog.spec.ts -g "load individual"` | Run a single spec / single test. |

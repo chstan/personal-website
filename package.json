@@ -47,6 +47,8 @@
     "docker:tag": "bash scripts/tag.sh",
     "docker:sh": "docker run --rm -it --entrypoint=/bin/sh personal_website",
     "verify-docker": "scripts/verify_docker.sh",
+    "check:railway": "scripts/check-railway.sh",
+    "capture:linode": "scripts/capture-linode-state.sh",
     "type-check": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest",

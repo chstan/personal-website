@@ -154,12 +154,20 @@ If the discovery is later (>24h post-cutover), Railway's per-deploy rollback in 
 
 ---
 
+## Tooling
+
+Two scripts back this checklist; both are read-only and safe to run any time:
+
+- `pnpm check:railway` — asserts the Railway project/service/deployment is healthy. With `CUSTOM_DOMAIN=conradstansbury.com` it also checks the apex DNS, HTTP 200, and TLS days-to-expiry. Use this before and after each major step (cutover gate, post-soak verification).
+- `pnpm capture:linode` — writes a DNS + HTTP + TLS snapshot of the current live site to `docs/deploy/dns-snapshot-<YYYY-MM-DD>.txt`. Run it before Step 2 (DNS provider move) so we have a frozen baseline to diff against during cutover and rollback.
+
 ## What I can do without further input from you
 
-- ✅ Inspect Railway state (`railway status`, `railway logs`) and report.
+- ✅ Inspect Railway state (`pnpm check:railway`) and report.
+- ✅ Snapshot the current live site (`pnpm capture:linode`) on demand.
 - ✅ Generate the exact `dig` and `curl` commands for any verification.
 - ✅ Pre-cutover Playwright runs against the Railway preview URL once it returns 200.
-- ✅ Diff the live DNS against `dns-snapshot-2026-05-01.txt` and flag drift.
+- ✅ Diff a fresh `dns-snapshot-…` against the saved baseline and flag drift.
 - ✅ Land the worktree branch on `master` once you say go (push + open PR).
 
 ## What I can't do without you
