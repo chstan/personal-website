@@ -1,36 +1,12 @@
 #!/bin/bash
 
-# Pre-commit hook to ensure code quality before every commit
-# 2025 Standard: Build -> Fast parallel checks (lint/type-check) -> Sequential slow tests
+# Fast local pre-commit gate.
+# Heavier checks (full build, Docker verification, Playwright visuals) run in CI.
+# To run the strict gate locally: `pnpm precheck`.
 
 echo "🚀 Running pre-commit checks..."
 
-# 1. Build the project first
-pnpm build || { echo "❌ Build failed."; exit 1; }
+pnpm exec lint-staged || { echo "❌ lint-staged failed."; exit 1; }
+pnpm test:run || { echo "❌ Vitest failed."; exit 1; }
 
-# 2. Run fast checks in parallel (lint and type-check)
-echo "🏃 Running lint and type-check..."
-rm -f .check_failed
-
-pnpm lint &
-P1=$!
-pnpm type-check &
-P2=$!
-
-wait $P1 || touch .check_failed
-wait $P2 || touch .check_failed
-
-if [ -f .check_failed ]; then
-  rm .check_failed
-  echo "❌ Lint or type-check failed. Fix errors before committing."
-  exit 1
-fi
-
-# 3. Run higher latency tests sequentially
-echo "🐳 Running verify-docker..."
-pnpm verify-docker || { echo "❌ Docker verification failed."; exit 1; }
-
-echo "🧪 Running Playwright tests..."
-pnpm exec playwright test || { echo "❌ Playwright tests failed."; exit 1; }
-
-echo "✅ All pre-commit checks passed."
+echo "✅ Pre-commit checks passed."

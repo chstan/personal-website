@@ -55,7 +55,12 @@ export default tseslint.config(
   },
   {
     // Special handling for config files and tests
-    files: ['*.config.{js,ts}', 'tests/**/*.{ts,tsx}'],
+    files: [
+      '*.config.{js,ts}',
+      'tests/**/*.{ts,tsx}',
+      'src/**/*.{test,spec}.{ts,tsx}',
+      'src/setupTests.ts',
+    ],
     rules: {
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
