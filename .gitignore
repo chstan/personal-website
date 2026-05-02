@@ -31,3 +31,5 @@ env.sh
 
 # Local Agent/Temp
 .gemini/
+.claude/worktrees/
+.claude/local/
