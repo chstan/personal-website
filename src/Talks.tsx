@@ -51,7 +51,7 @@ const TalksPage: React.FC = () => {
         <div key={l} className="talks-container">
           <header className="talks-section-header">{l}</header>
           <ul>
-            {TALKS.filter(t => t.kind === k).map(t => <li key={t.presentationTitle}><TalkSummary talk={t} /></li>)}
+            {TALKS.filter(t => t.kind === k).map(t => <li key={`${t.date}-${t.presentationTitle}`}><TalkSummary talk={t} /></li>)}
           </ul>
         </div>
       )}
