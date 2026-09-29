@@ -336,6 +336,12 @@ const UnmigratedTalksPage: React.FC = () => {
   );
 }
 
+const FuzzyTalkPage: React.FC = () => {
+  return (
+    <DynamicMarkdown articleId="fuzzy_talk" />
+  );
+}
+
 
 const GoPage: React.FC = () =>
   <section className="markdown">
@@ -354,6 +360,7 @@ const GoPage: React.FC = () =>
 export {
   WelcomePage,
   UnmigratedTalksPage,
+  FuzzyTalkPage,
   ContactPage,
   ReadingPage,
   Resume,
