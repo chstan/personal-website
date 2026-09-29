@@ -19,6 +19,7 @@ vi.mock('./staticPages', () => ({
   ContactPage: () => <div data-testid="page">contact</div>,
   GoPage: () => <div data-testid="page">go</div>,
   Resume: () => <div data-testid="page">resume</div>,
+  FuzzyTalkPage: () => <div data-testid="page">fuzzy-talk</div>,
 }));
 vi.mock('./TalkPages', () => ({
   TalkItem: () => <div data-testid="page">talk-item</div>,
@@ -50,6 +51,7 @@ describe('App routing', () => {
     ['/writing/some-post', 'writing-item'],
     ['/talks/subgradient-iteration', 'talk-item'],
     ['/unmigrated-talk', 'unmigrated-redirect'],
+    ['/fuzzy-talk', 'fuzzy-talk'],
   ])('mounts the right page for %s', (path, marker) => {
     const { unmount } = renderAt(path);
     expect(screen.getAllByTestId('page').some((el) => el.textContent === marker)).toBe(true);

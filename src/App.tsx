@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes, } from 'react-router-dom';
-import {ContactPage, GoPage, Resume, WelcomePage} from "./staticPages";
+import {ContactPage, GoPage, Resume, WelcomePage, FuzzyTalkPage} from "./staticPages";
 import {ProjectsPage} from "./Project";
 import {TalksPage} from "./Talks";
 import {TalkItem, UnmigratedTalkRedirect} from "./TalkPages";
@@ -154,6 +154,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/unmigrated-talk" element={<UnmigratedTalkRedirect />} />
             <Route path='/talks/:talkId' element={<TalkItem />}/>
+            <Route path="/fuzzy-talk" element={<FuzzyTalkPage />} />
             <Route path='/writing/:blogId' element={<BlogItem />}/>
             {flatLinks.map(([k, [C, __]]) =>
               <Route key={k} path={k} element={<C />} />
