@@ -1,21 +1,38 @@
 # Deploying to Railway
 
 This site is built to deploy on Railway out of the box via the
-existing `Dockerfile`. The repo also ships `railway.toml`, which
-Railway picks up automatically and uses to wire the build, start
-command, and healthcheck.
+existing `Dockerfile`. Service configuration (GitHub source, builder,
+healthcheck, restart policy, `PORT`) is declared as Railway
+Infrastructure as Code in `.railway/railway.ts`, which replaced the
+deprecated `railway.toml` (Config as Code stops working 2026-12-01).
+
+## Managing the config
+
+`.railway/railway.ts` is applied explicitly from a machine logged in
+with `railway login` and linked via `railway link --project serene-laughter`:
+
+```bash
+railway config plan    # preview the diff against the live project
+railway config apply   # apply it
+```
+
+Both need Node 22.6+ (the CLI runs the file with
+`--experimental-strip-types`) and the `railway` devDependency
+installed. On an older Node: `npx -p node@22 -c 'railway config plan'`.
+Always read the plan before applying; fields omitted from the file are
+reset (e.g. dropping `source` would disconnect the GitHub repo).
 
 ## One-time setup
 
 1. Create a new Railway project (or open the existing one).
 2. Connect it to the GitHub repo `chstan/personal-website`.
-3. In the service settings:
-   - **Builder**: Dockerfile (Railway will detect this from `railway.toml`).
-   - **Region**: pick the one closest to most traffic.
+3. Settings not (yet) in `.railway/railway.ts`:
+   - **Region**: US West.
    - **Networking → Generate domain**: gives you a `*.up.railway.app`
-     subdomain. Use this for verification before flipping the apex.
-4. There are no required environment variables. `PORT` is injected
-   by Railway and the Dockerfile honors it (defaults to 8001 locally).
+     subdomain (currently `personal-website-production-6b37`). Use
+     this for verification before flipping the apex.
+4. `PORT=8001` is set in `.railway/railway.ts` so the public domain's
+   target port is stable; the Dockerfile honors whatever `PORT` is.
 
 ## Verifying a deploy
 

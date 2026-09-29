@@ -101,4 +101,4 @@ The `src/` tree is flat; non-obvious entry points:
 
 ## Active initiatives
 
-- **Hosted-platform migration.** The site is moving off self-hosted Linode toward Railway. The Dockerfile honors `$PORT`, `railway.toml` configures the service, and `docs/deploy/railway.md` covers DNS cutover. See `docs/rfcs/0001-cleanup-devx-and-hosted-migration.md` for the broader plan.
+- **Hosted-platform migration.** The site is moving off self-hosted Linode toward Railway. The Dockerfile honors `$PORT`, `.railway/railway.ts` (Railway IaC; `railway config plan`/`apply`, needs Node 22.6+) configures the service, `docs/deploy/punchlist.md` tracks status, and `docs/deploy/railway.md` covers DNS cutover. See `docs/rfcs/0001-cleanup-devx-and-hosted-migration.md` for the broader plan.
