@@ -67,21 +67,21 @@
     "date": "August 28th, 2015",
     "location": "Zanbato, Inc.",
     "presentationTitle": "Subgradient Iteration",
-    "presentationUrl": "/unmigrated-talk#subgradient-iteration",
+    "presentationUrl": "/talks/subgradient-iteration",
     "kind": "zanbato-tech-talk"
   },
   {
     "date": "October 2nd, 2015",
     "location": "Zanbato, Inc.",
     "presentationTitle": "Handling Data Synchronization in Knockout",
-    "presentationUrl": "/unmigrated-talk#knockout-datasync",
+    "presentationUrl": "/talks/knockout-datasync",
     "kind": "zanbato-tech-talk"
   },
   {
     "date": "May 13th, 2016",
     "location": "Zanbato, Inc.",
     "presentationTitle": "Data Engineering at Scale (or other catchy titles)",
-    "presentationUrl": "/unmigrated-talk#data-engineering",
+    "presentationUrl": "/talks/data-engineering",
     "kind": "zanbato-tech-talk"
   }
 ]

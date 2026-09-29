@@ -19,7 +19,10 @@ vi.mock('./staticPages', () => ({
   ContactPage: () => <div data-testid="page">contact</div>,
   GoPage: () => <div data-testid="page">go</div>,
   Resume: () => <div data-testid="page">resume</div>,
-  UnmigratedTalksPage: () => <div data-testid="page">unmigrated</div>,
+}));
+vi.mock('./TalkPages', () => ({
+  TalkItem: () => <div data-testid="page">talk-item</div>,
+  UnmigratedTalkRedirect: () => <div data-testid="page">unmigrated-redirect</div>,
 }));
 
 // App ships its own <BrowserRouter>, so navigate via jsdom's history before mounting.
@@ -45,7 +48,8 @@ describe('App routing', () => {
     ['/slide-puzzles', 'slide-puzzles'],
     ['/go', 'go'],
     ['/writing/some-post', 'writing-item'],
-    ['/unmigrated-talk', 'unmigrated'],
+    ['/talks/subgradient-iteration', 'talk-item'],
+    ['/unmigrated-talk', 'unmigrated-redirect'],
   ])('mounts the right page for %s', (path, marker) => {
     const { unmount } = renderAt(path);
     expect(screen.getAllByTestId('page').some((el) => el.textContent === marker)).toBe(true);

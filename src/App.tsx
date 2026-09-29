@@ -1,8 +1,9 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes, } from 'react-router-dom';
-import {ContactPage, GoPage, Resume, WelcomePage, UnmigratedTalksPage} from "./staticPages";
+import {ContactPage, GoPage, Resume, WelcomePage} from "./staticPages";
 import {ProjectsPage} from "./Project";
 import {TalksPage} from "./Talks";
+import {TalkItem, UnmigratedTalkRedirect} from "./TalkPages";
 import PapersPage from "./Papers";
 import DominionPage from "./DominionPage";
 import ChessPage from "./ChessPage";
@@ -151,7 +152,8 @@ const App: React.FC = () => {
         </div>
         <div className="content-container">
           <Routes>
-            <Route path="/unmigrated-talk" element={<UnmigratedTalksPage />} />
+            <Route path="/unmigrated-talk" element={<UnmigratedTalkRedirect />} />
+            <Route path='/talks/:talkId' element={<TalkItem />}/>
             <Route path='/writing/:blogId' element={<BlogItem />}/>
             {flatLinks.map(([k, [C, __]]) =>
               <Route key={k} path={k} element={<C />} />

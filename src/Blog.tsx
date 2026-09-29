@@ -35,6 +35,7 @@ const BlogPage = () => <div className="project-container">
 </div>;
 
 export {
+  Breadcrumb,
   BlogPage,
   BlogItem,
 };
