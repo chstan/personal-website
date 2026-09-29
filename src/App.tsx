@@ -13,7 +13,7 @@ import {TaxExplorerPage,} from "./Marriage";
 
 const Unimplemented: React.FC = () =>
   <p>Website migration in progress: this page has not been moved. You can still visit the old
-    version at <WrapLink to={"http://historical.conradstansbury.com"}>the archived copy</WrapLink></p>;
+    version at <WrapLink to={"https://web.archive.org/web/20150707053844/http://conradstansbury.com/scheme"}>the archived copy</WrapLink></p>;
 
 
 type NavGroupProps = React.PropsWithChildren<{
