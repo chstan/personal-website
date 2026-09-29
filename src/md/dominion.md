@@ -1,75 +1,54 @@
 Simulator Information
 =====================
 
-The simulator maintains during each turn the global game state, with a structure summarized below, and information specific to a single turn, including buying power and the number of actions remaining for the current player.
+Games are two-player: your policy against one of the built-in bots, alternating who goes first. Each game uses the standard two-player supply (8 of each victory card, 10 Curses, 10 of each kingdom card) and a fixed kingdom:
 
-In order to determine what moves to make on a given turn, the simulator executes a policy, which is a collection of functions of (generally) the game state viewable from the active policy's point of view and the turn information. In order to be playable, a policy need only provide a function to decide what move to make on its turn, as reasonable defaults will be provided in the simulator utilities for reactions and other decisions.
+- **Moat** (2): +2 Cards. Blocks attacks while in hand.
+- **Village** (3): +1 Card, +2 Actions.
+- **Woodcutter** (3): +1 Buy, +2 coins.
+- **Militia** (4): +2 coins. Opponent discards down to 3 cards.
+- **Smithy** (4): +3 Cards.
+- **Council Room** (5): +4 Cards, +1 Buy. Opponent draws a card.
+- **Festival** (5): +2 Actions, +1 Buy, +2 coins.
+- **Laboratory** (5): +2 Cards, +1 Action.
+- **Market** (5): +1 Card, +1 Action, +1 Buy, +1 coin.
+- **Witch** (5): +2 Cards. Opponent gains a Curse.
 
+Plus Copper, Silver, Gold, Estate, Duchy, Province, and Curse. Cards that need open-ended decisions (Chapel, Remodel, Throne Room, and friends) are left out so that a policy can stay a simple list.
 
-Public Game State
------------------
+Each turn runs the usual phases. In the **action phase** the policy plays actions while it has actions remaining. In the **buy phase** every treasure in hand is played automatically and the policy buys cards, one per available buy. **Cleanup** discards everything and draws five new cards.
 
-The global game state available to a policy (through its first argument) is a Clojure map. Its structure follows this example documenting the game state at the start of a new game on Beth's turn:
+The game ends after the turn in which the Provinces run out or any three supply piles are empty. Most victory points wins; a tie goes to the player who took fewer turns. To keep passive policies from running forever, games also stop after 60 turns each.
 
-```clojure
-;; Publicly viewable state
-{:player-names #{"Alex" "Beth"}
- :turns ["Beth" "Alex"]
- :card-pool {:Province  8
-             :Gold      30
-             :Ironworks 8
-          ;; :Card      Count
-             }
- :players {"Beth"
-           {:name "Beth"
-            :hand [:Copper :Copper :Copper :Estate :Copper]
-            :deck {:Copper 3 :Estate 2}
-            :played-cards []
-            :discard []
-            "Alex"
-           {:name "Alex"
-            :hand-size 5
-            :hand-and-deck {:Copper 7 :Estate 3}
-            :played-cards []
-            :discard []}}}
+Reactions to attacks are handled for you: Moat always blocks, and when Militia hits you the simulator discards Curses and victory cards first, then your cheapest remaining cards.
+
+Writing a Policy
+================
+
+A policy is a JSON object with an optional `name` and two lists, `play` and `buy`:
+
+```json
+{
+  "name": "Smithy Big Money",
+  "play": ["Smithy"],
+  "buy": [
+    {"card": "Province", "minCoins": 8},
+    {"card": "Duchy", "provincesLeftAtMost": 4},
+    {"card": "Estate", "provincesLeftAtMost": 2},
+    "Gold",
+    {"card": "Smithy", "maxOwned": 1},
+    "Silver"
+  ]
+}
 ```
 
-Turn Information
-----------------
+`play` is a priority list of action cards. While you have actions left, the first listed card that is in your hand gets played. Actions you don't list are never played.
 
-Additionally, the second argument to most functions in a policy is a description of the state of the policy's turn. This includes gold (including played treasures but excluding treasures in hand), and takes the format:
+`buy` is a list of rules read top to bottom. For each buy, the first rule whose card is in the supply, affordable, and whose conditions all hold is purchased. If no rule matches, the turn ends. A bare card name like `"Gold"` is shorthand for `{"card": "Gold"}`. Rules may add any of these conditions:
 
-```clojure
-;; Turn information
-{:buys    1
- :actions 1
- :gold    0
- :phase   :action}
+- `minCoins`: only buy if you have at least this many coins available.
+- `maxOwned`: only buy while you own fewer than this many copies.
+- `provincesLeftAtMost`: only buy once the Province pile is down to this many or fewer.
+- `provincesLeftAtLeast`: only buy while the Province pile has at least this many.
 
-;; :phase can be :action or :buy
-```
-
-Minimal Policy
-==============
-
-A minimal viable policy is a map containing a function associated to the key :plays.
-
-This function takes the game state and turn information and produces a move, which should be one of:
-
-```clojure
-;; Play action
-{:intent  :play-action
- :card    :Smithy}
-;; the value for :card can be any action in hand
-
-;; Buy a card
-{:intent  :buy
- :card    :Province}
-;; the value for :card can be any affordable card
-;; available for purchase
-
-;; Finish turn
-{:intent  :finish-turn}
-```
-
-The :plays function is repeatedly executed until a `:finish-turn` `:intention` is produced.
+Unknown cards, misspelled keys, and malformed numbers are reported when you press run. The built-in bots are written in exactly this format, so you can load one from the menu above the editor and start tinkering from there.
