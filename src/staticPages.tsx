@@ -6,7 +6,7 @@ import {
   ResumeRow, ResumeRowKind,
 } from "./data";
 import {TalkSummary} from "./Talks";
-import {Expandable, SimpleButton, WrapLink} from "./common";
+import {DynamicMarkdown, Expandable, SimpleButton, WrapLink} from "./common";
 import { Baduk, AutoplayBaduk } from './lib/Baduk';
 import moves from './json/alpha_go_lee_sedol_1.json';
 import {ExampleMarriageDiagram} from "./Marriage";
