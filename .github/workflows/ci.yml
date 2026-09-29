@@ -51,7 +51,11 @@ jobs:
         with:
           path: .playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+      # playwright.config.ts pins browsers to ./.playwright only at test time;
+      # the install CLI doesn't read the config, so point it there explicitly.
       - run: pnpm exec playwright install --with-deps chromium
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.playwright
       - run: pnpm exec playwright test
       - name: Upload Playwright report on failure
         if: failure()
