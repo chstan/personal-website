@@ -6,7 +6,7 @@ import {
   ResumeRow, ResumeRowKind,
 } from "./data";
 import {TalkSummary} from "./Talks";
-import {DynamicMarkdown, Expandable, SimpleButton, WrapLink} from "./common";
+import {Expandable, SimpleButton, WrapLink} from "./common";
 import { Baduk, AutoplayBaduk } from './lib/Baduk';
 import moves from './json/alpha_go_lee_sedol_1.json';
 import {ExampleMarriageDiagram} from "./Marriage";
@@ -330,12 +330,6 @@ const Resume: React.FC = () => {
   );
 };
 
-const UnmigratedTalksPage: React.FC = () => {
-  return (
-    <DynamicMarkdown articleId="talks_page" />
-  );
-}
-
 const FuzzyTalkPage: React.FC = () => {
   return (
     <DynamicMarkdown articleId="fuzzy_talk" />
@@ -359,7 +353,6 @@ const GoPage: React.FC = () =>
 
 export {
   WelcomePage,
-  UnmigratedTalksPage,
   FuzzyTalkPage,
   ContactPage,
   ReadingPage,
