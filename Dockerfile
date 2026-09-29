@@ -3,8 +3,9 @@ FROM node:22-slim AS builder
 
 WORKDIR /app
 
-# Enable pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Enable pnpm. Pinned to the major CI uses: pnpm 11+ ignores the
+# `pnpm.overrides` field in package.json, which breaks --frozen-lockfile.
+RUN corepack enable && corepack prepare pnpm@10 --activate
 
 # Install dependencies
 COPY package.json pnpm-lock.yaml ./ 
