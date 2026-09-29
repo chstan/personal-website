@@ -78,6 +78,11 @@
   border: solid 4px var(--chess-target);
 }
 
+/* main.css sizes every span at 14px; pieces take their square's size. */
+.chess-piece {
+  font-size: inherit;
+}
+
 .chess-piece.white {
   color: white;
   text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black;
