@@ -35,6 +35,10 @@ jobs:
   build-and-visual:
     name: build + Playwright visuals
     runs-on: ubuntu-latest
+    # Pinned image = pinned fonts/rendering. The committed *-chromium-linux.png
+    # baselines were generated in this image; keep its tag in step with the
+    # @playwright/test version and regenerate baselines when bumping it.
+    container: mcr.microsoft.com/playwright:v1.57.0-noble
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -50,12 +54,11 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          key: playwright-noble-${{ hashFiles('pnpm-lock.yaml') }}
       # playwright.config.ts pins browsers to ./.playwright only at test time;
       # the install CLI doesn't read the config, so point it there explicitly.
-      - run: pnpm exec playwright install --with-deps chromium
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.playwright
+      # System deps are already in the container image.
+      - run: PLAYWRIGHT_BROWSERS_PATH="$GITHUB_WORKSPACE/.playwright" pnpm exec playwright install chromium
       - run: pnpm exec playwright test
       - name: Upload Playwright report on failure
         if: failure()
