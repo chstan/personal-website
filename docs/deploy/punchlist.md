@@ -25,9 +25,10 @@ Last updated: 2026-09-28
 - [x] AI: Diagnose May 2026 deploy failure. Root cause: `corepack prepare pnpm@latest` now pulls pnpm 12, which ignores `pnpm.overrides` in package.json, so `--frozen-lockfile` fails. Fixed by pinning `pnpm@10` (matches CI).
 - [x] AI: Migrate `railway.toml` → `.railway/railway.ts` (old format stops working **2026-12-01**). The generated file omitted source/PORT (applying it would have disconnected GitHub); completed by hand and dropped `startCommand`. `railway config plan` is clean (0 destroy). Note: `migrate --apply` already cleared the live service's Config File setting, so healthcheck/restart policy are unset until `config apply`.
 - [x] AI: Record dashboard-only settings (region, domain) in `railway.md`.
-- [ ] AI: Commit on `worktree-dns` as separate infra commits (Dockerfile pin; IaC migration + `railway` devDep; docs/punchlist).
-- [ ] C: OK `railway config apply` + deploy (merge/push to `master`).
-- [ ] AI: Preview URL returns 200; Playwright passes with `PLAYWRIGHT_BASE_URL=https://personal-website-production-6b37.up.railway.app`.
+- [x] AI: Commit as separate infra/docs commits; `railway config apply` (plan now clean); push to `master` (`0388de9`).
+- [x] AI: Railway deploy `0388de9` SUCCESS; preview URL returns 200 on `/`, `/writing`, `/resume`, `/marriage`.
+- [x] AI: Playwright DOM tests (`tests/blog.spec.ts`) pass against the preview URL (`PLAYWRIGHT_BASE_URL=https://personal-website-production-6b37.up.railway.app`).
+- [ ] AI: Visual tests can't be compared on Linux: only `chromium-darwin` baselines are committed, so a Linux run just writes new baselines. Either compare on macOS, or commit Linux baselines generated from a known-good build (CI on Ubuntu has the same gap).
 
 ## Phase 2 — DNS to Cloudflare (no visible change)
 
