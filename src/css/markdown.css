@@ -118,6 +118,57 @@
   & #run-button:hover {
     background-color: rgba(109, 189, 35, 0.2);
   }
+
+  & #play-dominion {
+    & > * {
+      margin-bottom: 12px;
+    }
+    & textarea {
+      box-sizing: border-box;
+      width: 100%;
+      border: none;
+      padding: 8px;
+      font-family: monospace;
+      font-size: 13px;
+      background-color: var(--light-gray);
+      resize: vertical;
+    }
+    & input[type="number"] {
+      width: 70px;
+    }
+  }
+
+  & .dominion-controls {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  & .dominion-errors {
+    color: rgb(180, 30, 30);
+    font-size: 14px;
+    padding-left: 20px;
+    list-style: disc;
+  }
+
+  & .dominion-results {
+    width: 100%;
+    font-size: 14px;
+    border-collapse: collapse;
+    & th, & td {
+      text-align: left;
+      padding: 4px 6px;
+      border-bottom: 1px solid var(--editor-color);
+    }
+  }
+
+  & .dominion-log {
+    max-height: 300px;
+    overflow: auto;
+    font-size: 12px;
+    padding: 8px;
+    background-color: var(--light-gray);
+    white-space: pre-wrap;
+  }
 }
 
 .wide .markdown {
