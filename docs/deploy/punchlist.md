@@ -35,7 +35,7 @@ Last updated: 2026-09-28
 - [x] C: Create Cloudflare account, add `conradstansbury.com` (Free). Nameservers switched at Namecheap and the Linode zone disabled (2026-09-28). Registry delegates to `huxley`/`tiffany.ns.cloudflare.com`; imported records are unproxied at TTL 300; historical/memory absent.
 - [x] C: Create an API token (Zone:DNS:Edit + Zone:Zone:Read, this zone only) and save it to `~/.config/cloudflare/token` (mode 600). Verified active (`cfut_…`).
 - [x] ~~AI: `pnpm capture:linode` for a fresh baseline~~ Skipped: the NS switch already happened; the May snapshot plus `pnpm check:dns` output cover it.
-- [ ] C: Clean up the imported zone (approved 2026-09-28; the API write was blocked by Claude's permission check): delete `A`/`AAAA mail`, `MX @`, `A staging` (not in the May snapshot, HTTP times out); add `CAA @ 0 issue "letsencrypt.org"`. Folded into the cutover batch below.
+- [x] AI: Clean up the imported zone: delete `A`/`AAAA mail`, `MX @`, `A staging` (not in the May snapshot, HTTP timed out); add `CAA @ 0 issue "letsencrypt.org"`. Done as part of the cutover batch below.
 - [x] C: Switch nameservers at Namecheap to the two Cloudflare NS values.
 - [x] AI: Confirm `dig NS` shows Cloudflare and the site still resolves to Linode.
 
@@ -43,13 +43,14 @@ Last updated: 2026-09-28
 
 - [x] ~~Lower TTL on `@`/`www` to 300s; wait 24h~~ Already auto (300s) since the Cloudflare import.
 - [x] AI: Add `conradstansbury.com` + `www` as custom domains in Railway (`railway domain … --port 8001`; not expressible in IaC). Targets: `@` → `j4277x5e.up.railway.app`, `www` → `m6n9aeus.up.railway.app`.
-- [ ] C: Apply the cutover DNS batch in Cloudflare (see the final report / skill): `_railway-verify` TXTs, replace `@`/`www` A+AAAA with CNAMEs (proxy off), plus the Phase 2 cleanup.
-- [ ] AI: `CUSTOM_DOMAIN=conradstansbury.com pnpm check:railway` is green (DNS, 200, TLS); Playwright passes against prod.
+- [x] AI: Cutover DNS batch applied 2026-09-28 ~22:47 PT via a one-off script (approved by C): `_railway-verify` TXTs, CAA, `@`/`www` A+AAAA → CNAMEs (proxy off), and the Phase 2 cleanup (mail, MX, staging deleted).
+- [x] AI: Railway verified both domains; Let's Encrypt certs issued (apex YE2, www YR1, expire 2026-12-28, auto-renew).
+- [x] AI: `https://conradstansbury.com/{,writing,resume,marriage}` and `https://www.conradstansbury.com/` return 200 with valid TLS; `http://` 301s to `https://`. Public resolvers 1.1.1.1, 8.8.8.8, 9.9.9.9 and OpenDNS all return Railway (`69.46.46.126`). Conrad's local resolver held the old Linode answer for up to ~2h after the cutover (leftover from Linode's 86400 TTL).
 - [ ] C: Browser smoke test (`/`, `/writing`, a post, `/marriage`, `/resume`).
 
 ## Phase 4 — Soak & decommission
 
-- [ ] AI: +24h: check Railway logs/metrics; restore TTL to 3600.
+- [ ] AI: +24h: check Railway logs/metrics, and re-run `CUSTOM_DOMAIN=conradstansbury.com pnpm check:railway` once local DNS has refreshed. TTL can stay auto (300s): Cloudflare serves it cheaply and it keeps rollback fast.
 - [ ] C: **Archive the old site off the VM before destroy**: tarball `~/deploy/historical_website` (incl. `config/`, `res/`) and `~/src/{Chess-Engine,SchemeREPL,wobsite}`, then download it. A downloaded tarball beats a Linode snapshot, which bills monthly.
 - [ ] C: +1 week green: destroy the Linode VM and cancel the account.
 
