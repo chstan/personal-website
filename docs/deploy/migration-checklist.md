@@ -2,6 +2,8 @@
 
 Companion to `docs/deploy/railway.md`. Operational checklist for the cutover, populated with concrete answers from discovery on 2026-05-01.
 
+> **Status (2026-09-28):** partly superseded. Current status is in `docs/deploy/punchlist.md` and ops guidance in `.claude/skills/site-ops/SKILL.md`. Since this was written, DNS has moved to Cloudflare. The Railway preview now returns 200: the 502 became a pnpm-12 build failure, which is fixed. The "Open items" below are resolved. Corrected rows are marked *(corrected)*.
+
 ---
 
 ## Discovery summary
@@ -16,7 +18,7 @@ Companion to `docs/deploy/railway.md`. Operational checklist for the cutover, po
 | Linode VM | `198.74.51.35` / `2600:3c01::f03c:91ff:fe56:6e8b` |
 | TLS cert | Let's Encrypt R12, **expired 2026-03-28**. HTTPS has been broken for ~5 weeks. |
 | Apex + www | Serving a stale React build (older than current `master`). |
-| `historical.conradstansbury.com` | Haskell server + C++ binaries. **Already 502** — backend is dead. No Wayback snapshots. |
+| `historical.conradstansbury.com` | Haskell server (`chstan/wobsite`, deployed via `chstan/dispossessed`) + C binaries (`chstan/Chess-Engine`, `chstan/SchemeREPL`) + a JVM Dominion sandbox. **Already 502**: the backend is dead. *(corrected)* Wayback has captures: the 2015 main site and the 2024–25 `historical.*` landing page. |
 | `memory.conradstansbury.com` | In TLS SAN list, no DNS record, also 502 if reached via host header. |
 | `mail.conradstansbury.com` | A record + MX record exist but backend is 502; Conrad confirmed no actual mail. |
 | Other DNS | No TXT, SPF, DKIM, DMARC, or CAA. Zero email-deliverability records to preserve. |
