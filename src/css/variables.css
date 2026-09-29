@@ -34,4 +34,10 @@
   --go-size: 400px;
   --board-color: rgb(221, 180, 84);
   --board-color-shadow: rgba(255, 255, 255, 0.08);
+
+  /* scheme console */
+  --console-font: 'Source Code Pro', Menlo, Consolas, monospace;
+  --console-output-color: #666;
+  --console-value-color: rgb(29, 84, 127);
+  --console-error-color: rgb(170, 30, 30);
 }

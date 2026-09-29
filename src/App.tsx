@@ -10,6 +10,7 @@ import ChessPage from "./ChessPage";
 import {WrapLink} from "./common";
 import {BlogItem, BlogPage} from "./Blog";
 import SlidePuzzlePage from "./SlidePuzzlePage";
+import SchemePage from "./SchemePage";
 import {TaxExplorerPage,} from "./Marriage";
 
 const Unimplemented: React.FC = () =>
@@ -41,7 +42,7 @@ const projectLinksSection: NavLinkSection = {
   title: 'Quicklinks',
   defaultOpen: false,
   content: [
-    ['/scheme', [Unimplemented, 'scheme']],
+    ['/scheme', [SchemePage, 'scheme']],
     ['/dominion', [DominionPage, 'dominion']],
     ['/go', [GoPage, 'go']],
     ['/chess', [ChessPage, 'chess']],

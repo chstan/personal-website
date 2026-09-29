@@ -10,6 +10,7 @@ vi.mock('./Papers', () => ({ default: () => <div data-testid="page">papers</div>
 vi.mock('./DominionPage', () => ({ default: () => <div data-testid="page">dominion</div> }));
 vi.mock('./ChessPage', () => ({ default: () => <div data-testid="page">chess</div> }));
 vi.mock('./SlidePuzzlePage', () => ({ default: () => <div data-testid="page">slide-puzzles</div> }));
+vi.mock('./SchemePage', () => ({ default: () => <div data-testid="page">scheme</div> }));
 vi.mock('./Blog', () => ({
   BlogPage: () => <div data-testid="page">writing</div>,
   BlogItem: () => <div data-testid="page">writing-item</div>,
@@ -48,6 +49,7 @@ describe('App routing', () => {
     ['/chess', 'chess'],
     ['/slide-puzzles', 'slide-puzzles'],
     ['/go', 'go'],
+    ['/scheme', 'scheme'],
     ['/writing/some-post', 'writing-item'],
     ['/talks/subgradient-iteration', 'talk-item'],
     ['/unmigrated-talk', 'unmigrated-redirect'],
