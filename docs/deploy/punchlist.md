@@ -60,3 +60,17 @@ Last updated: 2026-09-28
 - [x] AI: Fix stale claims in `migration-checklist.md` (old-site source and Wayback captures exist).
 - [ ] AI: Update `railway.md`, `AGENTS.md` "Active initiatives", and the RFC status once done.
 - [ ] Optional: static `/historical` archive from Wayback captures (option B, 3–6h).
+
+## Phase 6 — Restore unmigrated content (2026-09-29)
+
+All of these run client-side. None of them needs a backend.
+
+- [x] `/scheme`: TypeScript Scheme interpreter + REPL page (replaces the server-side C interpreter).
+- [x] `/chess`: TypeScript engine (alpha-beta + quiescence, Web Worker) + playable board; per-browser record.
+- [x] `/dominion`: TypeScript simulator, 10-card kingdom, JSON priority-list policies (no code execution), 3 bots.
+- [x] `/fuzzy-talk`: honors-thesis talk restored from wobsite `Views/Fuzzy.hs`; figures were already in `public/img/`.
+- [x] Zanbato talks → `/talks/:talkId`; `/unmigrated-talk#id` redirects.
+- [x] Post-HTTPS fixes: Google Fonts over https (logo font was blocked as mixed content); dead `historical.*` links replaced.
+- [x] CI green: Linux baselines + visuals job runs in `mcr.microsoft.com/playwright:v1.57.0-noble`.
+- [ ] C: regenerate the stale `*-chromium-darwin.png` baselines (chess, dominion) on a Mac: `pnpm exec playwright test -g "chess|dominion" --update-snapshots`.
+- [ ] Dead links: `public/pdf/thesis.pdf` and `CTD2015_slides.pdf` are referenced by papers/talks but not in the repo.
