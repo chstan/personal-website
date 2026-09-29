@@ -49,6 +49,7 @@
     "verify-docker": "scripts/verify_docker.sh",
     "check:railway": "scripts/check-railway.sh",
     "capture:linode": "scripts/capture-linode-state.sh",
+    "check:dns": "scripts/cf-dns.sh",
     "type-check": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest",
